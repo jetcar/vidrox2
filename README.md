@@ -9,16 +9,54 @@
 <div align="center">This project owes it's existence to <a href="https://github.com/reisxd/TizenTube">@reisxd/TizenTube</a>. </div>
 
 
-## • Installation
-
-[<img src='assets/get-it-on-github.png' alt='Get it on GitHub' height = "90">](https://github.com/ycngmn/NoTubeTV/releases/latest)
-
 ## Features
 
 * YouTube Leanback UI.
 * Unlocks 4K resolutions.
 * Adblock, SponsorBlock, DeArrow.
-* Disable `shorts` and more...
+* **Shorts disabled by default** (can be re-enabled in settings).
+* Multi-layer shorts blocking with aggressive filtering.
+* Local userscripts (no external dependencies).
+
+## Building from Source
+
+### Prerequisites
+- JDK 11 or higher
+- Android SDK
+
+### Build Instructions
+
+**Debug APK:**
+```bash
+./gradlew assembleDebug
+```
+
+**Release APK:**
+```bash
+./gradlew assembleRelease
+```
+
+The APK will be located at:
+```
+app/build/outputs/apk/debug/app-debug.apk
+```
+
+### After Installation
+To ensure shorts blocking works properly:
+1. Go to **Settings → Apps → NoTubeTV**
+2. Select **Storage → Clear Data**
+3. Restart the app
+
+## How Shorts Blocking Works
+
+This app uses a comprehensive multi-layer approach to block YouTube Shorts:
+
+1. **JSON API Filtering** - Intercepts YouTube's API responses and removes shorts before rendering
+2. **CSS Hiding** - Hides shorts elements using aggressive CSS selectors
+3. **DOM Mutation Observer** - Continuously monitors and removes dynamically added shorts
+4. **Periodic Cleanup** - Runs cleanup every 2 seconds to catch late-loading content
+
+Shorts can be re-enabled through the in-app settings menu if desired.
 
 ## Contributing
 

@@ -143,6 +143,7 @@
     enableShorts: false,
   };
 
+
   let localConfig;
 
   try {
@@ -528,137 +529,24 @@
 
     // Filter out shorts sections when shorts are disabled
     if (!configRead("enableShorts")) {
-      console.log('[NoTubeTV] Shorts filtering enabled');
-
-      // NUCLEAR OPTION: Log and analyze the 4th row specifically
+      // Remove shorts shelves from home/browse sections (precise type check only)
       if (r?.contents?.tvBrowseRenderer?.content?.tvSurfaceContentRenderer?.content?.sectionListRenderer?.contents) {
-        const contents = r.contents.tvBrowseRenderer.content.tvSurfaceContentRenderer.content.sectionListRenderer.contents;
-        console.log(`[NoTubeTV] Total sections found: ${contents.length}`);
-
-        // Log each section to identify the 4th row
-        contents.forEach((section, index) => {
-          const type = section?.shelfRenderer?.tvhtml5ShelfRendererType || 'UNKNOWN';
-          const title = section?.shelfRenderer?.title?.runs?.[0]?.text || 'NO_TITLE';
-          console.log(`[NoTubeTV] Row ${index}: Type="${type}", Title="${title}"`);
-
-          // Check if this section contains shorts by any means
-          const sectionStr = JSON.stringify(section);
-          if (sectionStr.includes('SHORTS') || sectionStr.includes('shorts') || sectionStr.includes('reel')) {
-            console.log(`[NoTubeTV] ⚠️ Row ${index} contains SHORTS keywords!`);
-          }
-        });
-      }
-
-      // BRUTE FORCE: Remove the 4th row entirely if it exists
-      if (r?.contents?.tvBrowseRenderer?.content?.tvSurfaceContentRenderer?.content?.sectionListRenderer?.contents) {
-        const contents = r.contents.tvBrowseRenderer.content.tvSurfaceContentRenderer.content.sectionListRenderer.contents;
-
-        // Check if 4th row (index 3) is shorts
-        if (contents[3]) {
-          const fourthRowStr = JSON.stringify(contents[3]);
-          const isShortsRow = fourthRowStr.includes('SHORTS') ||
-                             fourthRowStr.includes('shorts') ||
-                             fourthRowStr.includes('reel') ||
-                             contents[3]?.shelfRenderer?.tvhtml5ShelfRendererType === "TVHTML5_SHELF_RENDERER_TYPE_SHORTS";
-
-          if (isShortsRow) {
-            console.log('[NoTubeTV] 🔥 REMOVING 4TH ROW - Contains shorts!');
-            contents.splice(3, 1); // Remove the 4th row
-          }
-        }
-      }
-
-      // Recursive function to find and remove shorts from any nested structure
-      function filterShortsRecursive(obj, path = '') {
-        if (!obj || typeof obj !== 'object') return obj;
-
-        // If this is an array, filter it
-        if (Array.isArray(obj)) {
-          return obj.filter((item, index) => {
-            // Check if this item is a shorts shelf
-            if (item?.shelfRenderer?.tvhtml5ShelfRendererType === "TVHTML5_SHELF_RENDERER_TYPE_SHORTS") {
-              console.log(`[NoTubeTV] Removed shorts shelf at ${path}[${index}]`);
-              return false;
-            }
-
-            // Check if this item is a shorts video
-            const hasReelEndpoint = item?.gridVideoRenderer?.navigationEndpoint?.reelWatchEndpoint ||
-                                   item?.compactVideoRenderer?.navigationEndpoint?.reelWatchEndpoint ||
-                                   item?.videoRenderer?.navigationEndpoint?.reelWatchEndpoint ||
-                                   item?.navigationEndpoint?.reelWatchEndpoint;
-
-            if (hasReelEndpoint) {
-              console.log(`[NoTubeTV] Removed shorts item (reelEndpoint) at ${path}[${index}]`);
-              return false;
-            }
-
-            // Check for SHORTS style in overlays
-            const itemStr = JSON.stringify(item);
-            if (itemStr.includes('"style":"SHORTS"') ||
-                itemStr.includes('TVHTML5_SHELF_RENDERER_TYPE_SHORTS') ||
-                itemStr.includes('reelWatchEndpoint')) {
-              console.log(`[NoTubeTV] Removed shorts item (style/endpoint) at ${path}[${index}]`);
-              return false;
-            }
-
-            // Recursively filter nested objects
-            filterShortsRecursive(item, `${path}[${index}]`);
-            return true;
-          });
-        }
-
-        // For objects, recursively process each property
-        for (const key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            obj[key] = filterShortsRecursive(obj[key], `${path}.${key}`);
-          }
-        }
-
-        return obj;
-      }
-
-      // Apply recursive filtering to the entire response
-      filterShortsRecursive(r, 'root');
-
-      // Additional targeted filtering - remove ALL sections containing shorts keywords
-      if (r?.contents?.tvBrowseRenderer?.content?.tvSurfaceContentRenderer?.content?.sectionListRenderer?.contents) {
-        const originalLength = r.contents.tvBrowseRenderer.content.tvSurfaceContentRenderer.content.sectionListRenderer.contents.length;
-
         r.contents.tvBrowseRenderer.content.tvSurfaceContentRenderer.content.sectionListRenderer.contents =
           r.contents.tvBrowseRenderer.content.tvSurfaceContentRenderer.content.sectionListRenderer.contents.filter(
-            (shelve, index) => {
-              // Check type
-              const isShortsByType = shelve.shelfRenderer?.tvhtml5ShelfRendererType === "TVHTML5_SHELF_RENDERER_TYPE_SHORTS";
-
-              // Check content - stringify and search
-              const shelveStr = JSON.stringify(shelve);
-              const hasShortsKeywords = shelveStr.includes('SHORTS') ||
-                                       shelveStr.includes('"shorts"') ||
-                                       shelveStr.includes('reelWatch') ||
-                                       shelveStr.includes('/shorts/');
-
-              const isShorts = isShortsByType || hasShortsKeywords;
-
-              if (isShorts) {
-                console.log(`[NoTubeTV] 🔥 Filtered shorts shelf at row ${index}`);
-              }
-
-              return !isShorts;
-            }
+            (shelf) => shelf?.shelfRenderer?.tvhtml5ShelfRendererType !== "TVHTML5_SHELF_RENDERER_TYPE_SHORTS"
           );
-
-        const newLength = r.contents.tvBrowseRenderer.content.tvSurfaceContentRenderer.content.sectionListRenderer.contents.length;
-        if (originalLength !== newLength) {
-          console.log(`[NoTubeTV] Removed ${originalLength - newLength} shorts sections total`);
-        }
       }
 
-      // Final check for any remaining shorts references
-      const jsonStr = JSON.stringify(r);
-      if (jsonStr.includes('SHORTS') || jsonStr.includes('reelWatch')) {
-        console.log('[NoTubeTV] WARNING: JSON response STILL contains shorts references after filtering!');
-      } else {
-        console.log('[NoTubeTV] ✓ All shorts successfully removed from JSON');
+      // Remove individual shorts video items (reelWatchEndpoint) from any list
+      if (r?.contents?.tvBrowseRenderer?.content?.tvSurfaceContentRenderer?.content?.sectionListRenderer?.contents) {
+        r.contents.tvBrowseRenderer.content.tvSurfaceContentRenderer.content.sectionListRenderer.contents.forEach((shelf) => {
+          const items = shelf?.shelfRenderer?.content?.horizontalListRenderer?.items;
+          if (items) {
+            shelf.shelfRenderer.content.horizontalListRenderer.items = items.filter(
+              (item) => !item?.gridVideoRenderer?.navigationEndpoint?.reelWatchEndpoint
+            );
+          }
+        });
       }
     }
 
@@ -1077,7 +965,7 @@
     // Add CSS to head.
 
     var css_248z =
-      ".ytaf-ui-container {\n  position: absolute;\n  top: 10%;\n  left: 10%;\n  right: 10%;\n  bottom: 10%;\n\n  background: rgba(0, 0, 0, 0.8);\n  color: white;\n  border-radius: 20px;\n  padding: 20px;\n  font-size: 1.5rem;\n  z-index: 1000;\n}\n\n.ytaf-ui-container :focus {\n  outline: 4px red solid;\n}\n\n.ytaf-ui-container h1 {\n  margin: 0;\n  margin-bottom: 0.5em;\n  text-align: center;\n}\n\n.ytaf-ui-container input[type='checkbox'] {\n  width: 1.4rem;\n  height: 1.4rem;\n}\n\n.ytaf-ui-container input[type='radio'] {\n  width: 1.4rem;\n  height: 1.4rem;\n}\n\n.ytaf-ui-container label {\n  display: block;\n  font-size: 1.4rem;\n}\n\n.ytaf-notification-container {\n  position: absolute;\n  right: 10px;\n  bottom: 10px;\n  font-size: 16pt;\n  z-index: 1200;\n}\n\n.ytaf-notification-container .message {\n  background: rgba(0, 0, 0, 0.7);\n  color: white;\n  padding: 1em;\n  margin: 0.5em;\n  transition: all 0.3s ease-in-out;\n  opacity: 1;\n  line-height: 1;\n  border-right: 10px solid rgba(50, 255, 50, 0.3);\n  display: inline-block;\n  float: right;\n}\n\n.ytaf-notification-container .message-hidden {\n  opacity: 0;\n  margin: 0 0.5em;\n  padding: 0 1em;\n  line-height: 0;\n}\n\n/* Fixes transparency effect for the video player */\n\n.ytLrWatchDefaultShadow {\n  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.8) 90%) !important;\n  background-color: rgba(0, 0, 0, 0.3) !important;\n  display: block !important;\n  height: 100% !important;\n  pointer-events: none !important;\n  position: absolute !important;\n  width: 100% !important;\n}\n\n/* Fixes shorts having a black background */\n\n.ytLrTileHeaderRendererShorts {\n  background-image: none !important;\n}\n\n/* Hide shorts completely when disabled */\n\n[tvhtml5-shelf-renderer-type='TVHTML5_SHELF_RENDERER_TYPE_SHORTS'] {\n  display: none !important;\n}\n\n.ytLrTileHeaderRendererShorts {\n  display: none !important;\n}\n\n/* Hide shorts in search and browse */\n[aria-label*='Shorts'],\n[aria-label*='shorts'],\n[title*='Shorts'],\n[title*='shorts'],\n[class*='Shorts'],\n[class*='shorts'],\n[id*='shorts'] {\n  display: none !important;\n}\n\n/* Hide shorts by navigation endpoint */\na[href*='/shorts/'] {\n  display: none !important;\n}\n\n/* Hide any element containing 'reel' (YouTube's internal name for shorts) */\n[class*='reel'],\n[class*='Reel'],\n[href*='/reel'] {\n  display: none !important;\n}\n\n/* NUCLEAR: Hide 4th row if it contains shorts */\nytlr-section-list-renderer > *:nth-child(4):has([tvhtml5-shelf-renderer-type*='SHORTS']),\nytlr-section-list-renderer > *:nth-child(4):has([href*='/shorts/']),\nytlr-section-list-renderer > *:nth-child(4):has([class*='shorts']) {\n  display: none !important;\n  visibility: hidden !important;\n  height: 0 !important;\n  opacity: 0 !important;\n}";
+      ".ytaf-ui-container {\n  position: absolute;\n  top: 10%;\n  left: 10%;\n  right: 10%;\n  bottom: 10%;\n\n  background: rgba(0, 0, 0, 0.8);\n  color: white;\n  border-radius: 20px;\n  padding: 20px;\n  font-size: 1.5rem;\n  z-index: 1000;\n}\n\n.ytaf-ui-container :focus {\n  outline: 4px red solid;\n}\n\n.ytaf-ui-container h1 {\n  margin: 0;\n  margin-bottom: 0.5em;\n  text-align: center;\n}\n\n.ytaf-ui-container input[type='checkbox'] {\n  width: 1.4rem;\n  height: 1.4rem;\n}\n\n.ytaf-ui-container input[type='radio'] {\n  width: 1.4rem;\n  height: 1.4rem;\n}\n\n.ytaf-ui-container label {\n  display: block;\n  font-size: 1.4rem;\n}\n\n.ytaf-notification-container {\n  position: absolute;\n  right: 10px;\n  bottom: 10px;\n  font-size: 16pt;\n  z-index: 1200;\n}\n\n.ytaf-notification-container .message {\n  background: rgba(0, 0, 0, 0.7);\n  color: white;\n  padding: 1em;\n  margin: 0.5em;\n  transition: all 0.3s ease-in-out;\n  opacity: 1;\n  line-height: 1;\n  border-right: 10px solid rgba(50, 255, 50, 0.3);\n  display: inline-block;\n  float: right;\n}\n\n.ytaf-notification-container .message-hidden {\n  opacity: 0;\n  margin: 0 0.5em;\n  padding: 0 1em;\n  line-height: 0;\n}\n\n/* Fixes transparency effect for the video player */\n\n.ytLrWatchDefaultShadow {\n  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.8) 90%) !important;\n  background-color: rgba(0, 0, 0, 0.3) !important;\n  display: block !important;\n  height: 100% !important;\n  pointer-events: none !important;\n  position: absolute !important;\n  width: 100% !important;\n}\n\n/* Hide shorts shelf by exact type — safe, won't match regular video rows */\n\n[tvhtml5-shelf-renderer-type='TVHTML5_SHELF_RENDERER_TYPE_SHORTS'] {\n  display: none !important;\n}\n\n.ytLrTileHeaderRendererShorts {\n  display: none !important;\n}";
 
     const existingStyle = document.querySelector("style[nonce]");
     if (existingStyle) {
@@ -1116,7 +1004,7 @@
     applyShortsHidingCSS();
   }
 
-  // Function to dynamically hide shorts via CSS based on config
+  // Function to hide shorts via CSS based on config — uses only precise selectors
   function applyShortsHidingCSS() {
     const shortsStyleId = 'notubetv-hide-shorts';
     let existingStyle = document.getElementById(shortsStyleId);
@@ -1126,51 +1014,12 @@
         const style = document.createElement("style");
         style.id = shortsStyleId;
         style.textContent = `
-          /* Hide shorts shelf sections */
-          [tvhtml5-shelf-renderer-type='TVHTML5_SHELF_RENDERER_TYPE_SHORTS'],
-          [tvhtml5-shelf-renderer-type*='SHORTS'] {
+          /* Hide shorts shelf sections by exact type attribute */
+          [tvhtml5-shelf-renderer-type='TVHTML5_SHELF_RENDERER_TYPE_SHORTS'] {
             display: none !important;
-            visibility: hidden !important;
-            height: 0 !important;
-            width: 0 !important;
-            overflow: hidden !important;
           }
-
-          /* Hide individual shorts items */
+          /* Hide individual shorts tile headers */
           .ytLrTileHeaderRendererShorts {
-            display: none !important;
-          }
-
-          /* Hide shorts by aria labels and titles */
-          [aria-label*='Shorts'],
-          [aria-label*='shorts'],
-          [title*='Shorts'],
-          [title*='shorts'],
-          [class*='Shorts'],
-          [class*='shorts'] {
-            display: none !important;
-          }
-
-          /* Hide shorts navigation endpoints */
-          [href*='/shorts/'],
-          [href*='/reel'],
-          a[href*='/shorts/'] {
-            display: none !important;
-          }
-
-          /* Hide parent containers that might hold shorts */
-          ytlr-tile-renderer:has([href*='/shorts/']),
-          ytlr-shelf-renderer:has([tvhtml5-shelf-renderer-type*='SHORTS']) {
-            display: none !important;
-          }
-
-          /* Nuclear option: hide any element with 'short' or 'reel' in data attributes */
-          [data-shorts],
-          [data-reel],
-          [class*='reel'],
-          [class*='Reel'],
-          [id*='shorts'],
-          [id*='reel'] {
             display: none !important;
           }
         `;
@@ -1189,190 +1038,5 @@
       applyShortsHidingCSS();
     }
   });
-
-  // Observer to remove shorts elements that are dynamically added
-  if (!configRead("enableShorts")) {
-    console.log('[NoTubeTV] Starting MutationObserver for shorts removal');
-
-    let shortsRemovedCount = 0;
-
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType === 1) { // Element node
-            let shouldRemove = false;
-
-            // Check if the node itself is a shorts element
-            if (node.getAttribute) {
-              const attrs = [
-                node.getAttribute('tvhtml5-shelf-renderer-type'),
-                node.getAttribute('href'),
-                node.getAttribute('aria-label'),
-                node.getAttribute('title'),
-                node.className
-              ];
-
-              shouldRemove = attrs.some(attr =>
-                attr && (
-                  attr.includes('SHORTS') ||
-                  attr.includes('shorts') ||
-                  attr.includes('/shorts/') ||
-                  attr.includes('reel') ||
-                  attr.includes('Reel')
-                )
-              );
-
-              if (shouldRemove) {
-                console.log('[NoTubeTV] Removing shorts node:', node.tagName, node.className);
-                node.remove();
-                shortsRemovedCount++;
-                return;
-              }
-            }
-
-            // Check for shorts elements within the added node
-            if (node.querySelectorAll) {
-              const selectors = [
-                '[tvhtml5-shelf-renderer-type*="SHORTS"]',
-                '.ytLrTileHeaderRendererShorts',
-                '[href*="/shorts/"]',
-                '[aria-label*="Shorts"]',
-                '[aria-label*="shorts"]',
-                '[title*="Shorts"]',
-                '[title*="shorts"]',
-                '[class*="shorts"]',
-                '[class*="Shorts"]',
-                '[class*="reel"]',
-                '[class*="Reel"]',
-                '[href*="/reel"]'
-              ];
-
-              selectors.forEach(selector => {
-                try {
-                  const elements = node.querySelectorAll(selector);
-                  if (elements.length > 0) {
-                    console.log(`[NoTubeTV] Found ${elements.length} shorts elements matching: ${selector}`);
-                    elements.forEach(el => {
-                      el.remove();
-                      shortsRemovedCount++;
-                    });
-                  }
-                } catch (e) {
-                  // Ignore selector errors
-                }
-              });
-            }
-          }
-        });
-      });
-
-      if (shortsRemovedCount > 0 && shortsRemovedCount % 10 === 0) {
-        console.log(`[NoTubeTV] Total shorts elements removed: ${shortsRemovedCount}`);
-      }
-    });
-
-    // Start observing after DOM is loaded
-    const startObserver = () => {
-      if (document.body) {
-        observer.observe(document.body, {
-          childList: true,
-          subtree: true
-        });
-        console.log('[NoTubeTV] MutationObserver started');
-      } else {
-        setTimeout(startObserver, 100);
-      }
-    };
-    startObserver();
-
-    // Also do an initial scan and remove any existing shorts
-    setTimeout(() => {
-      console.log('[NoTubeTV] Running initial shorts cleanup');
-      const selectors = [
-        '[tvhtml5-shelf-renderer-type*="SHORTS"]',
-        '.ytLrTileHeaderRendererShorts',
-        '[href*="/shorts/"]',
-        '[aria-label*="Shorts"]',
-        '[title*="Shorts"]',
-        '[class*="shorts"]',
-        '[class*="reel"]'
-      ];
-
-      selectors.forEach(selector => {
-        try {
-          const elements = document.querySelectorAll(selector);
-          if (elements.length > 0) {
-            console.log(`[NoTubeTV] Initial cleanup: Found ${elements.length} elements matching ${selector}`);
-            elements.forEach(el => el.remove());
-          }
-        } catch (e) {
-          // Ignore selector errors
-        }
-      });
-    }, 1000);
-
-    // Run periodic cleanup every 2 seconds to catch late-loading shorts
-    setInterval(() => {
-      const selectors = [
-        '[tvhtml5-shelf-renderer-type*="SHORTS"]',
-        '.ytLrTileHeaderRendererShorts',
-        '[href*="/shorts/"]',
-        '[aria-label*="Shorts"]',
-        '[aria-label*="shorts"]',
-        '[title*="Shorts"]',
-        '[title*="shorts"]',
-        '[class*="shorts"]',
-        '[class*="reel"]',
-        '[href*="/reel"]'
-      ];
-
-      let removed = 0;
-      selectors.forEach(selector => {
-        try {
-          const elements = document.querySelectorAll(selector);
-          if (elements.length > 0) {
-            console.log(`[NoTubeTV] Periodic cleanup: Removing ${elements.length} elements matching ${selector}`);
-            elements.forEach(el => {
-              el.remove();
-              removed++;
-            });
-          }
-        } catch (e) {
-          // Ignore selector errors
-        }
-      });
-
-      if (removed > 0) {
-        console.log(`[NoTubeTV] Periodic cleanup removed ${removed} shorts elements`);
-      }
-
-      // NUCLEAR: Specifically check and remove 4th row if it contains shorts
-      try {
-        const sectionList = document.querySelector('ytlr-section-list-renderer');
-        if (sectionList) {
-          const sections = sectionList.children;
-          if (sections.length >= 4) {
-            const fourthRow = sections[3]; // 0-based index
-            if (fourthRow) {
-              const fourthRowHTML = fourthRow.outerHTML || '';
-              const fourthRowText = fourthRow.textContent || '';
-
-              // Check if 4th row contains shorts indicators
-              if (fourthRowHTML.toLowerCase().includes('shorts') ||
-                  fourthRowHTML.includes('SHORTS') ||
-                  fourthRowHTML.includes('/shorts/') ||
-                  fourthRowHTML.includes('reel') ||
-                  fourthRowText.toLowerCase().includes('shorts')) {
-                console.log('[NoTubeTV] 🔥🔥🔥 REMOVING 4TH ROW FROM DOM - Contains shorts!');
-                fourthRow.remove();
-              }
-            }
-          }
-        }
-      } catch (e) {
-        // Ignore errors
-      }
-    }, 2000); // Run every 2 seconds
-  }
 })();
 /* End TizenTubeScripts.js */

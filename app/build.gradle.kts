@@ -37,12 +37,21 @@ android {
     buildFeatures {
         compose = true
     }
+
+
 }
 
 dependencies {
     implementation(libs.ktor.client.core)
     implementation (libs.ktor.ktor.client.okhttp)
-    api(libs.compose.webview.multiplatform)
+    api(libs.compose.webview.multiplatform) {
+        // Exclude desktop-only JCEF/jogamp dependencies that can't be resolved from Android repos
+        exclude(group = "org.jogamp.gluegen", module = "gluegen-rt")
+        exclude(group = "org.jogamp.jogl", module = "jogl-all")
+        exclude(group = "dev.datlag.kcef", module = "kcef")
+        exclude(group = "dev.datlag", module = "kcef")
+        exclude(group = "dev.datlag", module = "jcef")
+    }
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

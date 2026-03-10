@@ -1,6 +1,7 @@
 package com.ycngmn.notubetv.ui.screens
 
 import android.app.Activity
+import android.content.pm.PackageManager
 import android.view.View
 import android.view.WindowManager
 import android.webkit.CookieManager
@@ -26,12 +27,14 @@ import com.ycngmn.notubetv.utils.fetchScripts
 import com.ycngmn.notubetv.utils.getUpdate
 import com.ycngmn.notubetv.utils.permHandler
 import com.ycngmn.notubetv.utils.readRaw
+import kotlin.math.roundToInt
 
 @Composable
 fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
 
     val context = LocalContext.current
     val activity = context as Activity
+    val isTvDevice = context.packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK)
 
     val state = rememberWebViewState("https://www.youtube.com/tv")
     val navigator = rememberWebViewNavigator()
@@ -115,12 +118,24 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
 
                 // Enables hardware acceleration
                 setLayerType(View.LAYER_TYPE_HARDWARE, null)
-                // Set the zoom to 25% to fit the screen. Side-effect of viewport spoofing.
-                setInitialScale(25)
+
+                if (isTvDevice) {
+                    // Keep existing TV rendering behavior.
+                    setInitialScale(25)
+                } else {
+                    // Fit the spoofed 3840px viewport into the actual screen width.
+                    val screenWidthPx = resources.displayMetrics.widthPixels.coerceAtLeast(1)
+                    val fitScale = ((screenWidthPx / 3840f) * 100f).roundToInt().coerceIn(10, 100)
+                    settings.useWideViewPort = true
+                    settings.loadWithOverviewMode = true
+                    setInitialScale(fitScale)
+                    // Disable over-scroll glow so touch scrolling feels native
+                    overScrollMode = View.OVER_SCROLL_NEVER
+                }
 
                 // Hide scrollbars
-                isVerticalScrollBarEnabled = false
-                isHorizontalScrollBarEnabled = false
+                isVerticalScrollBarEnabled = true
+                isHorizontalScrollBarEnabled = true
             }
         }
     )

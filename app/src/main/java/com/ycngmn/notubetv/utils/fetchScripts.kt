@@ -8,7 +8,7 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import com.ycngmn.notubetv.R
 
-const val SCRIPTS_URL = "https://raw.githubusercontent.com/ycngmn/NoTubeTV/refs/heads/main/assets/userscripts.js"
+const val SCRIPTS_URL = "https://raw.githubusercontent.com/jetcar/vidrox/refs/heads/main/assets/userscripts.js"
 suspend fun fetchScripts(context: Context): String {
     // Try to load from local raw resources first
     try {

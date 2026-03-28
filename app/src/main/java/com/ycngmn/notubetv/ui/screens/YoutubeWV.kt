@@ -17,11 +17,15 @@ import android.net.http.SslError
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.multiplatform.webview.web.LoadingState
 import com.multiplatform.webview.web.WebView
@@ -48,6 +52,7 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
     val context = LocalContext.current
     val activity = context as Activity
     val isTvDevice = context.packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK)
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     val state = rememberWebViewState("https://www.youtube.com/tv")
     val navigator = rememberWebViewNavigator()
@@ -57,6 +62,18 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
 
     val loadingState = state.loadingState
     val exitTrigger = remember { mutableStateOf(false) }
+
+    fun checkForUpdate() {
+        val isDebuggerAttached = Debug.isDebuggerConnected() || Debug.waitingForDebugger()
+        val shouldCheckForUpdate =
+            !DISABLE_AUTO_UPDATE_WHEN_DEBUGGER_ATTACHED || !isDebuggerAttached
+
+        if (shouldCheckForUpdate) {
+            getUpdate(context, navigator) { update ->
+                if (update != null) youtubeVM.setUpdate(update)
+            }
+        }
+    }
 
     // Translate native back-presses to 'escape' button press
     BackHandler {
@@ -68,14 +85,19 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
     // Fetch scripts and updates at launch
     LaunchedEffect(Unit) {
         youtubeVM.setScript(fetchScripts(context))
-        val isDebuggerAttached = Debug.isDebuggerConnected() || Debug.waitingForDebugger()
-        val shouldCheckForUpdate =
-            !DISABLE_AUTO_UPDATE_WHEN_DEBUGGER_ATTACHED || !isDebuggerAttached
+        checkForUpdate()
+    }
 
-        if (shouldCheckForUpdate) {
-            getUpdate(context, navigator) { update ->
-                if (update != null) youtubeVM.setUpdate(update)
+    DisposableEffect(lifecycleOwner, context, navigator) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                checkForUpdate()
             }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 

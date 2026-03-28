@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Debug
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.webkit.CookieManager
@@ -187,6 +188,46 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
                 isFocusable = true
                 isFocusableInTouchMode = true
                 requestFocus()
+
+                 if (isTvDevice) {
+                    var lastTouchY = 0f
+                    var lastTouchX = 0f
+                    var isDragging = false
+
+                    setOnTouchListener { view, event ->
+                        when (event.actionMasked) {
+                            MotionEvent.ACTION_DOWN -> {
+                                lastTouchY = event.y
+                                lastTouchX = event.x
+                                isDragging = false
+                                view.parent?.requestDisallowInterceptTouchEvent(true)
+                                false
+                            }
+
+                            MotionEvent.ACTION_MOVE -> {
+                                val deltaY = (lastTouchY - event.y).toInt()
+                                val deltaX = (lastTouchX - event.x).toInt()
+                                if (kotlin.math.abs(deltaY) > 8 || kotlin.math.abs(deltaX) > 8) {
+                                    isDragging = true
+                                    scrollBy(deltaX, deltaY)
+                                    lastTouchY = event.y
+                                    lastTouchX = event.x
+                                    true
+                                } else {
+                                    false
+                                }
+                            }
+
+                            MotionEvent.ACTION_UP,
+                            MotionEvent.ACTION_CANCEL -> {
+                                view.parent?.requestDisallowInterceptTouchEvent(false)
+                                isDragging
+                            }
+
+                            else -> false
+                        }
+                    }
+                }
 
                 // Bridges the exit button click on the website to handle it natively.
                 addJavascriptInterface(ExitBridge(exitTrigger), "ExitBridge")

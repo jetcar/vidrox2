@@ -95,6 +95,10 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
     val activity = context as Activity
     val isTvDevice = context.packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK)
     val lifecycleOwner = LocalLifecycleOwner.current
+    val versionName = remember {
+        try { context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "" }
+        catch (e: PackageManager.NameNotFoundException) { "" }
+    }
 
     val state = rememberWebViewState(YOUTUBE_TV_URL)
     val navigator = rememberWebViewNavigator()
@@ -280,6 +284,14 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
                     showDirectionPad()
                     dispatchDpadKey(webViewRef.value, KeyEvent.KEYCODE_DPAD_RIGHT)
                 },
+            )
+            Text(
+                text = "v$versionName",
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(NAV_PAD_PADDING),
+                color = Color.White.copy(alpha = 0.5f),
+                fontSize = 12.sp,
             )
         }
 

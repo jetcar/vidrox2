@@ -1,0 +1,14 @@
+{
+  "name": "youtube-tv-capture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture": "node ./capture.mjs",
+    "save-storage-state": "node ./save-storage-state.mjs",
+    "check": "node --check ./capture.mjs && node --check ./save-storage-state.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.55.0"
+  }
+}
+

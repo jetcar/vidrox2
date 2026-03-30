@@ -76,6 +76,17 @@ This app uses a comprehensive multi-layer approach to block YouTube Shorts:
 
 Shorts can be re-enabled through the in-app settings menu if desired.
 
+## Maintaining filters with YouTube TV fixtures
+
+This repo includes a maintainer-only GitHub Actions workflow for capturing signed-in YouTube TV pages and network fixtures.
+
+Use it when YouTube changes renderer shapes or starts surfacing unwanted content in new ways.
+
+- Workflow: `.github/workflows/capture-youtube-tv-fixtures.yml`
+- Guide: `docs/shorts-fixtures.md`
+
+The workflow is designed to help inspect real payloads and update `app/src/main/res/raw/userscripts.js` safely. It does not auto-rewrite filtering logic.
+
 ## Contributing
 
 You can help by creating new issues or directly contributing to the development.<br>

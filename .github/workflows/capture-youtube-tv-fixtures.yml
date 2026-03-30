@@ -1,0 +1,79 @@
+name: Capture YouTube TV Fixtures
+
+on:
+  workflow_dispatch:
+    inputs:
+      home_url:
+        description: Home or signed-in landing page URL
+        required: true
+        default: https://www.youtube.com/tv
+      browse_url:
+        description: Browse/list page URL to inspect
+        required: true
+        default: https://www.youtube.com/tv#/browse
+      details_url:
+        description: Details/watch page URL to inspect
+        required: true
+        default: https://www.youtube.com/tv#/watch?v=dQw4w9WgXcQ
+      wait_ms:
+        description: Extra milliseconds to wait after load for late network responses
+        required: true
+        default: '8000'
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    name: Capture signed-in YouTube TV fixtures
+    runs-on: ubuntu-latest
+    environment: fixture-capture
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: tools/youtube-tv-capture/package-lock.json
+
+      - name: Install capture dependencies
+        working-directory: tools/youtube-tv-capture
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        working-directory: tools/youtube-tv-capture
+        run: npx playwright install --with-deps chromium
+
+      - name: Decode YouTube TV session state
+        shell: bash
+        run: |
+          test -n "$YOUTUBE_TV_STORAGE_STATE_BASE64"
+          printf '%s' "$YOUTUBE_TV_STORAGE_STATE_BASE64" | base64 --decode > "$RUNNER_TEMP/youtube-tv.state.json"
+          echo "STORAGE_STATE_PATH=$RUNNER_TEMP/youtube-tv.state.json" >> "$GITHUB_ENV"
+        env:
+          YOUTUBE_TV_STORAGE_STATE_BASE64: ${{ secrets.YOUTUBE_TV_STORAGE_STATE_BASE64 }}
+
+      - name: Capture fixtures
+        working-directory: tools/youtube-tv-capture
+        env:
+          STORAGE_STATE_PATH: ${{ env.STORAGE_STATE_PATH }}
+          WAIT_MS: ${{ inputs.wait_ms }}
+          OUTPUT_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/out
+          CAPTURE_URLS_JSON: >-
+            [
+              {"name":"home","url":"${{ inputs.home_url }}"},
+              {"name":"browse","url":"${{ inputs.browse_url }}"},
+              {"name":"details","url":"${{ inputs.details_url }}"}
+            ]
+        run: npm run capture
+
+      - name: Upload fixture artifacts
+        uses: actions/upload-artifact@v5
+        with:
+          name: youtube-tv-fixtures-${{ github.run_number }}
+          path: tools/youtube-tv-capture/out
+          retention-days: 14
+

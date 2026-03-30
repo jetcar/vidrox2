@@ -6,7 +6,7 @@
   <img src='assets/VidroX_banner.png' alt="VidroX_banner_image">
 </p>
 
-<div align="center">This project owes it's existence to <a href="https://github.com/reisxd/TizenTube">@reisxd/TizenTube</a>. </div>
+<div align="center">This project owes its existence to <a href="https://github.com/reisxd/TizenTube">@reisxd/TizenTube</a>. </div>
 
 
 ## Features
@@ -21,7 +21,7 @@
 ## Building from Source
 
 ### Prerequisites
-- JDK 11 or higher
+- JDK 17 or higher
 - Android SDK
 
 ### Build Instructions
@@ -36,10 +36,10 @@
 ./gradlew assembleRelease
 ```
 
-The APK will be located at:
-```
-app/build/outputs/apk/debug/app-debug.apk
-```
+The generated APKs will be located at:
+
+- Debug: `app/build/outputs/apk/debug/app-debug.apk`
+- Release: `app/build/outputs/apk/release/app-release.apk`
 
 ### After Installation
 To ensure shorts blocking works properly:

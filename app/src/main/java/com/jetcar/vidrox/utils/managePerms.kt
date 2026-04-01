@@ -3,31 +3,38 @@ package com.jetcar.vidrox.utils
 import android.content.Context
 import android.content.pm.PackageManager
 import android.webkit.PermissionRequest
+import android.webkit.WebChromeClient
+import android.webkit.WebView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.core.content.ContextCompat
-import com.multiplatform.webview.web.AccompanistWebChromeClient
-import com.multiplatform.webview.web.PlatformWebViewParams
 
 @Composable
-fun permHandler(context: Context): PlatformWebViewParams {
+fun rememberWebChromeClient(
+    context: Context,
+    onProgressChanged: (Float) -> Unit,
+): WebChromeClient {
 
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {}
 
-    val chrome = remember {
-        object : AccompanistWebChromeClient() {
+    return remember(context, onProgressChanged) {
+        object : WebChromeClient() {
             override fun onPermissionRequest(request: PermissionRequest) {
                 if (PermissionRequest.RESOURCE_AUDIO_CAPTURE in request.resources && !hasPermission(context))
                     permissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
                 request.grant(request.resources)
             }
+
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                onProgressChanged((newProgress.coerceIn(0, 100)) / 100f)
+                super.onProgressChanged(view, newProgress)
+            }
         }
     }
-    return PlatformWebViewParams(chromeClient = chrome)
 }
 
 fun hasPermission(context: Context) : Boolean  {

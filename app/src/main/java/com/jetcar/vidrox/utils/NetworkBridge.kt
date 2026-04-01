@@ -2,7 +2,6 @@ package com.jetcar.vidrox.utils
 
 import android.util.Log
 import android.webkit.JavascriptInterface
-import com.multiplatform.webview.web.WebViewNavigator
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -14,7 +13,9 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 
-class NetworkBridge(val navigator: WebViewNavigator) {
+class NetworkBridge(
+    private val javascriptEvaluator: JavaScriptEvaluator,
+) {
     companion object {
         private const val TAG = "NetworkBridge"
     }
@@ -32,11 +33,11 @@ class NetworkBridge(val navigator: WebViewNavigator) {
                     else body
                 Log.d(TAG, "fetch success url=$url responseLength=${filteredBody.length}")
                 val js = "window.onNetworkBridgeResponse(${JSONObject.quote(filteredBody)});"
-                withContext(Dispatchers.Main) { navigator.evaluateJavaScript(js) }
+                withContext(Dispatchers.Main) { javascriptEvaluator.evaluate(js) }
             } catch (exception: Exception) {
                 Log.e(TAG, "fetch failed url=$url", exception)
                 withContext(Dispatchers.Main) {
-                    navigator.evaluateJavaScript("window.onNetworkBridgeResponse(null);")
+                    javascriptEvaluator.evaluate("window.onNetworkBridgeResponse(null);")
                 }
             }
         }

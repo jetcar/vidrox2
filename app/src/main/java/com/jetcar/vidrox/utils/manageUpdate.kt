@@ -1,7 +1,6 @@
 package com.jetcar.vidrox.utils
 
 import android.content.Context
-import com.multiplatform.webview.web.WebViewNavigator
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -35,13 +34,17 @@ suspend fun fetchUpdate() : ReleaseData {
 }
 
 
-suspend fun getUpdate(context: Context, navigator: WebViewNavigator, callback: (ReleaseData?) -> Unit) {
+suspend fun getUpdate(
+    context: Context,
+    javascriptEvaluator: JavaScriptEvaluator,
+    callback: (ReleaseData?) -> Unit,
+) {
     try {
         val remoteRelease = fetchUpdate()
         val remoteVersion = remoteRelease.tagName.removePrefix("v")
 
         if (compareVersions(remoteVersion, getLocalVersion(context)) > 0) {
-            getSkipVersion(navigator) {
+            getSkipVersion(javascriptEvaluator) {
                 val skipVersion = it?.removeSurrounding("\"")?.removePrefix("v")
                 if (compareVersions(remoteVersion, skipVersion ?: "0") > 0)
                     callback(remoteRelease)
@@ -88,8 +91,8 @@ private fun compareVersions(left: String, right: String): Int {
     return 0
 }
 
-fun getSkipVersion(navigator: WebViewNavigator, callback: (String?) -> Unit) {
-    navigator.evaluateJavaScript("configRead('skipVersionName')") {
+fun getSkipVersion(javascriptEvaluator: JavaScriptEvaluator, callback: (String?) -> Unit) {
+    javascriptEvaluator.evaluate("configRead('skipVersionName')") {
         callback(it)
     }
 }

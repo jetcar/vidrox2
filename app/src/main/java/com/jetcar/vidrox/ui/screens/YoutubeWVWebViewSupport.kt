@@ -16,7 +16,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.multiplatform.webview.web.WebViewState
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -24,10 +23,8 @@ private const val DISABLE_AUTO_UPDATE_WHEN_DEBUGGER_ATTACHED = true
 private const val ALLOW_SSL_ERRORS_WHEN_DEBUGGER_ATTACHED = true
 private const val WEBVIEW_DEBUG_TAG = "YoutubeWV"
 private const val TV_TOUCH_DRAG_THRESHOLD = 8
-private const val TV_INITIAL_SCALE = 25
-private const val SPOOFED_VIEWPORT_WIDTH = 3840f
-private const val TOUCH_SCALE_MIN = 10
-private const val TOUCH_SCALE_MAX = 100
+private const val YT_TV_WIDTH = 7000f
+private const val YT_TV_HEIGHT = 4000f
 private const val TV_USER_AGENT = "Mozilla/5.0 Cobalt/25 (Sony, PS4, Wired)"
 
 internal fun shouldCheckForUpdate(): Boolean {
@@ -42,31 +39,30 @@ internal fun configureCookies(webView: WebView) {
     cookieManager.flush()
 }
 
-internal fun configureWebSettings(state: WebViewState) {
-    state.webSettings.apply {
-        customUserAgentString = TV_USER_AGENT
-        isJavaScriptEnabled = true
-
-        androidWebSettings.apply {
-            useWideViewPort = true
-            domStorageEnabled = true
-            hideDefaultVideoPoster = true
-            mediaPlaybackRequiresUserGesture = false
-        }
+internal fun configureWebSettings(webView: WebView) {
+    webView.settings.apply {
+        userAgentString = TV_USER_AGENT
+        javaScriptEnabled = true
+        domStorageEnabled = true
+        mediaPlaybackRequiresUserGesture = false
     }
 }
 
 internal fun createLoggingWebViewClient(
     onPageNavigated: () -> Unit,
     onMainFrameError: () -> Unit,
+    onPageStarted: () -> Unit,
+    onPageFinished: () -> Unit,
 ): WebViewClient {
     return object : WebViewClient() {
         override fun onPageStarted(view: WebView?, url: String?, favicon: android.graphics.Bitmap?) {
+            onPageStarted()
             onPageNavigated()
             super.onPageStarted(view, url, favicon)
         }
 
         override fun onPageFinished(view: WebView?, url: String?) {
+            onPageFinished()
             onPageNavigated()
             super.onPageFinished(view, url)
         }
@@ -198,17 +194,22 @@ internal fun WebView.configureFocusAndTouch(onUserInteraction: () -> Unit) {
 }
 
 internal fun WebView.configureScale(isTvDevice: Boolean) {
-    if (isTvDevice) {
-        setInitialScale(TV_INITIAL_SCALE)
-        return
-    }
-
-    val screenWidthPx = resources.displayMetrics.widthPixels.coerceAtLeast(1)
-    val fitScale = ((screenWidthPx / SPOOFED_VIEWPORT_WIDTH) * 100f)
-        .roundToInt()
-        .coerceIn(TOUCH_SCALE_MIN, TOUCH_SCALE_MAX)
+    // YouTube TV renders at 1920×1080.  We compute the exact zoom so
+    // the page fills the screen without overflow in either direction.
+    //
+    // useWideViewPort = true  → let the page use its own wide layout
+    // loadWithOverviewMode = false → do NOT auto-zoom (it zooms based on
+    //   the viewport meta, not the content, which causes ~2× over-zoom)
     settings.useWideViewPort = true
-    settings.loadWithOverviewMode = true
+    settings.loadWithOverviewMode = false
+
+    val screenW = resources.displayMetrics.widthPixels.coerceAtLeast(1)
+    val screenH = resources.displayMetrics.heightPixels.coerceAtLeast(1)
+
+    val scaleW = screenW / YT_TV_WIDTH * 100f
+    val scaleH = screenH / YT_TV_HEIGHT * 100f
+    val fitScale = minOf(scaleW, scaleH).roundToInt().coerceAtLeast(1)
+
     setInitialScale(fitScale)
     overScrollMode = View.OVER_SCROLL_NEVER
 }

@@ -38,9 +38,12 @@ fun SplashLoading(progress: Float) {
         Modifier
             .fillMaxSize()
             .background(Color(0XFF0B0B0B))
+            .debugLayoutBorder(Color(0xFFFF5722))
     ) {
         Column(
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .debugLayoutBorder(Color(0xFF4CAF50)),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
@@ -49,7 +52,9 @@ fun SplashLoading(progress: Float) {
                 modifier = Modifier.padding(bottom = 80.dp)
             )
             Row(
-                modifier = Modifier.fillMaxWidth(0.6F),
+                modifier = Modifier
+                    .fillMaxWidth(0.6F)
+                    .debugLayoutBorder(Color(0xFF03A9F4)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(

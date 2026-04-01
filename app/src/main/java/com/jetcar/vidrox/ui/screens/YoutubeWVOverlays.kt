@@ -35,7 +35,9 @@ internal fun OfflineOverlay(
     onRefresh: () -> Unit,
 ) {
     Box(
-        modifier = modifier.padding(24.dp),
+        modifier = modifier
+            .padding(24.dp)
+            .debugLayoutBorder(Color(0xFFFF9800)),
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -43,6 +45,7 @@ internal fun OfflineOverlay(
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(16.dp))
                 .background(OFFLINE_PANEL_COLOR)
+                .debugLayoutBorder(Color(0xFF9C27B0), RoundedCornerShape(16.dp))
                 .padding(horizontal = 24.dp, vertical = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -58,6 +61,7 @@ internal fun OfflineOverlay(
                 color = Color.White.copy(alpha = 0.88f),
             )
             Button(
+                modifier = Modifier.debugLayoutBorder(Color(0xFF03A9F4), RoundedCornerShape(16.dp)),
                 onClick = onRefresh,
                 colors = ButtonDefaults.colors(
                     containerColor = Color.White.copy(alpha = 0.18f),
@@ -82,23 +86,27 @@ internal fun DirectionPadOverlay(
     onRight: () -> Unit,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.debugLayoutBorder(Color(0xFF00BCD4)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(NAV_BUTTON_SPACING),
     ) {
-        NavigationButton(symbol = "^", onClick = onUp)
-        Row(horizontalArrangement = Arrangement.spacedBy(NAV_BUTTON_SPACING)) {
-            NavigationButton(symbol = "<", onClick = onLeft)
-            NavigationButton(symbol = "OK", onClick = onOk)
-            NavigationButton(symbol = ">", onClick = onRight)
+        NavigationButton(symbol = "^", borderColor = Color(0xFFFF5252), onClick = onUp)
+        Row(
+            modifier = Modifier.debugLayoutBorder(Color(0xFF8BC34A)),
+            horizontalArrangement = Arrangement.spacedBy(NAV_BUTTON_SPACING)
+        ) {
+            NavigationButton(symbol = "<", borderColor = Color(0xFFFFC107), onClick = onLeft)
+            NavigationButton(symbol = "OK", borderColor = Color(0xFF2196F3), onClick = onOk)
+            NavigationButton(symbol = ">", borderColor = Color(0xFFE91E63), onClick = onRight)
         }
-        NavigationButton(symbol = "v", onClick = onDown)
+        NavigationButton(symbol = "v", borderColor = Color(0xFF4CAF50), onClick = onDown)
     }
 }
 
 @Composable
 private fun NavigationButton(
     symbol: String,
+    borderColor: Color,
     onClick: () -> Unit,
 ) {
     Box(
@@ -106,6 +114,7 @@ private fun NavigationButton(
             .size(NAV_BUTTON_SIZE)
             .clip(CircleShape)
             .background(NAV_BUTTON_COLOR)
+            .debugLayoutBorder(borderColor, CircleShape)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {

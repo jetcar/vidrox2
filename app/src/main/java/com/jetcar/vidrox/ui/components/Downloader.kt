@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import android.app.Activity
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -32,6 +33,7 @@ import java.io.File
 @Composable
 fun UpdateAppScreen(tagName: String, downloadUrl: String, onDismiss: () -> Unit) {
     val context = LocalContext.current
+    val activity = context as Activity
     val viewModel: UpdateViewModel = viewModel()
     val progress = viewModel.downloadProgress.collectAsState()
 
@@ -123,17 +125,20 @@ fun UpdateAppScreen(tagName: String, downloadUrl: String, onDismiss: () -> Unit)
 
                         Spacer(modifier = Modifier.width(10.dp))
 
-                        YTButton("Install") {
-                            val apkFile = downloadedApk.value ?: run {
-                                isShowDialog.value = false
-                                onDismiss()
-                                return@YTButton
+                            YTButton("Install") {
+                                val apkFile = downloadedApk.value ?: run {
+                                    isShowDialog.value = false
+                                    onDismiss()
+                                    return@YTButton
+                                }
+                                if (viewModel.installApk(context, apkFile)) {
+                                    // finishAffinity removes the task from recents cleanly,
+                                    // then exitProcess kills all threads immediately so the
+                                    // WebView GL renderer cannot race against EGL teardown.
+                                    activity.finishAffinity()
+                                    kotlin.system.exitProcess(0)
+                                }
                             }
-                            if (viewModel.installApk(context, apkFile)) {
-                                isShowDialog.value = false
-                                onDismiss()
-                            }
-                        }
                     }
                 }
             }

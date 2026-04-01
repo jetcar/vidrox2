@@ -14,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -31,7 +32,10 @@ import androidx.compose.ui.window.Dialog
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
 import com.jetcar.vidrox.utils.ReleaseData
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
+private const val AUTO_UPDATE_COUNTDOWN_SECONDS = 10
 
 @Composable
 fun UpdateDialog(releaseData: ReleaseData, onDismiss: () -> Unit) {
@@ -39,11 +43,26 @@ fun UpdateDialog(releaseData: ReleaseData, onDismiss: () -> Unit) {
     val isDownload = remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
     val scope = rememberCoroutineScope()
+    val countdown = remember { mutableIntStateOf(AUTO_UPDATE_COUNTDOWN_SECONDS) }
+
+    val triggerUpdate = {
+        isDownload.value = true
+        isShowDialog.value = false
+    }
 
     if (isDownload.value)
         UpdateAppScreen(releaseData.tagName, releaseData.downloadUrl, onDismiss)
 
     if (isShowDialog.value) {
+        // Count down every second; auto-update when it reaches 0
+        LaunchedEffect(Unit) {
+            while (countdown.intValue > 0) {
+                delay(1000)
+                countdown.intValue--
+            }
+            triggerUpdate()
+        }
+
         Dialog(
             onDismissRequest = {
                 isShowDialog.value = false
@@ -52,10 +71,11 @@ fun UpdateDialog(releaseData: ReleaseData, onDismiss: () -> Unit) {
         ) {
             Surface(
                 shape = RoundedCornerShape(10.dp),
-                modifier = Modifier.border(2.dp, Color.White,RoundedCornerShape(10.dp))
+                modifier = Modifier.border(2.dp, Color.White, RoundedCornerShape(10.dp))
             ) {
                 Column(
-                    modifier = Modifier.background(Color(0XFF201c1c))
+                    modifier = Modifier
+                        .background(Color(0XFF201c1c))
                         .fillMaxWidth()
                         .padding(20.dp)
                 ) {
@@ -83,17 +103,16 @@ fun UpdateDialog(releaseData: ReleaseData, onDismiss: () -> Unit) {
                         Spacer(modifier = Modifier.width(10.dp))
 
                         YTButton(
-                            "Update",
-                            Modifier.focusRequester(focusRequester)
-                        ) {
-                            isDownload.value = true
-                            isShowDialog.value = false
-                        }
+                            text = "Update (${countdown.intValue})",
+                            modifier = Modifier.focusRequester(focusRequester),
+                            onClick = triggerUpdate
+                        )
                     }
                 }
             }
         }
-        // Request focus for Update button.
+
+        // Request focus for Update button
         LaunchedEffect(Unit) {
             scope.launch { focusRequester.requestFocus() }
         }

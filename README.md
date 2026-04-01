@@ -20,6 +20,7 @@
 * Multi-layer shorts blocking with aggressive filtering.
 * Local userscripts (no external dependencies).
 * Auto-update with countdown via GitHub Releases.
+* Release automation publishes a new GitHub release whenever new commits reach the default branch.
 * D-pad overlay for tablet/touch use.
 
 ## Building from Source

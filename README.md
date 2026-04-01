@@ -88,7 +88,7 @@ Shorts can be re-enabled through the in-app settings menu.
 ## Contributing
 
 Issues and pull requests are welcome.
-Any new commit merged into the default branch is enough to trigger the release automation workflow for the next GitHub release.
+Merging commits to the default branch automatically triggers the GitHub release workflow.
 
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix.

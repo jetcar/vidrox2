@@ -15,7 +15,7 @@ data class ReleaseData (
 )
 
 suspend fun fetchUpdate() : ReleaseData {
-    val fetchUrl = "https://api.github.com/repos/jetcar/vidrox/releases/latest"
+    val fetchUrl = "https://api.github.com/repos/jetcar/vidrox2/releases/latest"
     val client = HttpClient(OkHttp)
     val req = client.get(fetchUrl)
     val res = JSONObject(req.body() as String)

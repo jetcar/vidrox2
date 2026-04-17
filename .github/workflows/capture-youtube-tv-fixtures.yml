@@ -68,6 +68,7 @@ jobs:
           STORAGE_STATE_PATH: ${{ env.STORAGE_STATE_PATH }}
           WAIT_MS: ${{ inputs.wait_ms || '8000' }}
           OUTPUT_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/fixtures
+          HTML_OUTPUT_DIR: ${{ runner.temp }}/html-fixtures
           SKIP_SCREENSHOT: 'true'
           SKIP_HAR: 'true'
           CAPTURE_URLS_JSON: >-

@@ -85,7 +85,7 @@ async function analyzeFixtures() {
   let totalAdEndpoints = 0;
 
   for (const page of manifest.pages) {
-    const htmlPath = path.join(FIXTURES_DIR, page.html);
+    const htmlPath = path.isAbsolute(page.html) ? page.html : path.join(FIXTURES_DIR, page.html);
     if (!existsSync(htmlPath)) {
       lines.push(`### Page: ${page.name}`);
       lines.push('');

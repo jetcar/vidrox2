@@ -1,0 +1,3 @@
+# HTML fixture files are written to a temporary location during CI and must
+# never be committed — they can contain embedded API keys and session data.
+fixtures/**/*.html

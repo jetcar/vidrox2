@@ -11,6 +11,7 @@ const DEFAULT_CAPTURES = [
 const YOUTUBE_TV_USER_AGENT =
   process.env.YOUTUBE_TV_USER_AGENT || 'Mozilla/5.0 Cobalt/25 (Sony, PS4, Wired)';
 const OUTPUT_DIR = path.resolve(process.env.OUTPUT_DIR || './out');
+const HTML_OUTPUT_DIR = process.env.HTML_OUTPUT_DIR ? path.resolve(process.env.HTML_OUTPUT_DIR) : OUTPUT_DIR;
 const STORAGE_STATE_PATH = process.env.STORAGE_STATE_PATH;
 const WAIT_MS = Number.parseInt(process.env.WAIT_MS || '8000', 10);
 const VIEWPORT_WIDTH = Number.parseInt(process.env.VIEWPORT_WIDTH || '3840', 10);
@@ -124,7 +125,9 @@ async function captureTarget(context, target, manifest) {
   await page.waitForLoadState('networkidle', { timeout: 20_000 }).catch(() => { });
   await page.waitForTimeout(WAIT_MS);
 
-  const htmlPath = path.join(targetDir, `${target.name}.html`);
+  const htmlDir = path.join(HTML_OUTPUT_DIR, target.name);
+  await mkdir(htmlDir, { recursive: true });
+  const htmlPath = path.join(htmlDir, `${target.name}.html`);
   const screenshotPath = path.join(targetDir, `${target.name}.png`);
   const metadataPath = path.join(targetDir, `${target.name}.json`);
 
@@ -140,7 +143,7 @@ async function captureTarget(context, target, manifest) {
     title: await page.title(),
     startedAt,
     capturedAt: new Date().toISOString(),
-    html: path.relative(OUTPUT_DIR, htmlPath).replace(/\\/g, '/'),
+    html: htmlPath,
     screenshot: SKIP_SCREENSHOT ? null : path.relative(OUTPUT_DIR, screenshotPath).replace(/\\/g, '/'),
     responseCount: capturedResponses.length,
     responses: capturedResponses,

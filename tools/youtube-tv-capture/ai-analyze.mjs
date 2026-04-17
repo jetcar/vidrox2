@@ -294,7 +294,7 @@ async function run() {
     // Analyze each captured HTML page
     const pageAnalyses = [];
     for (const page of manifest.pages) {
-        const htmlPath = path.join(FIXTURES_DIR, page.html);
+        const htmlPath = path.isAbsolute(page.html) ? page.html : path.join(FIXTURES_DIR, page.html);
         if (!existsSync(htmlPath)) continue;
         const html = await readFile(htmlPath, 'utf8');
         pageAnalyses.push({

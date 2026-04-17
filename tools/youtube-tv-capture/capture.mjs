@@ -30,6 +30,14 @@ const SENSITIVE_PATH_PATTERNS = [
   '/logout',
 ];
 
+// Redact Google API keys (AIza... format) from captured content so they are
+// never committed to version control.
+const GOOGLE_API_KEY_PATTERN = /AIza[0-9A-Za-z\-_]{35}/g;
+
+function sanitizeContent(text) {
+  return text.replace(GOOGLE_API_KEY_PATTERN, 'REDACTED');
+}
+
 function shouldCaptureResponse(url, contentType) {
   if (!url.includes('youtube.com')) {
     return false;
@@ -102,7 +110,7 @@ async function captureTarget(context, target, manifest) {
     const fileName = `${String(++responseIndex).padStart(3, '0')}-${sanitizeName(new URL(url).pathname || 'response')}.json`;
     const filePath = path.join(networkDir, fileName);
 
-    await writeFile(filePath, body, 'utf8');
+    await writeFile(filePath, sanitizeContent(body), 'utf8');
     capturedResponses.push({
       url,
       status: response.status(),
@@ -120,7 +128,7 @@ async function captureTarget(context, target, manifest) {
   const screenshotPath = path.join(targetDir, `${target.name}.png`);
   const metadataPath = path.join(targetDir, `${target.name}.json`);
 
-  await writeFile(htmlPath, await page.content(), 'utf8');
+  await writeFile(htmlPath, sanitizeContent(await page.content()), 'utf8');
   if (!SKIP_SCREENSHOT) {
     await page.screenshot({ path: screenshotPath, fullPage: true });
   }

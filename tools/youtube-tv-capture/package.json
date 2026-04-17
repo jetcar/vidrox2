@@ -8,7 +8,7 @@
     "check": "node --check ./capture.mjs && node --check ./save-storage-state.mjs"
   },
   "dependencies": {
-    "playwright": "^1.55.0"
+    "playwright": "^1.55.1"
   }
 }
 

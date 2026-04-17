@@ -37,8 +37,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v5
@@ -88,11 +86,12 @@ jobs:
         env:
           FIXTURES_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/fixtures
 
-      - name: Upload fixture artifacts
+      - name: Upload analysis report artifact
+        if: steps.analyze.outcome == 'success'
         uses: actions/upload-artifact@v5
         with:
-          name: youtube-tv-fixtures-${{ github.run_number }}
-          path: tools/youtube-tv-capture/fixtures
+          name: youtube-tv-analysis-${{ github.run_number }}
+          path: ${{ runner.temp }}/pr-body.md
           retention-days: 14
 
       - name: Create pull request with fixture changes
@@ -130,5 +129,5 @@ jobs:
               --base "${{ github.ref_name }}"
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 

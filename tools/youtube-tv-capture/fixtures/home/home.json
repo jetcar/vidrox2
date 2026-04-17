@@ -1,0 +1,67 @@
+{
+  "name": "home",
+  "requestedUrl": "https://www.youtube.com/tv",
+  "finalUrl": "https://www.youtube.com/tv#/",
+  "title": "YouTube on TV",
+  "startedAt": "2026-04-17T20:01:29.827Z",
+  "capturedAt": "2026-04-17T20:01:58.002Z",
+  "html": "/home/runner/work/_temp/html-fixtures/home/home.html",
+  "screenshot": null,
+  "responseCount": 9,
+  "responses": [
+    {
+      "url": "https://www.youtube.com/tv_config?action_get_config=true&client=lb4&theme=cl",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "file": "home/network/001-tv_config.json"
+    },
+    {
+      "url": "https://www.youtube.com/youtubei/v1/account/accounts_list?prettyPrint=false&t=NBMZDLBbF8BBKioi",
+      "status": 200,
+      "contentType": "application/json; charset=UTF-8",
+      "file": "home/network/002-youtubei_v1_account_accounts_list.json"
+    },
+    {
+      "url": "https://www.youtube.com/youtubei/v1/log_event?prettyPrint=false&t=DR5zw47651sXi4pp",
+      "status": 200,
+      "contentType": "application/json; charset=UTF-8",
+      "file": "home/network/003-youtubei_v1_log_event.json"
+    },
+    {
+      "url": "https://www.youtube.com/youtubei/v1/log_event?prettyPrint=false&t=Y6bNXrH2aljr5tFh",
+      "status": 200,
+      "contentType": "application/json; charset=UTF-8",
+      "file": "home/network/004-youtubei_v1_log_event.json"
+    },
+    {
+      "url": "https://www.youtube.com/youtubei/v1/log_event?prettyPrint=false&t=hB7Dh46EDpB69Z4w",
+      "status": 200,
+      "contentType": "application/json; charset=UTF-8",
+      "file": "home/network/005-youtubei_v1_log_event.json"
+    },
+    {
+      "url": "https://www.youtube.com/youtubei/v1/guide?prettyPrint=false&t=nKio_i8_K_RTJCQc",
+      "status": 200,
+      "contentType": "application/json; charset=UTF-8",
+      "file": "home/network/006-youtubei_v1_guide.json"
+    },
+    {
+      "url": "https://www.youtube.com/api/jnn/v1/GenerateIT",
+      "status": 200,
+      "contentType": "application/json+protobuf; charset=UTF-8",
+      "file": "home/network/007-api_jnn_v1_generateit.json"
+    },
+    {
+      "url": "https://www.youtube.com/youtubei/v1/log_event?prettyPrint=false&t=i6iW8hv5q7BN3qnJ",
+      "status": 200,
+      "contentType": "application/json; charset=UTF-8",
+      "file": "home/network/008-youtubei_v1_log_event.json"
+    },
+    {
+      "url": "https://www.youtube.com/api/lounge/pairing/get_lounge_token_batch",
+      "status": 200,
+      "contentType": "application/json; charset=UTF-8",
+      "file": "home/network/009-api_lounge_pairing_get_lounge_token_batch.json"
+    }
+  ]
+}

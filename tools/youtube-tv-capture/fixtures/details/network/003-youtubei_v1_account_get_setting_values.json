@@ -1,0 +1,24 @@
+{
+  "responseContext": {
+    "serviceTrackingParams": [
+      {
+        "service": "GFEEDBACK",
+        "params": [
+          {
+            "key": "logged_in",
+            "value": "0"
+          }
+        ]
+      }
+    ],
+    "responseId": "IhMItpqD7db1kwMVwm4SAR255xdX"
+  },
+  "settingValues": [
+    {
+      "key": "484",
+      "value": {
+        "stringValue": ""
+      }
+    }
+  ]
+}

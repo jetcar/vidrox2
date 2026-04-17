@@ -1,0 +1,43 @@
+{
+  "name": "details",
+  "requestedUrl": "https://www.youtube.com/tv#/watch?v=dQw4w9WgXcQ",
+  "finalUrl": "https://www.youtube.com/tv#/watch?v=dQw4w9WgXcQ",
+  "title": "YouTube on TV",
+  "startedAt": "2026-04-17T20:02:26.261Z",
+  "capturedAt": "2026-04-17T20:02:36.046Z",
+  "html": "/home/runner/work/_temp/html-fixtures/details/details.html",
+  "screenshot": null,
+  "responseCount": 5,
+  "responses": [
+    {
+      "url": "https://www.youtube.com/tv_config?action_get_config=true&client=lb4&theme=cl",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "file": "details/network/001-tv_config.json"
+    },
+    {
+      "url": "https://www.youtube.com/api/jnn/v1/GenerateIT",
+      "status": 200,
+      "contentType": "application/json+protobuf; charset=UTF-8",
+      "file": "details/network/002-api_jnn_v1_generateit.json"
+    },
+    {
+      "url": "https://www.youtube.com/youtubei/v1/account/get_setting_values",
+      "status": 200,
+      "contentType": "application/json; charset=UTF-8",
+      "file": "details/network/003-youtubei_v1_account_get_setting_values.json"
+    },
+    {
+      "url": "https://www.youtube.com/youtubei/v1/log_event?prettyPrint=false&t=GsFAFX9YLEUmf6OM",
+      "status": 200,
+      "contentType": "application/json; charset=UTF-8",
+      "file": "details/network/004-youtubei_v1_log_event.json"
+    },
+    {
+      "url": "https://www.youtube.com/api/lounge/pairing/get_lounge_token_batch",
+      "status": 200,
+      "contentType": "application/json; charset=UTF-8",
+      "file": "details/network/005-api_lounge_pairing_get_lounge_token_batch.json"
+    }
+  ]
+}

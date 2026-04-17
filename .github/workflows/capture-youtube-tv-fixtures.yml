@@ -88,11 +88,12 @@ jobs:
         env:
           FIXTURES_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/fixtures
 
-      - name: Upload fixture artifacts
+      - name: Upload analysis report artifact
+        if: steps.analyze.outcome == 'success'
         uses: actions/upload-artifact@v5
         with:
-          name: youtube-tv-fixtures-${{ github.run_number }}
-          path: tools/youtube-tv-capture/fixtures
+          name: youtube-tv-analysis-${{ github.run_number }}
+          path: ${{ runner.temp }}/pr-body.md
           retention-days: 14
 
       - name: Create pull request with fixture changes

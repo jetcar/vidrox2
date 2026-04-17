@@ -22,8 +22,27 @@ function sanitizeName(value) {
   return value.replace(/[^a-z0-9._-]+/gi, '_').replace(/^_+|_+$/g, '').toLowerCase();
 }
 
+const SENSITIVE_PATH_PATTERNS = [
+  '/o/oauth2/',
+  '/oauth2/',
+  '/token',
+  '/signin',
+  '/logout',
+];
+
 function shouldCaptureResponse(url, contentType) {
   if (!url.includes('youtube.com')) {
+    return false;
+  }
+
+  let parsedPath;
+  try {
+    parsedPath = new URL(url).pathname;
+  } catch {
+    parsedPath = url;
+  }
+
+  if (SENSITIVE_PATH_PATTERNS.some((pattern) => parsedPath.includes(pattern))) {
     return false;
   }
 

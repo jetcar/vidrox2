@@ -15,6 +15,8 @@ const STORAGE_STATE_PATH = process.env.STORAGE_STATE_PATH;
 const WAIT_MS = Number.parseInt(process.env.WAIT_MS || '8000', 10);
 const VIEWPORT_WIDTH = Number.parseInt(process.env.VIEWPORT_WIDTH || '3840', 10);
 const VIEWPORT_HEIGHT = Number.parseInt(process.env.VIEWPORT_HEIGHT || '2160', 10);
+const SKIP_SCREENSHOT = process.env.SKIP_SCREENSHOT === 'true';
+const SKIP_HAR = process.env.SKIP_HAR === 'true';
 
 function sanitizeName(value) {
   return value.replace(/[^a-z0-9._-]+/gi, '_').replace(/^_+|_+$/g, '').toLowerCase();
@@ -100,7 +102,9 @@ async function captureTarget(context, target, manifest) {
   const metadataPath = path.join(targetDir, `${target.name}.json`);
 
   await writeFile(htmlPath, await page.content(), 'utf8');
-  await page.screenshot({ path: screenshotPath, fullPage: true });
+  if (!SKIP_SCREENSHOT) {
+    await page.screenshot({ path: screenshotPath, fullPage: true });
+  }
 
   const pageMetadata = {
     name: target.name,
@@ -110,7 +114,7 @@ async function captureTarget(context, target, manifest) {
     startedAt,
     capturedAt: new Date().toISOString(),
     html: path.relative(OUTPUT_DIR, htmlPath).replace(/\\/g, '/'),
-    screenshot: path.relative(OUTPUT_DIR, screenshotPath).replace(/\\/g, '/'),
+    screenshot: SKIP_SCREENSHOT ? null : path.relative(OUTPUT_DIR, screenshotPath).replace(/\\/g, '/'),
     responseCount: capturedResponses.length,
     responses: capturedResponses,
   };
@@ -137,11 +141,15 @@ async function main() {
     deviceScaleFactor: 1,
     colorScheme: 'dark',
     locale: 'en-US',
-    recordHar: {
-      path: path.join(OUTPUT_DIR, 'session.har'),
-      mode: 'minimal',
-      content: 'embed',
-    },
+    ...(SKIP_HAR
+      ? {}
+      : {
+          recordHar: {
+            path: path.join(OUTPUT_DIR, 'session.har'),
+            mode: 'minimal',
+            content: 'embed',
+          },
+        }),
   });
 
   const manifest = {

@@ -1,6 +1,11 @@
 name: Capture YouTube TV Fixtures
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
+  schedule:
+    - cron: '0 6 * * *'
   workflow_dispatch:
     inputs:
       home_url:
@@ -21,7 +26,8 @@ on:
         default: '8000'
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   capture:
@@ -31,6 +37,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v5
@@ -60,20 +68,67 @@ jobs:
         working-directory: tools/youtube-tv-capture
         env:
           STORAGE_STATE_PATH: ${{ env.STORAGE_STATE_PATH }}
-          WAIT_MS: ${{ inputs.wait_ms }}
-          OUTPUT_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/out
+          WAIT_MS: ${{ inputs.wait_ms || '8000' }}
+          OUTPUT_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/fixtures
+          SKIP_SCREENSHOT: 'true'
+          SKIP_HAR: 'true'
           CAPTURE_URLS_JSON: >-
             [
-              {"name":"home","url":"${{ inputs.home_url }}"},
-              {"name":"browse","url":"${{ inputs.browse_url }}"},
-              {"name":"details","url":"${{ inputs.details_url }}"}
+              {"name":"home","url":"${{ inputs.home_url || 'https://www.youtube.com/tv' }}"},
+              {"name":"browse","url":"${{ inputs.browse_url || 'https://www.youtube.com/tv#/browse' }}"},
+              {"name":"details","url":"${{ inputs.details_url || 'https://www.youtube.com/tv#/watch?v=dQw4w9WgXcQ' }}"}
             ]
         run: npm run capture
+
+      - name: Analyze fixture changes
+        id: analyze
+        continue-on-error: true
+        working-directory: tools/youtube-tv-capture
+        run: node ./analyze.mjs > "$RUNNER_TEMP/pr-body.md"
+        env:
+          FIXTURES_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/fixtures
 
       - name: Upload fixture artifacts
         uses: actions/upload-artifact@v5
         with:
           name: youtube-tv-fixtures-${{ github.run_number }}
-          path: tools/youtube-tv-capture/out
+          path: tools/youtube-tv-capture/fixtures
           retention-days: 14
+
+      - name: Create pull request with fixture changes
+        shell: bash
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+          git add tools/youtube-tv-capture/fixtures/
+          if git diff --cached --quiet; then
+            echo "No fixture changes detected. Skipping pull request."
+            exit 0
+          fi
+
+          BRANCH="fixtures/youtube-tv-$(date -u +%Y-%m-%d)"
+          git checkout -b "$BRANCH"
+          git commit -m "chore: update YouTube TV fixtures $(date -u +%Y-%m-%d)"
+          git push --force origin "$BRANCH"
+
+          if [ -f "$RUNNER_TEMP/pr-body.md" ]; then
+            PR_BODY=$(cat "$RUNNER_TEMP/pr-body.md")
+          else
+            PR_BODY="YouTube TV fixtures have changed. Review the HTML and script differences to update ad-filtering in \`app/src/main/res/raw/userscripts.js\`."
+          fi
+
+          EXISTING_PR=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING_PR" ]; then
+            gh pr edit "$EXISTING_PR" --body "$PR_BODY"
+            echo "Updated existing PR #$EXISTING_PR"
+          else
+            gh pr create \
+              --title "chore: YouTube TV fixtures update $(date -u +%Y-%m-%d)" \
+              --body "$PR_BODY" \
+              --base "${{ github.ref_name }}"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

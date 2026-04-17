@@ -86,8 +86,18 @@ jobs:
         env:
           FIXTURES_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/fixtures
 
+      - name: Run AI ad-filter analysis
+        id: ai-analyze
+        continue-on-error: true
+        working-directory: tools/youtube-tv-capture
+        run: node ./ai-analyze.mjs >> "$RUNNER_TEMP/pr-body.md"
+        env:
+          FIXTURES_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/fixtures
+          USERSCRIPTS_PATH: ${{ github.workspace }}/app/src/main/res/raw/userscripts.js
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
       - name: Upload analysis report artifact
-        if: steps.analyze.outcome == 'success'
+        if: steps.analyze.outcome == 'success' || steps.ai-analyze.outcome == 'success'
         uses: actions/upload-artifact@v5
         with:
           name: youtube-tv-analysis-${{ github.run_number }}
@@ -102,14 +112,23 @@ jobs:
           git config user.name "github-actions[bot]"
 
           git add tools/youtube-tv-capture/fixtures/
+          git add app/src/main/res/raw/userscripts.js
+
           if git diff --cached --quiet; then
-            echo "No fixture changes detected. Skipping pull request."
+            echo "No fixture or userscripts changes detected. Skipping pull request."
             exit 0
           fi
 
           BRANCH="fixtures/youtube-tv-$(date -u +%Y-%m-%d)"
           git checkout -b "$BRANCH"
-          git commit -m "chore: update YouTube TV fixtures $(date -u +%Y-%m-%d)"
+
+          # Use a richer commit message when userscripts.js was also updated
+          if git diff --cached --name-only | grep -q 'userscripts.js'; then
+            git commit -m "chore: update YouTube TV fixtures and ad filters $(date -u +%Y-%m-%d)"
+          else
+            git commit -m "chore: update YouTube TV fixtures $(date -u +%Y-%m-%d)"
+          fi
+
           git push --force origin "$BRANCH"
 
           if [ -f "$RUNNER_TEMP/pr-body.md" ]; then

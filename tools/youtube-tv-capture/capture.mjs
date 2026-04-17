@@ -121,7 +121,7 @@ async function captureTarget(context, target, manifest) {
 
   const startedAt = new Date().toISOString();
   await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: 120_000 });
-  await page.waitForLoadState('networkidle', { timeout: 20_000 }).catch(() => {});
+  await page.waitForLoadState('networkidle', { timeout: 20_000 }).catch(() => { });
   await page.waitForTimeout(WAIT_MS);
 
   const htmlPath = path.join(targetDir, `${target.name}.html`);
@@ -171,12 +171,12 @@ async function main() {
     ...(SKIP_HAR
       ? {}
       : {
-          recordHar: {
-            path: path.join(OUTPUT_DIR, 'session.har'),
-            mode: 'minimal',
-            content: 'embed',
-          },
-        }),
+        recordHar: {
+          path: path.join(OUTPUT_DIR, 'session.har'),
+          mode: 'minimal',
+          content: 'embed',
+        },
+      }),
   });
 
   const manifest = {

@@ -67,8 +67,7 @@ jobs:
         env:
           STORAGE_STATE_PATH: ${{ env.STORAGE_STATE_PATH }}
           WAIT_MS: ${{ inputs.wait_ms || '8000' }}
-          OUTPUT_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/fixtures
-          HTML_OUTPUT_DIR: ${{ runner.temp }}/html-fixtures
+          OUTPUT_DIR: ${{ runner.temp }}/fixtures
           SKIP_SCREENSHOT: 'true'
           SKIP_HAR: 'true'
           CAPTURE_URLS_JSON: >-
@@ -85,7 +84,7 @@ jobs:
         working-directory: tools/youtube-tv-capture
         run: node ./analyze.mjs > "$RUNNER_TEMP/pr-body.md"
         env:
-          FIXTURES_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/fixtures
+          FIXTURES_DIR: ${{ runner.temp }}/fixtures
 
       - name: Run AI ad-filter analysis
         id: ai-analyze
@@ -93,7 +92,7 @@ jobs:
         working-directory: tools/youtube-tv-capture
         run: node ./ai-analyze.mjs >> "$RUNNER_TEMP/pr-body.md"
         env:
-          FIXTURES_DIR: ${{ github.workspace }}/tools/youtube-tv-capture/fixtures
+          FIXTURES_DIR: ${{ runner.temp }}/fixtures
           USERSCRIPTS_PATH: ${{ github.workspace }}/app/src/main/res/raw/userscripts.js
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
@@ -112,23 +111,17 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
 
-          git add tools/youtube-tv-capture/fixtures/
           git add app/src/main/res/raw/userscripts.js
 
           if git diff --cached --quiet; then
-            echo "No fixture or userscripts changes detected. Skipping pull request."
+            echo "No userscripts changes detected. Skipping pull request."
             exit 0
           fi
 
           BRANCH="fixtures/youtube-tv-$(date -u +%Y-%m-%d)"
           git checkout -b "$BRANCH"
 
-          # Use a richer commit message when userscripts.js was also updated
-          if git diff --cached --name-only | grep -q 'userscripts.js'; then
-            git commit -m "chore: update YouTube TV fixtures and ad filters $(date -u +%Y-%m-%d)"
-          else
-            git commit -m "chore: update YouTube TV fixtures $(date -u +%Y-%m-%d)"
-          fi
+          git commit -m "fix: update ad filters from YouTube TV fixtures $(date -u +%Y-%m-%d)"
 
           git push --force origin "$BRANCH"
 

@@ -17,6 +17,8 @@ local.properties
 *.jks
 *.keystore
 /tools/youtube-tv-capture/out/
+/tools/youtube-tv-capture/fixtures/**/*.png
+/tools/youtube-tv-capture/fixtures/**/*.har
 /tools/youtube-tv-capture/*.state.json
 /tools/youtube-tv-capture/node_modules/
 /tools/youtube-tv-capture/youtube-tv.state.base64.txt

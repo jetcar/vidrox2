@@ -4,8 +4,9 @@
   "type": "module",
   "scripts": {
     "capture": "node ./capture.mjs",
+    "analyze": "node ./analyze.mjs",
     "save-storage-state": "node ./save-storage-state.mjs",
-    "check": "node --check ./capture.mjs && node --check ./save-storage-state.mjs"
+    "check": "node --check ./capture.mjs && node --check ./analyze.mjs && node --check ./save-storage-state.mjs"
   },
   "dependencies": {
     "playwright": "^1.55.1"

@@ -27,6 +27,23 @@ private const val YT_TV_WIDTH = 7000f
 private const val YT_TV_HEIGHT = 4000f
 private const val TV_USER_AGENT = "Mozilla/5.0 Cobalt/25 (Sony, PS4, Wired)"
 
+// Ad-serving domains detected in captured YouTube TV fixtures.
+// These domains serve no legitimate YouTube TV content and are blocked unconditionally.
+private val AD_BLOCK_HOSTS = setOf(
+    "doubleclick.net",
+    "googlesyndication.com",
+    "googleads.g.doubleclick.net",
+    "adservice.google.com",
+    "pagead2.googlesyndication.com",
+    "tpc.googlesyndication.com",
+)
+
+private fun isAdUrl(url: String): Boolean =
+    AD_BLOCK_HOSTS.any { host -> url.contains(host) }
+
+private fun emptyResponse(): WebResourceResponse =
+    WebResourceResponse("text/plain", "utf-8", "".byteInputStream())
+
 internal fun shouldCheckForUpdate(): Boolean {
     val isDebuggerAttached = Debug.isDebuggerConnected() || Debug.waitingForDebugger()
     return !DISABLE_AUTO_UPDATE_WHEN_DEBUGGER_ATTACHED || !isDebuggerAttached
@@ -73,6 +90,10 @@ internal fun createLoggingWebViewClient(
         ): WebResourceResponse? {
             val url = request?.url?.toString()
             if (!url.isNullOrBlank()) {
+                if (isAdUrl(url)) {
+                    Log.d(WEBVIEW_DEBUG_TAG, "blocked ad request $url")
+                    return emptyResponse()
+                }
                 Log.d(WEBVIEW_DEBUG_TAG, "request ${request?.method ?: "GET"} $url")
             }
             return super.shouldInterceptRequest(view, request)

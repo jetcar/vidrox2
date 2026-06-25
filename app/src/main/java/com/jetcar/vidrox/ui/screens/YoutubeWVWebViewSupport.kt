@@ -41,6 +41,8 @@ private fun isAdUrl(url: String): Boolean {
     } catch (_: Exception) {
         return false
     }
+    // `endsWith(".$domain")` is safe: the leading dot guarantees a proper label
+    // boundary, so "notdoubleclick.net" cannot match "doubleclick.net".
     return AD_BLOCK_HOSTS.any { domain -> host == domain || host.endsWith(".$domain") }
 }
 

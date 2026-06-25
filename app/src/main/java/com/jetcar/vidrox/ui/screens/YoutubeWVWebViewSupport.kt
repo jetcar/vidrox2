@@ -32,14 +32,17 @@ private const val TV_USER_AGENT = "Mozilla/5.0 Cobalt/25 (Sony, PS4, Wired)"
 private val AD_BLOCK_HOSTS = setOf(
     "doubleclick.net",
     "googlesyndication.com",
-    "googleads.g.doubleclick.net",
     "adservice.google.com",
-    "pagead2.googlesyndication.com",
-    "tpc.googlesyndication.com",
 )
 
-private fun isAdUrl(url: String): Boolean =
-    AD_BLOCK_HOSTS.any { host -> url.contains(host) }
+private fun isAdUrl(url: String): Boolean {
+    val host = try {
+        android.net.Uri.parse(url).host?.lowercase() ?: return false
+    } catch (_: Exception) {
+        return false
+    }
+    return AD_BLOCK_HOSTS.any { domain -> host == domain || host.endsWith(".$domain") }
+}
 
 private fun emptyResponse(): WebResourceResponse =
     WebResourceResponse("text/plain", "utf-8", "".byteInputStream())
@@ -91,7 +94,7 @@ internal fun createLoggingWebViewClient(
             val url = request?.url?.toString()
             if (!url.isNullOrBlank()) {
                 if (isAdUrl(url)) {
-                    Log.d(WEBVIEW_DEBUG_TAG, "blocked ad request $url")
+                    Log.d(WEBVIEW_DEBUG_TAG, "Blocked ad request $url")
                     return emptyResponse()
                 }
                 Log.d(WEBVIEW_DEBUG_TAG, "request ${request?.method ?: "GET"} $url")

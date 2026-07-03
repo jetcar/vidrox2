@@ -32,6 +32,9 @@ private const val TV_USER_AGENT = "Mozilla/5.0 Cobalt/25 (Sony, PS4, Wired)"
 private val AD_BLOCK_HOSTS = setOf(
     "doubleclick.net",
     "googlesyndication.com",
+    "googletagservices.com",
+    "googleadservices.com",
+    "2mdn.net",
     "adservice.google.com",
 )
 

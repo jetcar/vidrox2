@@ -1,8 +1,8 @@
 /**
  * ai-analyze.mjs
  *
- * Uses GitHub Models to analyze captured YouTube TV HTML fixtures and suggest
- * ad-blocking improvements to app/src/main/res/raw/userscripts.js.
+ * Uses GitHub Models to analyze captured YouTube TV HTML fixtures and network
+ * payloads and suggest ad-blocking improvements to app/src/main/res/raw/userscripts.js.
  *
  * Environment variables:
  *   FIXTURES_DIR          - path to the fixtures directory (default: ./fixtures)
@@ -41,8 +41,11 @@ const AD_URL_KEYWORDS = [
     'googlesyndication',
     'adsbygoogle',
     'googleads',
+    'googletagservices',
+    'googleadservices',
     'ad_request',
     'adsystem',
+    '2mdn',
 ];
 
 /**
@@ -148,6 +151,76 @@ function extractAdPatterns(html) {
     return { adScriptUrls, adClasses: [...adClasses], adJsonSnippets };
 }
 
+function isAdJsonKey(key) {
+    const normalized = key.toLowerCase();
+    return AD_JSON_KEYS.some((candidate) => candidate.toLowerCase() === normalized) ||
+        /(?:^|[A-Z_])(ad|ads|sponsored|promoted|instream|companion)[A-Za-z0-9_]*$/.test(key);
+}
+
+function isAdRendererKey(key) {
+    return /(ad|ads|sponsored|promoted|instream|companion)[A-Za-z0-9_]*Renderer$/.test(key);
+}
+
+function collectAdPayloadSignals(value, signals) {
+    if (!value || typeof value !== 'object') {
+        return;
+    }
+
+    if (Array.isArray(value)) {
+        value.forEach((entry) => collectAdPayloadSignals(entry, signals));
+        return;
+    }
+
+    for (const [key, child] of Object.entries(value)) {
+        if (isAdJsonKey(key)) {
+            signals.keys.add(key);
+        }
+        if (isAdRendererKey(key)) {
+            signals.renderers.add(key);
+        }
+        collectAdPayloadSignals(child, signals);
+    }
+}
+
+async function extractNetworkAdPatterns(responses) {
+    const signals = {
+        adEndpoints: new Set(),
+        keys: new Set(),
+        renderers: new Set(),
+    };
+
+    for (const response of responses ?? []) {
+        if (AD_URL_KEYWORDS.some((keyword) => response.url?.toLowerCase().includes(keyword))) {
+            signals.adEndpoints.add(response.url);
+        }
+
+        if (!response.file) {
+            continue;
+        }
+
+        const responsePath = path.isAbsolute(response.file)
+            ? response.file
+            : path.join(FIXTURES_DIR, response.file);
+        if (!existsSync(responsePath)) {
+            continue;
+        }
+
+        try {
+            const parsed = JSON.parse(await readFile(responsePath, 'utf8'));
+            const payload = parsed && typeof parsed === 'object' && 'body' in parsed ? parsed.body : parsed;
+            collectAdPayloadSignals(payload, signals);
+        } catch {
+            // Ignore malformed captures so AI analysis can proceed with the rest.
+        }
+    }
+
+    return {
+        adEndpoints: [...signals.adEndpoints].sort(),
+        adKeys: [...signals.keys].sort(),
+        adRenderers: [...signals.renderers].sort(),
+    };
+}
+
 // ---------------------------------------------------------------------------
 // userscripts.js helpers
 // ---------------------------------------------------------------------------
@@ -202,7 +275,7 @@ async function callGitHubModels(token, messages) {
 
 function buildPrompt(adBlockCode, pageAnalyses) {
     const pagesSection = pageAnalyses
-        .map(({ name, url, adScriptUrls, adClasses, adJsonSnippets }) => {
+        .map(({ name, url, adScriptUrls, adClasses, adJsonSnippets, adEndpoints, adKeys, adRenderers }) => {
             const parts = [`### Page: ${name} (${url})`];
 
             if (adScriptUrls.length) {
@@ -211,13 +284,22 @@ function buildPrompt(adBlockCode, pageAnalyses) {
             if (adClasses.length) {
                 parts.push('Ad-related class/id attributes: ' + adClasses.slice(0, 15).join(', '));
             }
+            if (adEndpoints.length) {
+                parts.push('Ad-related network endpoints: ' + adEndpoints.slice(0, 20).join(', '));
+            }
+            if (adKeys.length) {
+                parts.push('Ad-related JSON keys found in captured network bodies: ' + adKeys.join(', '));
+            }
+            if (adRenderers.length) {
+                parts.push('Ad-related renderer keys found in captured network bodies: ' + adRenderers.join(', '));
+            }
             if (adJsonSnippets.length) {
                 parts.push('Inline JSON snippets referencing ad keys:');
                 adJsonSnippets.forEach(({ key, snippet }) => {
                     parts.push(`  [${key}]: ...${snippet.slice(0, 300)}...`);
                 });
             }
-            if (!adScriptUrls.length && !adClasses.length && !adJsonSnippets.length) {
+            if (!adScriptUrls.length && !adClasses.length && !adEndpoints.length && !adKeys.length && !adRenderers.length && !adJsonSnippets.length) {
                 parts.push('No ad signals detected on this page.');
             }
 
@@ -238,11 +320,12 @@ CAPTURED PAGE ANALYSIS:
 ${pagesSection}
 
 YOUR TASK:
-1. Review the inline JSON snippets for ad-related keys NOT already handled by the current code.
+1. Review the captured network JSON keys/renderers and inline JSON snippets for ad-related keys NOT already handled by the current code.
 2. Keys already handled: adPlacements, playerAds, adSlots, adSlotRenderer (masthead via filter).
 3. If new patterns are found (new renderer types, new JSON keys containing ad data), suggest additions to the JSON.parse override.
 4. Only add code when you have concrete evidence from the snippets above. Do not speculate.
-5. Preserve all existing logic — only append new if/delete blocks inside JSON.parse.
+5. Prefer a recursive, key-based cleanup that preserves non-ad data while stripping nested ad payloads.
+6. Preserve all existing logic — only append helper functions or if/delete blocks inside the JSON.parse section.
 
 RETURN ONLY VALID JSON (no markdown fences, no extra text):
 {
@@ -291,24 +374,25 @@ async function run() {
         return;
     }
 
-    // Analyze each captured HTML page
+    // Analyze each captured page and its network captures
     const pageAnalyses = [];
     for (const page of manifest.pages) {
         const htmlPath = path.isAbsolute(page.html) ? page.html : path.join(FIXTURES_DIR, page.html);
-        if (!existsSync(htmlPath)) continue;
-        const html = await readFile(htmlPath, 'utf8');
+       const html = existsSync(htmlPath) ? await readFile(htmlPath, 'utf8') : '';
+       const networkSignals = await extractNetworkAdPatterns(page.responses ?? []);
         pageAnalyses.push({
             name: page.name,
             url: page.finalUrl ?? page.url ?? page.name,
             ...extractAdPatterns(html),
-        });
+           ...networkSignals,
+       });
     }
 
     if (pageAnalyses.length === 0) {
-        const report =
-            '## AI Ad-Filter Analysis\n\nNo fixture HTML files found. Skipping AI analysis.';
-        process.stdout.write(report + '\n');
-        return;
+       const report =
+           '## AI Ad-Filter Analysis\n\nNo fixture pages found. Skipping AI analysis.';
+       process.stdout.write(report + '\n');
+       return;
     }
 
     const prompt = buildPrompt(adBlock.code, pageAnalyses);

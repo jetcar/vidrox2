@@ -31,6 +31,29 @@ const SENSITIVE_PATH_PATTERNS = [
   '/logout',
 ];
 
+const AD_RESPONSE_KEYWORDS = [
+  'doubleclick',
+  'googlesyndication',
+  'googletagservices',
+  'googleadservices',
+  'googleads',
+  'pagead',
+  'adservice',
+  'adsystem',
+  '2mdn',
+];
+
+const TEXTUAL_CONTENT_TYPE_MARKERS = [
+  'application/json',
+  'application/javascript',
+  'application/x-javascript',
+  'application/xml',
+  'application/xhtml+xml',
+  'text/',
+  'javascript',
+  'xml',
+];
+
 // Redact Google API keys (AIza... format) from captured content so they are
 // never committed to version control.
 const GOOGLE_API_KEY_PATTERN = /AIza[0-9A-Za-z\-_]{35}/g;
@@ -39,10 +62,16 @@ function sanitizeContent(text) {
   return text.replace(GOOGLE_API_KEY_PATTERN, 'REDACTED');
 }
 
+function matchesAdSignal(url) {
+  return AD_RESPONSE_KEYWORDS.some((keyword) => url.toLowerCase().includes(keyword));
+}
+
+function isTextualContentType(contentType) {
+  return TEXTUAL_CONTENT_TYPE_MARKERS.some((marker) => contentType.toLowerCase().includes(marker));
+}
+
 function shouldCaptureResponse(url, contentType) {
-  if (!url.includes('youtube.com')) {
-    return false;
-  }
+  const normalizedUrl = url.toLowerCase();
 
   let parsedPath;
   try {
@@ -52,14 +81,51 @@ function shouldCaptureResponse(url, contentType) {
   }
 
   if (SENSITIVE_PATH_PATTERNS.some((pattern) => parsedPath.includes(pattern))) {
-    return false;
+    return { capture: false, reason: null };
   }
 
-  if (url.includes('/youtubei/v1/')) {
-    return true;
+  if (normalizedUrl.includes('/youtubei/v1/')) {
+    return { capture: true, reason: 'youtubei' };
   }
 
-  return Boolean(contentType && contentType.includes('application/json'));
+  if (normalizedUrl.includes('youtube.com') && Boolean(contentType && contentType.includes('application/json'))) {
+    return { capture: true, reason: 'youtube-json' };
+  }
+
+  if (matchesAdSignal(normalizedUrl)) {
+    return {
+      capture: true,
+      reason: isTextualContentType(contentType) ? 'ad-signal-text' : 'ad-signal',
+    };
+  }
+
+  return { capture: false, reason: null };
+}
+
+function buildResponseFileName(url, responseIndex) {
+  try {
+    const parsedUrl = new URL(url);
+    return `${String(responseIndex).padStart(3, '0')}-${sanitizeName(`${parsedUrl.hostname}${parsedUrl.pathname || 'response'}`)}.json`;
+  } catch {
+    return `${String(responseIndex).padStart(3, '0')}-${sanitizeName(url)}.json`;
+  }
+}
+
+function parseCapturedBody(body, contentType) {
+  if (body == null) {
+    return { body: null, bodyFormat: 'empty' };
+  }
+
+  const sanitizedBody = sanitizeContent(body);
+  if (contentType.toLowerCase().includes('json')) {
+    try {
+      return { body: JSON.parse(sanitizedBody), bodyFormat: 'json' };
+    } catch {
+      // Fall through and persist the raw sanitized text.
+    }
+  }
+
+  return { body: sanitizedBody, bodyFormat: 'text' };
 }
 
 function buildCaptureTargets() {
@@ -98,24 +164,36 @@ async function captureTarget(context, target, manifest) {
     const url = response.url();
     const headers = response.headers();
     const contentType = headers['content-type'] || '';
+    const captureDecision = shouldCaptureResponse(url, contentType);
 
-    if (!shouldCaptureResponse(url, contentType)) {
+    if (!captureDecision.capture) {
       return;
     }
 
     const body = await response.text().catch(() => null);
-    if (body == null) {
+    if (body == null && captureDecision.reason !== 'ad-signal') {
       return;
     }
 
-    const fileName = `${String(++responseIndex).padStart(3, '0')}-${sanitizeName(new URL(url).pathname || 'response')}.json`;
+    const fileName = buildResponseFileName(url, ++responseIndex);
     const filePath = path.join(networkDir, fileName);
+    const { body: parsedBody, bodyFormat } = parseCapturedBody(body, contentType);
+    const capturedResponse = {
+      url,
+      status: response.status(),
+      contentType,
+      captureReason: captureDecision.reason,
+      bodyFormat,
+      body: parsedBody,
+    };
 
-    await writeFile(filePath, sanitizeContent(body), 'utf8');
+    await writeFile(filePath, JSON.stringify(capturedResponse, null, 2), 'utf8');
     capturedResponses.push({
       url,
       status: response.status(),
       contentType,
+      captureReason: captureDecision.reason,
+      bodyFormat,
       file: path.relative(OUTPUT_DIR, filePath).replace(/\\/g, '/'),
     });
   });
@@ -209,4 +287,3 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
-

@@ -488,32 +488,94 @@
    * This in turn calls the following snippet:
    * https://github.com/gorhill/uBlock/blob/bfdc81e9e400f7b78b2abc97576c3d7bf3a11a0b/assets/resources/scriptlets.js#L365-L470
    *
-   * Seems like for now dropping just the adPlacements is enough for YouTube TV
+   * Recursively strip known ad payloads from YouTube TV API responses before
+   * they reach the player.
    */
+  const AD_PAYLOAD_KEYS = new Set([
+    "adPlacements",
+    "playerAds",
+    "adSlots",
+    "adSlotRenderer",
+    "promotedSparklesTextSearchRenderer",
+    "mastheadAd",
+    "adBreakHeartbeatParams",
+    "adMetadata",
+    "adPreviewRenderer",
+    "adInfoRenderer",
+    "adBadgeRenderer",
+    "companionAdSlot",
+    "linearAdSequenceRenderer",
+    "instreamVideoAdRenderer",
+    "adLayoutLoggingData",
+    "adActionInterstitialRenderer",
+    "adDurationRemaining",
+  ]);
+
+  function isAdPayloadKey(key) {
+    return AD_PAYLOAD_KEYS.has(key);
+  }
+
+  function hasDirectAdMarker(value) {
+    return (
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      Object.keys(value).some(isAdPayloadKey)
+    );
+  }
+
+  function scrubAdPayload(value, seen = new WeakSet()) {
+    if (!value || typeof value !== "object" || seen.has(value)) {
+      return value;
+    }
+
+    seen.add(value);
+
+    if (Array.isArray(value)) {
+      for (let i = value.length - 1; i >= 0; i--) {
+        if (hasDirectAdMarker(value[i])) {
+          value.splice(i, 1);
+          continue;
+        }
+        scrubAdPayload(value[i], seen);
+      }
+      return value;
+    }
+
+    Object.keys(value).forEach((key) => {
+      if (isAdPayloadKey(key)) {
+        const entry = value[key];
+        if (Array.isArray(entry)) {
+          value[key] = [];
+        } else if (typeof entry === "boolean") {
+          value[key] = false;
+        } else {
+          delete value[key];
+        }
+        return;
+      }
+
+      scrubAdPayload(value[key], seen);
+    });
+
+    return value;
+  }
+
   const origParse = JSON.parse;
   JSON.parse = function () {
     const r = origParse.apply(this, arguments);
-    if (r.adPlacements && configRead("enableAdBlock")) {
-      r.adPlacements = [];
-    }
-
-    if (r.playerAds && configRead("enableAdBlock")) {
-      r.playerAds = false;
-    }
-
-    if (r.adSlots && configRead("enableAdBlock")) {
-      r.adSlots = [];
+    if (configRead("enableAdBlock")) {
+      scrubAdPayload(r);
     }
 
     // Drop "masthead" ad from home screen
-    if (
+    const mastheadItems =
       r?.contents?.tvBrowseRenderer?.content?.tvSurfaceContentRenderer?.content
-        ?.sectionListRenderer?.contents &&
-      configRead("enableAdBlock")
-    ) {
-      const s = r.contents.tvBrowseRenderer.content.tvSurfaceContentRenderer.content.sectionListRenderer.contents[0];
-      s.shelfRenderer.content.horizontalListRenderer.items =
-        s.shelfRenderer.content.horizontalListRenderer.items.filter(i => !i?.adSlotRenderer);
+        ?.sectionListRenderer?.contents?.[0]?.shelfRenderer?.content
+        ?.horizontalListRenderer?.items;
+    if (mastheadItems && configRead("enableAdBlock")) {
+      r.contents.tvBrowseRenderer.content.tvSurfaceContentRenderer.content.sectionListRenderer.contents[0].shelfRenderer.content.horizontalListRenderer.items =
+        mastheadItems.filter((i) => !i?.adSlotRenderer);
     }
 
     // Filter out shorts sections when shorts are disabled

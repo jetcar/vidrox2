@@ -72,10 +72,12 @@ function isTextualContentType(contentType) {
 
 function shouldCaptureResponse(url, contentType) {
   const normalizedUrl = url.toLowerCase();
-
+  let parsedHost = '';
   let parsedPath;
   try {
-    parsedPath = new URL(url).pathname;
+    const parsedUrl = new URL(url);
+    parsedHost = parsedUrl.hostname.toLowerCase();
+    parsedPath = parsedUrl.pathname;
   } catch {
     parsedPath = url;
   }
@@ -88,7 +90,10 @@ function shouldCaptureResponse(url, contentType) {
     return { capture: true, reason: 'youtubei' };
   }
 
-  if (normalizedUrl.includes('youtube.com') && Boolean(contentType && contentType.includes('application/json'))) {
+  if (
+    (parsedHost === 'youtube.com' || parsedHost.endsWith('.youtube.com')) &&
+    Boolean(contentType && contentType.includes('application/json'))
+  ) {
     return { capture: true, reason: 'youtube-json' };
   }
 
@@ -121,7 +126,8 @@ function parseCapturedBody(body, contentType) {
     try {
       return { body: JSON.parse(sanitizedBody), bodyFormat: 'json' };
     } catch {
-      // Fall through and persist the raw sanitized text.
+      // Some ad endpoints label malformed JSON-ish bodies as application/json;
+      // keep the sanitized text so later analysis can still inspect them.
     }
   }
 

@@ -569,12 +569,13 @@
     }
 
     // Drop "masthead" ad from home screen
-    const mastheadItems =
+    const mastheadSection =
       r?.contents?.tvBrowseRenderer?.content?.tvSurfaceContentRenderer?.content
-        ?.sectionListRenderer?.contents?.[0]?.shelfRenderer?.content
-        ?.horizontalListRenderer?.items;
+        ?.sectionListRenderer?.contents?.[0];
+    const mastheadItems =
+      mastheadSection?.shelfRenderer?.content?.horizontalListRenderer?.items;
     if (mastheadItems && configRead("enableAdBlock")) {
-      r.contents.tvBrowseRenderer.content.tvSurfaceContentRenderer.content.sectionListRenderer.contents[0].shelfRenderer.content.horizontalListRenderer.items =
+      mastheadSection.shelfRenderer.content.horizontalListRenderer.items =
         mastheadItems.filter((i) => !i?.adSlotRenderer);
     }
 

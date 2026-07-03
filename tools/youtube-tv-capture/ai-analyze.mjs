@@ -71,6 +71,7 @@ const AD_JSON_KEYS = [
     'adActionInterstitialRenderer',
     'adDurationRemaining',
 ];
+const AD_JSON_KEY_SET = new Set(AD_JSON_KEYS.map((candidate) => candidate.toLowerCase()));
 
 const AD_CLASS_PATTERNS = [
     /\bad[-_]?slot\b/i,
@@ -153,7 +154,7 @@ function extractAdPatterns(html) {
 
 function isAdJsonKey(key) {
     const normalized = key.toLowerCase();
-    return AD_JSON_KEYS.some((candidate) => candidate.toLowerCase() === normalized) ||
+    return AD_JSON_KEY_SET.has(normalized) ||
         /(?:^|[A-Z_])(ad|ads|sponsored|promoted|instream|companion)[A-Za-z0-9_]*$/.test(key);
 }
 

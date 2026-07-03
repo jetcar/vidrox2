@@ -68,8 +68,8 @@ jobs:
           STORAGE_STATE_PATH: ${{ env.STORAGE_STATE_PATH }}
           WAIT_MS: ${{ inputs.wait_ms || '8000' }}
           OUTPUT_DIR: ${{ runner.temp }}/fixtures
-          SKIP_SCREENSHOT: 'true'
-          SKIP_HAR: 'true'
+          SKIP_SCREENSHOT: 'false'
+          SKIP_HAR: 'false'
           CAPTURE_URLS_JSON: >-
             [
               {"name":"home","url":"${{ inputs.home_url || 'https://www.youtube.com/tv' }}"},
@@ -77,6 +77,15 @@ jobs:
               {"name":"details","url":"${{ inputs.details_url || 'https://www.youtube.com/tv#/watch?v=dQw4w9WgXcQ' }}"}
             ]
         run: npm run capture
+
+      - name: Upload fixture bundle artifact
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: youtube-tv-fixtures-${{ github.run_number }}
+          path: ${{ runner.temp }}/fixtures
+          retention-days: 14
+          if-no-files-found: warn
 
       - name: Analyze fixture changes
         id: analyze
@@ -143,4 +152,3 @@ jobs:
           fi
         env:
           GH_TOKEN: ${{ github.token }}
-

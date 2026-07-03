@@ -11,9 +11,33 @@ const AD_KEYWORDS = [
   'googlesyndication',
   'adsbygoogle',
   'googleads',
+  'googletagservices',
+  'googleadservices',
   'ad_request',
   'adsystem',
+  '2mdn',
 ];
+
+const AD_JSON_KEYS = [
+  'adPlacements',
+  'playerAds',
+  'adSlots',
+  'adSlotRenderer',
+  'promotedSparklesTextSearchRenderer',
+  'mastheadAd',
+  'adBreakHeartbeatParams',
+  'adMetadata',
+  'adPreviewRenderer',
+  'adInfoRenderer',
+  'adBadgeRenderer',
+  'companionAdSlot',
+  'linearAdSequenceRenderer',
+  'instreamVideoAdRenderer',
+  'adLayoutLoggingData',
+  'adActionInterstitialRenderer',
+  'adDurationRemaining',
+];
+const AD_JSON_KEY_SET = new Set(AD_JSON_KEYS.map((candidate) => candidate.toLowerCase()));
 
 const AD_CLASS_PATTERNS = [
   /\bad[-_]?slot\b/i,
@@ -61,6 +85,66 @@ function findAdNetworkEndpoints(responses) {
     .map((r) => r.url);
 }
 
+function isAdJsonKey(key) {
+  const normalized = key.toLowerCase();
+  return AD_JSON_KEY_SET.has(normalized) ||
+    /(?:^|[A-Z_])(ad|ads|sponsored|promoted|instream|companion)[A-Za-z0-9_]*$/.test(key);
+}
+
+function isAdRendererKey(key) {
+  return /(ad|ads|sponsored|promoted|instream|companion)[A-Za-z0-9_]*Renderer$/.test(key);
+}
+
+function collectAdPayloadSignals(value, signals) {
+  if (!value || typeof value !== 'object') {
+    return;
+  }
+
+  if (Array.isArray(value)) {
+    value.forEach((entry) => collectAdPayloadSignals(entry, signals));
+    return;
+  }
+
+  for (const [key, child] of Object.entries(value)) {
+    if (isAdJsonKey(key)) {
+      signals.keys.add(key);
+    }
+    if (isAdRendererKey(key)) {
+      signals.renderers.add(key);
+    }
+    collectAdPayloadSignals(child, signals);
+  }
+}
+
+async function inspectCapturedPayloads(fixturesDir, responses) {
+  const signals = {
+    keys: new Set(),
+    renderers: new Set(),
+  };
+
+  for (const response of responses ?? []) {
+    const responsePath = path.isAbsolute(response.file)
+      ? response.file
+      : path.join(fixturesDir, response.file);
+    if (!existsSync(responsePath)) {
+      continue;
+    }
+
+    try {
+      const parsed = JSON.parse(await readFile(responsePath, 'utf8'));
+      const payload = parsed && typeof parsed === 'object' && 'body' in parsed ? parsed.body : parsed;
+      collectAdPayloadSignals(payload, signals);
+    } catch {
+      // Ignore malformed captures so the report still renders for the rest.
+    }
+  }
+
+  return {
+    keys: [...signals.keys].sort(),
+    renderers: [...signals.renderers].sort(),
+  };
+}
+
 async function analyzeFixtures() {
   const manifestPath = path.join(FIXTURES_DIR, 'manifest.json');
   if (!existsSync(manifestPath)) {
@@ -83,32 +167,32 @@ async function analyzeFixtures() {
   let totalAdScripts = 0;
   let totalAdClasses = 0;
   let totalAdEndpoints = 0;
+  let totalAdKeys = 0;
+  let totalAdRenderers = 0;
 
   for (const page of manifest.pages) {
     const htmlPath = path.isAbsolute(page.html) ? page.html : path.join(FIXTURES_DIR, page.html);
-    if (!existsSync(htmlPath)) {
-      lines.push(`### Page: ${page.name}`);
-      lines.push('');
-      lines.push(`> ⚠️ HTML file not found: \`${page.html}\``);
-      lines.push('');
-      continue;
-    }
-
-    const html = await readFile(htmlPath, 'utf8');
+    const html = existsSync(htmlPath) ? await readFile(htmlPath, 'utf8') : '';
     const scriptUrls = extractExternalScriptUrls(html);
     const adScriptUrls = findAdScriptUrls(scriptUrls);
     const adClasses = findAdRelatedAttributes(html);
     const adEndpoints = findAdNetworkEndpoints(page.responses ?? []);
+    const adPayloadSignals = await inspectCapturedPayloads(FIXTURES_DIR, page.responses ?? []);
 
     totalAdScripts += adScriptUrls.length;
     totalAdClasses += adClasses.length;
     totalAdEndpoints += adEndpoints.length;
+    totalAdKeys += adPayloadSignals.keys.length;
+    totalAdRenderers += adPayloadSignals.renderers.length;
 
     lines.push(`### Page: ${page.name}`);
     lines.push('');
     lines.push(`- **URL:** ${page.finalUrl}`);
     lines.push(`- **Title:** ${page.title}`);
     lines.push(`- **Network responses captured:** ${page.responseCount}`);
+    if (!html) {
+      lines.push(`- **HTML fixture:** Missing (\`${page.html}\`)`);
+    }
     lines.push('');
 
     if (adScriptUrls.length > 0) {
@@ -138,6 +222,22 @@ async function analyzeFixtures() {
       lines.push('');
     }
 
+    if (adPayloadSignals.keys.length > 0) {
+      lines.push('**Ad-related JSON keys found in captured network bodies:**');
+      lines.push('```');
+      adPayloadSignals.keys.forEach((key) => lines.push(key));
+      lines.push('```');
+      lines.push('');
+    }
+
+    if (adPayloadSignals.renderers.length > 0) {
+      lines.push('**Ad-related renderer keys found in captured network bodies:**');
+      lines.push('```');
+      adPayloadSignals.renderers.forEach((renderer) => lines.push(renderer));
+      lines.push('```');
+      lines.push('');
+    }
+
     lines.push(
       `<details><summary>All external scripts (${scriptUrls.length} total)</summary>`,
     );
@@ -151,13 +251,13 @@ async function analyzeFixtures() {
 
   lines.push('---');
   lines.push('');
-  if (totalAdScripts + totalAdClasses + totalAdEndpoints === 0) {
+  if (totalAdScripts + totalAdClasses + totalAdEndpoints + totalAdKeys + totalAdRenderers === 0) {
     lines.push(
-      '✅ No ad-related scripts, class attributes, or network endpoints were detected in this capture.',
+      '✅ No ad-related scripts, class attributes, network endpoints, or payload keys were detected in this capture.',
     );
   } else {
     lines.push(
-      `⚠️ Found ${totalAdScripts} ad script URL(s), ${totalAdClasses} ad class/id attribute(s), and ${totalAdEndpoints} ad network endpoint(s). See details above.`,
+      `⚠️ Found ${totalAdScripts} ad script URL(s), ${totalAdClasses} ad class/id attribute(s), ${totalAdEndpoints} ad network endpoint(s), ${totalAdKeys} ad payload key(s), and ${totalAdRenderers} ad renderer key(s). See details above.`,
     );
   }
 

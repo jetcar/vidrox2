@@ -110,7 +110,8 @@ function shouldCaptureResponse(url, contentType) {
 function buildResponseFileName(url, responseIndex) {
   try {
     const parsedUrl = new URL(url);
-    return `${String(responseIndex).padStart(3, '0')}-${sanitizeName(`${parsedUrl.hostname}${parsedUrl.pathname || 'response'}`)}.json`;
+    const responsePath = `${parsedUrl.hostname}${parsedUrl.pathname || '/response'}`;
+    return `${String(responseIndex).padStart(3, '0')}-${sanitizeName(responsePath)}.json`;
   } catch {
     return `${String(responseIndex).padStart(3, '0')}-${sanitizeName(url)}.json`;
   }

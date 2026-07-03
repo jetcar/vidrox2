@@ -524,7 +524,11 @@
     );
   }
 
-  function scrubAdPayload(value, seen = new WeakSet()) {
+  function scrubAdPayload(value) {
+    return scrubAdPayloadInternal(value, new WeakSet());
+  }
+
+  function scrubAdPayloadInternal(value, seen) {
     if (!value || typeof value !== "object" || seen.has(value)) {
       return value;
     }
@@ -537,12 +541,12 @@
           value.splice(i, 1);
           continue;
         }
-        scrubAdPayload(value[i], seen);
+        scrubAdPayloadInternal(value[i], seen);
       }
       return value;
     }
 
-    Object.keys(value).forEach((key) => {
+    for (const key of Object.keys(value)) {
       if (isAdPayloadKey(key)) {
         const entry = value[key];
         if (Array.isArray(entry)) {
@@ -552,11 +556,11 @@
         } else {
           delete value[key];
         }
-        return;
+        continue;
       }
 
-      scrubAdPayload(value[key], seen);
-    });
+      scrubAdPayloadInternal(value[key], seen);
+    }
 
     return value;
   }

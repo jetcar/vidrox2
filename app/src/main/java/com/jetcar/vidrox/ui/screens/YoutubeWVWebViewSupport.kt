@@ -16,6 +16,8 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewFeature
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -70,6 +72,31 @@ internal fun configureWebSettings(webView: WebView) {
         javaScriptEnabled = true
         domStorageEnabled = true
         mediaPlaybackRequiresUserGesture = false
+    }
+}
+
+/**
+ * Registers the userscript to run at document start, before any of YouTube's
+ * own scripts. This is what lets the JSON.parse/fetch hooks see the very first
+ * API responses; injecting after page load loses that race. Returns false when
+ * the WebView doesn't support it, in which case the caller must fall back to
+ * evaluating the script in onPageFinished.
+ */
+internal fun tryAddDocumentStartScript(webView: WebView, script: String): Boolean {
+    if (!WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+        Log.w(
+            WEBVIEW_DEBUG_TAG,
+            "document-start script unsupported; falling back to onPageFinished injection",
+        )
+        return false
+    }
+    return try {
+        WebViewCompat.addDocumentStartJavaScript(webView, script, setOf("https://*.youtube.com"))
+        Log.d(WEBVIEW_DEBUG_TAG, "userscript registered for document-start injection")
+        true
+    } catch (e: Exception) {
+        Log.w(WEBVIEW_DEBUG_TAG, "document-start injection failed; falling back", e)
+        false
     }
 }
 

@@ -72,6 +72,7 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
     val directionPadResetKey = remember { mutableStateOf(0) }
     val isOffline = remember { mutableStateOf(!hasInternetConnection(context)) }
     val isPageLoaded = remember { mutableStateOf(false) }
+    val isDocStartInjected = remember { mutableStateOf(false) }
     val pageLoadTick = remember { mutableStateOf(0) }
     var loadingProgress by remember { mutableFloatStateOf(0f) }
     val exitTrigger = remember { mutableStateOf(false) }
@@ -168,8 +169,11 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
         }
     }
 
-    LaunchedEffect(pageLoadTick.value, jsScript) {
-        if (pageLoadTick.value > 0 && jsScript != null) {
+    // Fallback for WebViews without document-start script support: inject after
+    // page load. Late injection can miss YouTube's bootstrap requests, so it is
+    // only used when document-start registration was unavailable.
+    LaunchedEffect(pageLoadTick.value, jsScript, isDocStartInjected.value) {
+        if (pageLoadTick.value > 0 && jsScript != null && !isDocStartInjected.value) {
             javascriptEvaluator.evaluate(jsScript)
         }
     }
@@ -187,78 +191,86 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
             .fillMaxSize()
             .debugLayoutBorder(Color.Red)
     ) {
-        AndroidView(
-            modifier = Modifier
-                .fillMaxSize()
-                .debugLayoutBorder(Color.Green),
-            factory = { viewContext ->
-                AndroidWebView(viewContext).apply {
-                    layoutParams = android.view.ViewGroup.LayoutParams(
-                        android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                        android.view.ViewGroup.LayoutParams.MATCH_PARENT
-                    )
-                    webViewRef.value = this
+        // The WebView is created only once the userscript is available, so the
+        // script can be registered for document-start injection before the
+        // first page load starts. The script loads from bundled resources, so
+        // this delays creation by a frame at most.
+        if (jsScript != null) {
+            AndroidView(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .debugLayoutBorder(Color.Green),
+                factory = { viewContext ->
+                    AndroidWebView(viewContext).apply {
+                        layoutParams = android.view.ViewGroup.LayoutParams(
+                            android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                            android.view.ViewGroup.LayoutParams.MATCH_PARENT
+                        )
+                        webViewRef.value = this
 
 
-                    configureCookies(this)
-                    configureWebSettings(this)
+                        configureCookies(this)
+                        configureWebSettings(this)
 
-                    webChromeClient = pageChromeClient
-                    webViewClient = createLoggingWebViewClient(
-                        onPageNavigated = {
-                            showDirectionPad()
-                        },
-                        onMainFrameError = {
-                            isOffline.value = !hasInternetConnection(context)
-                        },
-                        onPageStarted = {
-                            isPageLoaded.value = false
-                            loadingProgress = 0f
-                        },
-                        onPageFinished = {
-                            isPageLoaded.value = true
-                            loadingProgress = 1f
-                            pageLoadTick.value += 1
-                        }
-                    )
+                        isDocStartInjected.value = tryAddDocumentStartScript(this, jsScript)
 
-                    configureFocusAndTouch(
-                        onUserInteraction = showDirectionPad,
-                    )
+                        webChromeClient = pageChromeClient
+                        webViewClient = createLoggingWebViewClient(
+                            onPageNavigated = {
+                                showDirectionPad()
+                            },
+                            onMainFrameError = {
+                                isOffline.value = !hasInternetConnection(context)
+                            },
+                            onPageStarted = {
+                                isPageLoaded.value = false
+                                loadingProgress = 0f
+                            },
+                            onPageFinished = {
+                                isPageLoaded.value = true
+                                loadingProgress = 1f
+                                pageLoadTick.value += 1
+                            }
+                        )
 
-                    addJavascriptInterface(ExitBridge(exitTrigger), "ExitBridge")
+                        configureFocusAndTouch(
+                            onUserInteraction = showDirectionPad,
+                        )
 
-                    /*
-                    Youtube's content security policy doesn't allow calling fetch on
-                    3rd party websites (eg. SponsorBlock api). This bridge counters that
-                    handling the requests on the native side. */
-                    addJavascriptInterface(NetworkBridge(javascriptEvaluator), "NetworkBridge")
+                        addJavascriptInterface(ExitBridge(exitTrigger), "ExitBridge")
 
-                    setLayerType(View.LAYER_TYPE_HARDWARE, null)
+                        /*
+                        Youtube's content security policy doesn't allow calling fetch on
+                        3rd party websites (eg. SponsorBlock api). This bridge counters that
+                        handling the requests on the native side. */
+                        addJavascriptInterface(NetworkBridge(javascriptEvaluator), "NetworkBridge")
 
-                    configureScale(isTvDevice)
+                        setLayerType(View.LAYER_TYPE_HARDWARE, null)
 
-                    isVerticalScrollBarEnabled = true
-                    isHorizontalScrollBarEnabled = true
+                        configureScale(isTvDevice)
 
-                    loadUrl(YOUTUBE_TV_URL)
+                        isVerticalScrollBarEnabled = true
+                        isHorizontalScrollBarEnabled = true
+
+                        loadUrl(YOUTUBE_TV_URL)
+                    }
+                },
+                update = { webView ->
+                    webViewRef.value = webView
                 }
-            },
-            update = { webView ->
-                webViewRef.value = webView
-            }
-        )
+            )
 
-        DisposableEffect(Unit) {
-            onDispose {
-                webViewRef.value?.apply {
-                    stopLoading()
-                    setWebChromeClient(null)
-                    removeJavascriptInterface("ExitBridge")
-                    removeJavascriptInterface("NetworkBridge")
-                    destroy()
+            DisposableEffect(Unit) {
+                onDispose {
+                    webViewRef.value?.apply {
+                        stopLoading()
+                        setWebChromeClient(null)
+                        removeJavascriptInterface("ExitBridge")
+                        removeJavascriptInterface("NetworkBridge")
+                        destroy()
+                    }
+                    webViewRef.value = null
                 }
-                webViewRef.value = null
             }
         }
 

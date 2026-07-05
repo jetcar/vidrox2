@@ -74,6 +74,25 @@ To ensure shorts blocking works properly:
 2. Select **Storage → Clear Data**
 3. Restart the app
 
+## How Ad Blocking Works
+
+Ads are removed with four cooperating layers:
+
+1. **Document-Start Injection** — The userscript is registered via
+   `WebViewCompat.addDocumentStartJavaScript`, so its hooks are installed
+   *before* any YouTube code runs (older WebViews fall back to injection after
+   page load). This closes the race where YouTube's bootstrap requests were
+   parsed before the ad filter existed.
+2. **JSON API Scrubbing** — Every path YouTube uses to parse API responses is
+   hooked (`JSON.parse`, `Response.json`, the XHR `response` getter, and the
+   bundle's captured `window._yttv[*].JSON` references), and known ad payloads
+   are stripped before they reach the player.
+3. **Network-Level Blocking** — Requests to known ad-serving domains are
+   dropped in `shouldInterceptRequest`.
+4. **Playback Watchdog** — Ads that survive scrubbing (e.g. server-stitched
+   ones) are skipped during playback: visible skip-ad buttons are auto-clicked,
+   and declared ad time ranges are seeked past while ad UI is on screen.
+
 ## How Shorts Blocking Works
 
 A multi-layer approach is used to block YouTube Shorts:

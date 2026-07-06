@@ -97,7 +97,7 @@ Ads are removed with four cooperating layers:
 
 A multi-layer approach is used to block YouTube Shorts:
 
-1. **JSON API Filtering** — Intercepts YouTube's API responses and removes shorts before rendering
+1. **JSON API Filtering** — Intercepts YouTube's API responses and removes shorts/reels before rendering, on every surface: home, search, subscription and channel tabs, the related-videos shelf, paged-in continuations, and the reel player queue
 2. **CSS Hiding** — Hides shorts elements using aggressive CSS selectors
 3. **DOM Mutation Observer** — Continuously monitors and removes dynamically added shorts
 4. **Periodic Cleanup** — Runs cleanup every 2 seconds to catch late-loading content

@@ -505,88 +505,62 @@
       }
     }
 
-    /**
-     * This is a minimal reimplementation of the following uBlock Origin rule:
-     * https://github.com/uBlockOrigin/uAssets/blob/3497eebd440f4871830b9b45af0afc406c6eb593/filters/filters.txt#L116
+    /*
+     * Surgical ad removal, matching the proven behaviour of upstream
+     * TizenTube / youtube-webos.
      *
-     * This in turn calls the following snippet:
-     * https://github.com/gorhill/uBlock/blob/bfdc81e9e400f7b78b2abc97576c3d7bf3a11a0b/assets/resources/scriptlets.js#L365-L470
-     *
-     * Recursively strip known ad payloads from YouTube TV API responses before
-     * they reach the player.
+     * We intentionally do NOT recursively delete every ad-related key. In
+     * particular the ad telemetry/heartbeat payloads (adBreakHeartbeatParams,
+     * adLayoutLoggingData, adDurationRemaining, …) are left untouched: they
+     * carry the "ad was shown" handshake, and stripping them makes YouTube's
+     * TV backend escalate to server-stitched ads that no client-side filter
+     * can remove. We only neutralise the ad *content* payloads and remove ad
+     * *tiles* from feeds.
      */
-    const AD_PAYLOAD_KEYS = new Set([
-      "adPlacements",
-      "playerAds",
-      "adSlots",
-      "adSlotRenderer",
-      "promotedSparklesTextSearchRenderer",
-      "mastheadAd",
-      "adBreakHeartbeatParams",
-      "adMetadata",
-      "adPreviewRenderer",
-      "adInfoRenderer",
-      "adBadgeRenderer",
-      "companionAdSlot",
-      "linearAdSequenceRenderer",
-      "instreamVideoAdRenderer",
-      "adLayoutLoggingData",
-      "adActionInterstitialRenderer",
-      "adDurationRemaining",
-    ]);
 
-    function isAdPayloadKey(key) {
-      return AD_PAYLOAD_KEYS.has(key);
+    // Neutralise the player-response ad payloads (top level of /player and
+    // watch-next responses). Emptying rather than deleting matches upstream
+    // and keeps the shapes the player expects.
+    function scrubPlayerAds(r) {
+      if (Array.isArray(r?.adPlacements)) r.adPlacements = [];
+      if (r?.playerAds) r.playerAds = false;
+      if (Array.isArray(r?.adSlots)) r.adSlots = [];
     }
 
-    function hasDirectAdMarker(value) {
-      return (
-        value &&
-        typeof value === "object" &&
-        !Array.isArray(value) &&
-        Object.keys(value).some(isAdPayloadKey)
+    // Remove ad tiles from a single section list: full-width ad cards, the
+    // home masthead ad, and ad tiles inside horizontal shelves.
+    function filterAdsFromSectionList(sectionList) {
+      if (!sectionList || !Array.isArray(sectionList.contents)) return;
+
+      sectionList.contents = sectionList.contents.filter(
+        (elm) =>
+          !elm?.adSlotRenderer &&
+          !elm?.tvMastheadRenderer &&
+          !elm?.mastheadAd &&
+          !elm?.promotedSparklesTextSearchRenderer
       );
+
+      for (const shelf of sectionList.contents) {
+        const items = shelf?.shelfRenderer?.content?.horizontalListRenderer?.items;
+        if (Array.isArray(items)) {
+          shelf.shelfRenderer.content.horizontalListRenderer.items = items.filter(
+            (item) => !item?.adSlotRenderer
+          );
+        }
+      }
     }
 
-    function scrubAdPayload(value) {
-      return scrubAdPayloadInternal(value, new WeakSet());
-    }
+    // Strip ads from every payload surface, mirroring the shorts traversal.
+    function stripAdsFromResponse(r) {
+      scrubPlayerAds(r);
+      forEachSectionList(r, filterAdsFromSectionList);
 
-    function scrubAdPayloadInternal(value, seen) {
-      if (!value || typeof value !== "object" || seen.has(value)) {
-        return value;
+      // Sponsored reels in the shorts player queue.
+      if (Array.isArray(r?.entries)) {
+        r.entries = r.entries.filter(
+          (entry) => !entry?.command?.reelWatchEndpoint?.adClientParams?.isAd
+        );
       }
-
-      seen.add(value);
-
-      if (Array.isArray(value)) {
-        for (let i = value.length - 1; i >= 0; i--) {
-          if (hasDirectAdMarker(value[i])) {
-            value.splice(i, 1);
-            continue;
-          }
-          scrubAdPayloadInternal(value[i], seen);
-        }
-        return value;
-      }
-
-      for (const key of Object.keys(value)) {
-        if (isAdPayloadKey(key)) {
-          const entry = value[key];
-          if (Array.isArray(entry)) {
-            value[key] = [];
-          } else if (typeof entry === "boolean") {
-            value[key] = false;
-          } else {
-            delete value[key];
-          }
-          continue;
-        }
-
-        scrubAdPayloadInternal(value[key], seen);
-      }
-
-      return value;
     }
 
     /*
@@ -659,34 +633,12 @@
       try {
         if (configRead("enableAdBlock")) {
           captureAdRangesFromPlayerResponse(r);
-          scrubAdPayload(r);
-
-          // Drop "masthead" ad from home screen
-          const mastheadSection =
-            r?.contents?.tvBrowseRenderer?.content?.tvSurfaceContentRenderer
-              ?.content?.sectionListRenderer?.contents?.[0];
-          const mastheadItems =
-            mastheadSection?.shelfRenderer?.content?.horizontalListRenderer
-              ?.items;
-          if (mastheadItems) {
-            mastheadSection.shelfRenderer.content.horizontalListRenderer.items =
-              mastheadItems.filter((i) => !i?.adSlotRenderer);
-          }
+          stripAdsFromResponse(r);
         }
 
-        // Filter out shorts sections when shorts are disabled
+        // Filter out shorts/reels everywhere when shorts are disabled
         if (!configRead("enableShorts")) {
-          const sections =
-            r?.contents?.tvBrowseRenderer?.content?.tvSurfaceContentRenderer
-              ?.content?.sectionListRenderer?.contents;
-
-          if (sections) {
-            r.contents.tvBrowseRenderer.content.tvSurfaceContentRenderer.content.sectionListRenderer.contents =
-              sections
-                .filter((shelf) => !isShortsShelf(shelf))
-                .map((shelf) => removeShortsFromShelf(shelf))
-                .filter((shelf) => shelf != null);
-          }
+          stripShortsFromResponse(r);
         }
       } catch (err) {
         console.error("[vidrox] response filtering failed:", err);
@@ -708,6 +660,8 @@
     };
 
     // Mark inline (preview) playback requests as ad-free, mirroring TizenTube.
+    // The flag is set on a deep clone, never on YouTube's live request object:
+    // mutating the original corrupts player state across subsequent requests.
     const origStringify = JSON.stringify;
     JSON.stringify = function (value, replacer, space) {
       try {
@@ -717,7 +671,9 @@
           !playbackCtx.isInlinePlaybackNoAd &&
           configRead("enableAdBlock")
         ) {
-          playbackCtx.isInlinePlaybackNoAd = true;
+          const clone = origParse(origStringify.call(this, value));
+          clone.playbackContext.contentPlaybackContext.isInlinePlaybackNoAd = true;
+          return origStringify.call(this, clone, replacer, space);
         }
       } catch (err) {
         // Leave the request untouched.
@@ -949,6 +905,7 @@
       return Boolean(
         reel ||
         shortsLockup ||
+        tile?.tvhtml5ShelfRendererType === "TVHTML5_TILE_RENDERER_TYPE_SHORTS" ||
         isShortsEndpoint(navigationEndpoint) ||
         /shorts/i.test(title)
       );
@@ -957,6 +914,11 @@
     function isShortsShelf(shelf) {
       const title = getShelfTitleText(shelf);
       const items = shelf?.shelfRenderer?.content?.horizontalListRenderer?.items || [];
+
+      // A reel shelf is shorts by definition.
+      if (shelf?.reelShelfRenderer) {
+        return true;
+      }
 
       if (
         shelf?.shelfRenderer?.tvhtml5ShelfRendererType ===
@@ -987,6 +949,73 @@
       }
 
       return shelf;
+    }
+
+    function filterShortsFromSectionList(sectionList) {
+      if (!sectionList || !Array.isArray(sectionList.contents)) return;
+      sectionList.contents = sectionList.contents
+        .filter((shelf) => !isShortsShelf(shelf))
+        .map((shelf) => removeShortsFromShelf(shelf))
+        .filter((shelf) => shelf != null);
+    }
+
+    /*
+     * Feeds appear on more surfaces than the home page: search results,
+     * subscription/channel tabs, the related-videos pivot next to the
+     * player, and rows paged in via continuations. Both the ad filter and
+     * the shorts filter run over every one of them via this single walker,
+     * so a surface can never be handled for one but missed for the other.
+     */
+    function forEachSectionList(r, cb) {
+      // Home screen
+      cb(
+        r?.contents?.tvBrowseRenderer?.content?.tvSurfaceContentRenderer
+          ?.content?.sectionListRenderer
+      );
+
+      // Search results
+      cb(r?.contents?.sectionListRenderer);
+
+      // Rows paged in while scrolling home/search
+      cb(r?.continuationContents?.sectionListContinuation);
+
+      // Related videos next to/below the player
+      cb(r?.contents?.singleColumnWatchNextResults?.pivot?.sectionListRenderer);
+
+      // Subscriptions/channel tabs
+      const navSections =
+        r?.contents?.tvBrowseRenderer?.content?.tvSecondaryNavRenderer?.sections;
+      if (Array.isArray(navSections)) {
+        for (const section of navSections) {
+          const tabs = section?.tvSecondaryNavSectionRenderer?.tabs;
+          if (!Array.isArray(tabs)) continue;
+          for (const tab of tabs) {
+            cb(
+              tab?.tabRenderer?.content?.tvSurfaceContentRenderer?.content
+                ?.sectionListRenderer
+            );
+          }
+        }
+      }
+    }
+
+    // Strip shorts/reels from every payload surface when shorts are disabled.
+    function stripShortsFromResponse(r) {
+      forEachSectionList(r, filterShortsFromSectionList);
+
+      // Items paged into a single row
+      const horizontalItems = r?.continuationContents?.horizontalListContinuation?.items;
+      if (Array.isArray(horizontalItems)) {
+        r.continuationContents.horizontalListContinuation.items =
+          horizontalItems.filter((item) => !isShortsItem(item));
+      }
+
+      // The reel (shorts) player's playback queue
+      if (Array.isArray(r?.entries)) {
+        r.entries = r.entries.filter(
+          (entry) => !entry?.command?.reelWatchEndpoint
+        );
+      }
     }
 
     // The tiny-sha256 module, edited to export itself.

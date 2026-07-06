@@ -742,36 +742,37 @@
      */
     const AD_SKIP_TICK_MS = 500;
     // Unambiguously ad-related; safe to click whenever visible.
+    // 'skip-ad' and aria-label variants are generic fallbacks that survive
+    // future renames.
     const AD_SKIP_BUTTON_SELECTORS = [
-      "ytlr-skip-ad-renderer",
-      '[class*="SkipAd"]',
       '[class*="skip-ad" i]',
+      '[class*="SkipAd"]',
       '[idomkey*="skip-ad" i]',
       '[idomkey*="skipAd"]',
       '[aria-label*="skip ad" i]',
     ].join(", ");
-    // Generic skip controls; only clicked while ad UI is on screen so a
-    // non-ad skip control (e.g. skip-forward) can never be spammed.
+    // The leanback skip control. Base name `ytlr-skip-button` is confirmed
+    // from captured watch-page DOM (its animation class is
+    // `ytlr-skip-button-animate-in`). Only clicked while ad UI is on screen,
+    // so a non-ad skip control can never be spammed.
     const AD_CONTEXT_SKIP_BUTTON_SELECTORS = [
       AD_SKIP_BUTTON_SELECTORS,
-      "ytlr-skip-button-renderer",
-      '[class*="ytLrSkipButton"]',
+      "ytlr-skip-button",
+      '[class*="ytlr-skip-button"]',
+      '[class*="skip-button" i]',
     ].join(", ");
 
-    // Substring matches must keep the "Ad" at a name boundary: a bare
-    // '[class*="ytLrAd"]' would also match e.g. "ytLrAddToPlaylist".
+    // Ad UI elements, verified against captured YouTube TV watch-page DOM:
+    // ads render <ytlr-ad-attribution> / <ytlr-ad-notify> elements. These
+    // exist in the DOM but stay zero-size until an ad shows, so callers gate
+    // on getBoundingClientRect (see isAdUiVisible). The kebab-case fallbacks
+    // cover related ad elements the static capture didn't surface.
     const AD_OVERLAY_SELECTORS = [
-      "ytlr-ad-player-overlay-renderer",
-      "ytlr-ad-preview-renderer",
-      "ytlr-ad-action-interstitial-renderer",
-      "ytlr-ad-info-dialog-renderer",
-      '[class*="ytLrAdPlayerOverlay"]',
-      '[class*="ytLrAdPreview"]',
-      '[class*="ytLrAdProgress"]',
-      '[class*="ytLrAdBadge"]',
-      '[class*="ytLrAdInfo"]',
-      '[class*="ytLrAdAction"]',
-      '[idomkey*="ad-player-overlay"]',
+      "ytlr-ad-attribution",
+      "ytlr-ad-notify",
+      '[class*="ytlr-ad-" i]',
+      "[class*='ad-showing']",
+      "[class*='ad-interrupting']",
     ].join(", ");
 
     function isAdUiVisible() {

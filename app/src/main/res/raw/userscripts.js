@@ -655,220 +655,282 @@
      * "json").
      */
     const origParse = JSON.parse;
-    JSON.parse = function () {
-      return processApiResponse(origParse.apply(this, arguments));
-    };
+JSON.parse = function () {
+  return processApiResponse(origParse.apply(this, arguments));
+};
 
-    // Mark inline (preview) playback requests as ad-free, mirroring TizenTube.
-    // The flag is set on a deep clone, never on YouTube's live request object:
-    // mutating the original corrupts player state across subsequent requests.
-    const origStringify = JSON.stringify;
-    JSON.stringify = function (value, replacer, space) {
-      try {
-        const playbackCtx = value?.playbackContext?.contentPlaybackContext;
-        if (
-          playbackCtx &&
-          !playbackCtx.isInlinePlaybackNoAd &&
-          configRead("enableAdBlock")
-        ) {
-          const clone = origParse(origStringify.call(this, value));
-          clone.playbackContext.contentPlaybackContext.isInlinePlaybackNoAd = true;
-          return origStringify.call(this, clone, replacer, space);
-        }
-      } catch (err) {
-        // Leave the request untouched.
-      }
-      return origStringify.call(this, value, replacer, space);
-    };
+// Recursive ad key cleanup
+function stripAdKeys(obj) {
+  if (!obj || typeof obj !== "object") return obj;
+  const adKeys = [
+    "adBadgeRenderer",
+    "adBadgeViewModel",
+    "adBreakHeartbeatParams",
+    "adBreakServiceRenderer",
+    "adDurationMs",
+    "adDurationRemaining",
+    "adDurationRemainingRenderer",
+    "adHoverTextButtonRenderer",
+    "adInfoDialogChoiceEndpoint",
+    "adInfoRenderer",
+    "adLayoutLoggingData",
+    "adLayoutMetadata",
+    "adPersonalizationSettingChangeEndpoint",
+    "adPingingEndpoint",
+    "adPlacementConfig",
+    "adPlacementRenderer",
+    "adPreviewRenderer",
+    "adSlotLoggingData",
+    "adSlotMetadata",
+    "adTimeOffset",
+    "adDurationRemaining",
+    "adDurationRemainingRenderer",
+    "instreamAdPlayerOverlayRenderer",
+    "instreamVideoAdRenderer",
+    "overlayPanelHeaderRenderer",
+    "adaptiveFormats"
+  ];
+  if (Array.isArray(obj)) {
+    for (let i = 0; i < obj.length; i++) {
+      obj[i] = stripAdKeys(obj[i]);
+    }
+    return obj;
+  }
+  for (const key of adKeys) {
+    if (key in obj) {
+      delete obj[key];
+    }
+  }
+  for (const k in obj) {
+    if (typeof obj[k] === "object" && obj[k] !== null) {
+      obj[k] = stripAdKeys(obj[k]);
+    }
+  }
+  return obj;
+}
 
+function processApiResponse(resp) {
+  if (!configRead("enableAdBlock")) return resp;
+  // Existing logic
+  if (resp && typeof resp === "object") {
+    // Remove known ad fields
+    if (Array.isArray(resp.adPlacements)) resp.adPlacements = [];
+    if (Array.isArray(resp.playerAds)) resp.playerAds = [];
+    if (Array.isArray(resp.adSlots)) resp.adSlots = [];
+    if (resp.adSlotRenderer) delete resp.adSlotRenderer;
+    // New recursive cleanup
+    resp = stripAdKeys(resp);
+  }
+  return resp;
+}
+
+const origStringify = JSON.stringify;
+JSON.stringify = function (value, replacer, space) {
+  try {
+    const playbackCtx = value?.playbackContext?.contentPlaybackContext;
     if (
-      typeof Response !== "undefined" &&
-      Response.prototype &&
-      typeof Response.prototype.json === "function"
+      playbackCtx &&
+      !playbackCtx.isInlinePlaybackNoAd &&
+      configRead("enableAdBlock")
     ) {
-      const origResponseJson = Response.prototype.json;
-      Response.prototype.json = function () {
-        return origResponseJson.apply(this, arguments).then(processApiResponse);
-      };
+      const clone = origParse(origStringify.call(this, value));
+      clone.playbackContext.contentPlaybackContext.isInlinePlaybackNoAd = true;
+      return origStringify.call(this, clone, replacer, space);
     }
+  } catch (err) {
+    // Leave the request untouched.
+  }
+  return origStringify.call(this, value, replacer, space);
+};
 
-    if (typeof XMLHttpRequest !== "undefined") {
-      const xhrResponse = Object.getOwnPropertyDescriptor(
-        XMLHttpRequest.prototype,
-        "response"
+if (
+  typeof Response !== "undefined" &&
+  Response.prototype &&
+  typeof Response.prototype.json === "function"
+) {
+  const origResponseJson = Response.prototype.json;
+  Response.prototype.json = function () {
+    return origResponseJson.apply(this, arguments).then(processApiResponse);
+  };
+}
+
+if (typeof XMLHttpRequest !== "undefined") {
+  const xhrResponse = Object.getOwnPropertyDescriptor(
+    XMLHttpRequest.prototype,
+    "response"
+  );
+  if (xhrResponse && xhrResponse.get) {
+    Object.defineProperty(XMLHttpRequest.prototype, "response", {
+      configurable: true,
+      enumerable: xhrResponse.enumerable,
+      get: function () {
+        const value = xhrResponse.get.call(this);
+        if (this.responseType === "json") processApiResponse(value);
+        return value;
+      },
+    });
+  }
+}
+
+/*
+ * YouTube's TV bundle keeps its own captured JSON object
+ * (window._yttv[key].JSON), which bypasses the global hooks above.
+ * Re-point those references at our patched functions, mirroring
+ * upstream TizenTube.
+ */
+function patchBundledJsonReferences() {
+  if (!window._yttv) return;
+  for (const key in window._yttv) {
+    const mod = window._yttv[key];
+    if (
+      mod &&
+      mod.JSON &&
+      typeof mod.JSON.parse === "function" &&
+      mod.JSON.parse !== JSON.parse
+    ) {
+      mod.JSON.parse = JSON.parse;
+      mod.JSON.stringify = JSON.stringify;
+      console.info("[vidrox] patched bundled JSON reference:", key);
+    }
+  }
+}
+
+/*
+ * Last line of defense for ads that survive payload scrubbing (e.g.
+ * server-stitched ones): auto-click any visible skip-ad button, and seek
+ * past ad ranges the player response declared. Seeking additionally
+ * requires ad UI to be visible in the player, so a declared range that
+ * merely marks an overlay-ad display window can never skip real content.
+ */
+const AD_SKIP_TICK_MS = 500;
+// Unambiguously ad-related; safe to click whenever visible.
+// 'skip-ad' and aria-label variants are generic fallbacks that survive
+// future renames.
+const AD_SKIP_BUTTON_SELECTORS = [
+  '[class*="skip-ad" i]',
+  '[class*="SkipAd"]',
+  '[idomkey*="skip-ad" i]',
+  '[idomkey*="skipAd"]',
+  '[aria-label*="skip ad" i]',
+].join(", ");
+// The leanback skip control. Base name `ytlr-skip-button` is confirmed
+// from captured watch-page DOM (its animation class is
+// `ytlr-skip-button-animate-in`). Only clicked while ad UI is on screen,
+// so a non-ad skip control can never be spammed.
+const AD_CONTEXT_SKIP_BUTTON_SELECTORS = [
+  AD_SKIP_BUTTON_SELECTORS,
+  "ytlr-skip-button",
+  '[class*="ytlr-skip-button"]',
+  '[class*="skip-button" i]',
+].join(", ");
+
+// Ad UI elements, verified against captured YouTube TV watch-page DOM:
+// ads render <ytlr-ad-attribution> / <ytlr-ad-notify> elements. These
+// exist in the DOM but stay zero-size until an ad shows, so callers gate
+// on getBoundingClientRect (see isAdUiVisible). The kebab-case fallbacks
+// cover related ad elements the static capture didn't surface.
+const AD_OVERLAY_SELECTORS = [
+  "ytlr-ad-attribution",
+  "ytlr-ad-notify",
+  '[class*="ytlr-ad-" i]',
+  "[class*='ad-showing']",
+  "[class*='ad-interrupting']",
+].join(", ");
+
+function isAdUiVisible() {
+  const overlay = document.querySelector(AD_OVERLAY_SELECTORS);
+  if (!overlay) return false;
+  const rect = overlay.getBoundingClientRect();
+  return rect.width > 0 || rect.height > 0;
+}
+
+function clickSkipButton(adUiVisible) {
+  const candidates = document.querySelectorAll(
+    adUiVisible ? AD_CONTEXT_SKIP_BUTTON_SELECTORS : AD_SKIP_BUTTON_SELECTORS
+  );
+  for (const el of candidates) {
+    const rect = el.getBoundingClientRect();
+    if (!rect.width && !rect.height) continue; // not visible
+
+    for (const type of ["mousedown", "mouseup", "click"]) {
+      el.dispatchEvent(
+        new MouseEvent(type, { bubbles: true, cancelable: true })
       );
-      if (xhrResponse && xhrResponse.get) {
-        Object.defineProperty(XMLHttpRequest.prototype, "response", {
-          configurable: true,
-          enumerable: xhrResponse.enumerable,
-          get: function () {
-            const value = xhrResponse.get.call(this);
-            if (this.responseType === "json") processApiResponse(value);
-            return value;
-          },
-        });
+    }
+    const enterKey = {
+      key: "Enter",
+      keyCode: 13,
+      bubbles: true,
+      cancelable: true,
+    };
+    el.dispatchEvent(new KeyboardEvent("keydown", enterKey));
+    el.dispatchEvent(new KeyboardEvent("keyup", enterKey));
+    console.info(
+      "[vidrox] auto-clicked ad skip button:",
+      el.className || el.tagName
+    );
+    return true;
+  }
+  return false;
+}
+
+function skipDeclaredAdRange(video) {
+  if (!adSkipState.ranges.length) return false;
+
+  // Only act on the video the ranges were captured for.
+  const match = location.hash.match(/[?&]v=([^&]+)/);
+  if (match && adSkipState.videoId && match[1] !== adSkipState.videoId) {
+    return false;
+  }
+
+  const current = video.currentTime;
+  for (const range of adSkipState.ranges) {
+    if (current >= range.start - 0.3 && current < range.end - 0.25) {
+      let target = range.end + 0.05;
+      if (isFinite(video.duration) && video.duration > 1) {
+        target = Math.min(target, video.duration - 0.1);
       }
-    }
-
-    /*
-     * YouTube's TV bundle keeps its own captured JSON object
-     * (window._yttv[key].JSON), which bypasses the global hooks above.
-     * Re-point those references at our patched functions, mirroring
-     * upstream TizenTube.
-     */
-    function patchBundledJsonReferences() {
-      if (!window._yttv) return;
-      for (const key in window._yttv) {
-        const mod = window._yttv[key];
-        if (
-          mod &&
-          mod.JSON &&
-          typeof mod.JSON.parse === "function" &&
-          mod.JSON.parse !== JSON.parse
-        ) {
-          mod.JSON.parse = JSON.parse;
-          mod.JSON.stringify = JSON.stringify;
-          console.info("[vidrox] patched bundled JSON reference:", key);
-        }
-      }
-    }
-
-    /*
-     * Last line of defense for ads that survive payload scrubbing (e.g.
-     * server-stitched ones): auto-click any visible skip-ad button, and seek
-     * past ad ranges the player response declared. Seeking additionally
-     * requires ad UI to be visible in the player, so a declared range that
-     * merely marks an overlay-ad display window can never skip real content.
-     */
-    const AD_SKIP_TICK_MS = 500;
-    // Unambiguously ad-related; safe to click whenever visible.
-    // 'skip-ad' and aria-label variants are generic fallbacks that survive
-    // future renames.
-    const AD_SKIP_BUTTON_SELECTORS = [
-      '[class*="skip-ad" i]',
-      '[class*="SkipAd"]',
-      '[idomkey*="skip-ad" i]',
-      '[idomkey*="skipAd"]',
-      '[aria-label*="skip ad" i]',
-    ].join(", ");
-    // The leanback skip control. Base name `ytlr-skip-button` is confirmed
-    // from captured watch-page DOM (its animation class is
-    // `ytlr-skip-button-animate-in`). Only clicked while ad UI is on screen,
-    // so a non-ad skip control can never be spammed.
-    const AD_CONTEXT_SKIP_BUTTON_SELECTORS = [
-      AD_SKIP_BUTTON_SELECTORS,
-      "ytlr-skip-button",
-      '[class*="ytlr-skip-button"]',
-      '[class*="skip-button" i]',
-    ].join(", ");
-
-    // Ad UI elements, verified against captured YouTube TV watch-page DOM:
-    // ads render <ytlr-ad-attribution> / <ytlr-ad-notify> elements. These
-    // exist in the DOM but stay zero-size until an ad shows, so callers gate
-    // on getBoundingClientRect (see isAdUiVisible). The kebab-case fallbacks
-    // cover related ad elements the static capture didn't surface.
-    const AD_OVERLAY_SELECTORS = [
-      "ytlr-ad-attribution",
-      "ytlr-ad-notify",
-      '[class*="ytlr-ad-" i]',
-      "[class*='ad-showing']",
-      "[class*='ad-interrupting']",
-    ].join(", ");
-
-    function isAdUiVisible() {
-      const overlay = document.querySelector(AD_OVERLAY_SELECTORS);
-      if (!overlay) return false;
-      const rect = overlay.getBoundingClientRect();
-      return rect.width > 0 || rect.height > 0;
-    }
-
-    function clickSkipButton(adUiVisible) {
-      const candidates = document.querySelectorAll(
-        adUiVisible ? AD_CONTEXT_SKIP_BUTTON_SELECTORS : AD_SKIP_BUTTON_SELECTORS
+      video.currentTime = target;
+      console.info(
+        `[vidrox] skipped stitched ad segment ${range.start}s-${range.end}s`
       );
-      for (const el of candidates) {
-        const rect = el.getBoundingClientRect();
-        if (!rect.width && !rect.height) continue; // not visible
-
-        for (const type of ["mousedown", "mouseup", "click"]) {
-          el.dispatchEvent(
-            new MouseEvent(type, { bubbles: true, cancelable: true })
-          );
-        }
-        const enterKey = {
-          key: "Enter",
-          keyCode: 13,
-          bubbles: true,
-          cancelable: true,
-        };
-        el.dispatchEvent(new KeyboardEvent("keydown", enterKey));
-        el.dispatchEvent(new KeyboardEvent("keyup", enterKey));
-        console.info(
-          "[vidrox] auto-clicked ad skip button:",
-          el.className || el.tagName
-        );
-        return true;
-      }
-      return false;
-    }
-
-    function skipDeclaredAdRange(video) {
-      if (!adSkipState.ranges.length) return false;
-
-      // Only act on the video the ranges were captured for.
-      const match = location.hash.match(/[?&]v=([^&]+)/);
-      if (match && adSkipState.videoId && match[1] !== adSkipState.videoId) {
-        return false;
-      }
-
-      const current = video.currentTime;
-      for (const range of adSkipState.ranges) {
-        if (current >= range.start - 0.3 && current < range.end - 0.25) {
-          let target = range.end + 0.05;
-          if (isFinite(video.duration) && video.duration > 1) {
-            target = Math.min(target, video.duration - 0.1);
-          }
-          video.currentTime = target;
-          console.info(
-            `[vidrox] skipped stitched ad segment ${range.start}s-${range.end}s`
-          );
-          try {
-            showToast("Ad block", "Skipping ad");
-          } catch (toastErr) {
-            // Toast is cosmetic; never let it break the skip.
-          }
-          return true;
-        }
-      }
-      return false;
-    }
-
-    let adSkipTickCount = 0;
-    let adUiWasVisible = false;
-    setInterval(() => {
       try {
-        adSkipTickCount++;
-        // The bundle can (re)create its JSON reference late; re-check every 2s.
-        if (adSkipTickCount % 4 === 0) patchBundledJsonReferences();
-
-        if (!configRead("enableAdBlock")) return;
-        const video = document.querySelector("video");
-        if (!video || video.paused || !isFinite(video.currentTime)) return;
-
-        const adUiVisible = isAdUiVisible();
-        if (adUiVisible !== adUiWasVisible) {
-          adUiWasVisible = adUiVisible;
-          console.info(`[vidrox] ad ui ${adUiVisible ? "appeared" : "gone"}`);
-        }
-
-        if (clickSkipButton(adUiVisible)) return;
-        if (adUiVisible) skipDeclaredAdRange(video);
-      } catch (err) {
-        // Keep the watchdog alive no matter what.
+        showToast("Ad block", "Skipping ad");
+      } catch (toastErr) {
+        // Toast is cosmetic; never let it break the skip.
       }
-    }, AD_SKIP_TICK_MS);
+      return true;
+    }
+  }
+  return false;
+}
 
-    function getShelfTitleText(shelf) {
+let adSkipTickCount = 0;
+let adUiWasVisible = false;
+setInterval(() => {
+  try {
+    adSkipTickCount++;
+    // The bundle can (re)create its JSON reference late; re-check every 2s.
+    if (adSkipTickCount % 4 === 0) patchBundledJsonReferences();
+
+    if (!configRead("enableAdBlock")) return;
+    const video = document.querySelector("video");
+    if (!video || video.paused || !isFinite(video.currentTime)) return;
+
+    const adUiVisible = isAdUiVisible();
+    if (adUiVisible !== adUiWasVisible) {
+      adUiWasVisible = adUiVisible;
+      console.info(`[vidrox] ad ui ${adUiVisible ? "appeared" : "gone"}`);
+    }
+
+    if (clickSkipButton(adUiVisible)) return;
+    if (adUiVisible) skipDeclaredAdRange(video);
+  } catch (err) {
+    // Keep the watchdog alive no matter what.
+  }
+}, AD_SKIP_TICK_MS);
+
+  function getShelfTitleText(shelf) {
       return (
         shelf?.shelfRenderer?.headerRenderer?.shelfHeaderRenderer?.avatarLockup?.avatarLockupRenderer?.title?.runs?.map((run) => run.text).join("") ||
         shelf?.shelfRenderer?.headerRenderer?.shelfHeaderRenderer?.title?.runs?.map((run) => run.text).join("") ||

@@ -23,7 +23,7 @@ on:
       wait_ms:
         description: Extra milliseconds to wait after load for late network responses
         required: true
-        default: '8000'
+        default: '15000'
 
 permissions:
   contents: write
@@ -66,7 +66,7 @@ jobs:
         working-directory: tools/youtube-tv-capture
         env:
           STORAGE_STATE_PATH: ${{ env.STORAGE_STATE_PATH }}
-          WAIT_MS: ${{ inputs.wait_ms || '8000' }}
+          WAIT_MS: ${{ inputs.wait_ms || '15000' }}
           OUTPUT_DIR: ${{ runner.temp }}/fixtures
           SKIP_SCREENSHOT: 'false'
           SKIP_HAR: 'false'

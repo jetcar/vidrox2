@@ -1017,6 +1017,35 @@
           (entry) => !entry?.command?.reelWatchEndpoint
         );
       }
+
+      // Left-nav "Shorts" entry (/youtubei/v1/guide). The rendered DOM uses
+      // obfuscated classes, so the CSS fallback can't target it reliably.
+      if (Array.isArray(r?.items)) {
+        for (const section of r.items) {
+          const sectionItems = section?.guideSectionRenderer?.items;
+          if (Array.isArray(sectionItems)) {
+            section.guideSectionRenderer.items = sectionItems.filter(
+              (item) => !isShortsGuideEntry(item)
+            );
+          }
+        }
+      }
+
+      // Guide startup behaviour that relaunches the app into the Shorts player.
+      if (Array.isArray(r?.startupBehaviours)) {
+        r.startupBehaviours = r.startupBehaviours.filter(
+          (behaviour) => !behaviour?.launchToShorts
+        );
+      }
+    }
+
+    function isShortsGuideEntry(item) {
+      const entry = item?.guideEntryRenderer;
+      return Boolean(
+        entry &&
+        (isShortsEndpoint(entry.navigationEndpoint) ||
+          /^YOUTUBE_SHORTS/.test(entry.icon?.iconType || ""))
+      );
     }
 
     // The tiny-sha256 module, edited to export itself.

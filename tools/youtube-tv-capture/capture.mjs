@@ -13,7 +13,7 @@ const YOUTUBE_TV_USER_AGENT =
 const OUTPUT_DIR = path.resolve(process.env.OUTPUT_DIR || './out');
 const HTML_OUTPUT_DIR = process.env.HTML_OUTPUT_DIR ? path.resolve(process.env.HTML_OUTPUT_DIR) : OUTPUT_DIR;
 const STORAGE_STATE_PATH = process.env.STORAGE_STATE_PATH;
-const WAIT_MS = Number.parseInt(process.env.WAIT_MS || '8000', 10);
+const WAIT_MS = Number.parseInt(process.env.WAIT_MS || '15000', 10);
 const VIEWPORT_WIDTH = Number.parseInt(process.env.VIEWPORT_WIDTH || '3840', 10);
 const VIEWPORT_HEIGHT = Number.parseInt(process.env.VIEWPORT_HEIGHT || '2160', 10);
 const SKIP_SCREENSHOT = process.env.SKIP_SCREENSHOT === 'true';

@@ -102,12 +102,21 @@ jobs:
 
           while git rev-parse -q --verify "refs/tags/v${release_version}" >/dev/null; do
             release_version=$(increment_patch "$release_version")
-            release_version_code=$((10#$release_version_code + 1))
             auto_bumped=true
           done
 
           if [ "$auto_bumped" = true ]; then
             echo "Auto-bumped release version to v${release_version}"
+          fi
+
+          # Derive versionCode from the version so every release is strictly
+          # higher than the last (0.0.42 -> 42, 1.2.3 -> 1002003). Releases up
+          # to v0.0.42 all shipped versionCode 6, so this keeps updates moving
+          # forward from there.
+          IFS='.' read -r code_major code_minor code_patch <<< "$release_version"
+          release_version_code=$(( 10#${code_major:-0} * 1000000 + 10#${code_minor:-0} * 1000 + 10#${code_patch:-0} ))
+          if [ "$release_version_code" -le "$current_version_code" ]; then
+            release_version_code=$(( 10#$current_version_code + 1 ))
           fi
 
           release_tag="v${release_version}"

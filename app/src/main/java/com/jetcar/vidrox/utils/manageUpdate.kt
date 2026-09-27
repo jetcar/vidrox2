@@ -11,7 +11,11 @@ import org.json.JSONObject
 data class ReleaseData (
     val tagName: String,
     val changelog: String,
-    val downloadUrl: String
+    val downloadUrl: String,
+    // Exact asset size and SHA-256 from the GitHub API, used to reject
+    // truncated or corrupted downloads before they reach the installer.
+    val expectedSize: Long,
+    val sha256: String?,
 )
 
 suspend fun fetchUpdate() : ReleaseData {
@@ -23,13 +27,18 @@ suspend fun fetchUpdate() : ReleaseData {
     val commitSHA = Regex("\\b[a-fA-F0-9]{40}\\b")
 
     val assets = res.getJSONArray("assets")
-    val apkUrl = findApkAssetUrl(assets)
+    val apkAsset = findApkAsset(assets)
 
     return ReleaseData(
         tagName = res.getString("tag_name"),
         changelog = res.getString("body")
             .substringAfter("</ins>").replace(commitSHA, "").replace(Regex("\\s{2,}"), " "),
-        downloadUrl = apkUrl
+        downloadUrl = apkAsset.getString("browser_download_url"),
+        expectedSize = apkAsset.optLong("size", -1L),
+        sha256 = apkAsset.optString("digest")
+            .takeIf { it.startsWith("sha256:") }
+            ?.removePrefix("sha256:")
+            ?.lowercase(),
     )
 }
 
@@ -61,20 +70,18 @@ private fun getLocalVersion(context: Context): String {
     return pInfo.versionName.toString()
 }
 
-private fun findApkAssetUrl(assets: JSONArray): String {
+// Only an .apk asset is ever offered: handing any other file to the
+// installer fails with "There was a problem parsing the package".
+private fun findApkAsset(assets: JSONArray): JSONObject {
     for (index in 0 until assets.length()) {
         val asset = assets.getJSONObject(index)
         val url = asset.optString("browser_download_url")
         if (url.endsWith(".apk", ignoreCase = true)) {
-            return url
+            return asset
         }
     }
 
-    if (assets.length() > 0) {
-        return assets.getJSONObject(0).getString("browser_download_url")
-    }
-
-    throw IllegalStateException("Latest release has no downloadable assets")
+    throw IllegalStateException("Latest release has no APK asset")
 }
 
 private fun compareVersions(left: String, right: String): Int {

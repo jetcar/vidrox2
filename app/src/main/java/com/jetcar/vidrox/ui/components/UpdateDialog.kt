@@ -51,7 +51,7 @@ fun UpdateDialog(releaseData: ReleaseData, onDismiss: () -> Unit) {
     }
 
     if (isDownload.value)
-        UpdateAppScreen(releaseData.tagName, releaseData.downloadUrl, onDismiss)
+        UpdateAppScreen(releaseData, onDismiss)
 
     if (isShowDialog.value) {
         // Count down every second; auto-update when it reaches 0

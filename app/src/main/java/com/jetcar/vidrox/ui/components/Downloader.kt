@@ -17,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import android.app.Activity
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,25 +26,29 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
 import com.jetcar.vidrox.ui.UpdateViewModel
+import com.jetcar.vidrox.utils.ReleaseData
 import java.io.File
 
 
 @Composable
-fun UpdateAppScreen(tagName: String, downloadUrl: String, onDismiss: () -> Unit) {
+fun UpdateAppScreen(releaseData: ReleaseData, onDismiss: () -> Unit) {
     val context = LocalContext.current
-    val activity = context as Activity
     val viewModel: UpdateViewModel = viewModel()
     val progress = viewModel.downloadProgress.collectAsState()
+    val tagName = releaseData.tagName
 
     val isShowDialog = remember { mutableStateOf(true) }
     val downloadedApk = remember { mutableStateOf<File?>(null) }
     val isDownloading = remember { mutableStateOf(true) }
+    val isInstalling = remember { mutableStateOf(false) }
 
-    LaunchedEffect(downloadUrl, tagName) {
+    LaunchedEffect(releaseData) {
         viewModel.downloadApk(
             context = context,
-            url = downloadUrl,
+            url = releaseData.downloadUrl,
             tagName = tagName,
+            expectedSize = releaseData.expectedSize,
+            sha256 = releaseData.sha256,
             onDownloaded = {
                 downloadedApk.value = it
                 isDownloading.value = false
@@ -131,12 +134,16 @@ fun UpdateAppScreen(tagName: String, downloadUrl: String, onDismiss: () -> Unit)
                                     onDismiss()
                                     return@YTButton
                                 }
-                                if (viewModel.installApk(context, apkFile)) {
-                                    // finishAffinity removes the task from recents cleanly,
-                                    // then exitProcess kills all threads immediately so the
-                                    // WebView GL renderer cannot race against EGL teardown.
-                                    activity.finishAffinity()
-                                    kotlin.system.exitProcess(0)
+                                if (isInstalling.value) return@YTButton
+                                isInstalling.value = true
+                                // The app keeps running: the system shows its own
+                                // confirmation and replaces the app on success.
+                                viewModel.installApk(context, apkFile) { committed ->
+                                    isInstalling.value = false
+                                    if (committed) {
+                                        isShowDialog.value = false
+                                        onDismiss()
+                                    }
                                 }
                             }
                     }

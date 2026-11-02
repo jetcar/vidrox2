@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - "codex/**"
     paths:
       - "ios/**"
       - "app/src/main/res/raw/userscripts.js"
@@ -48,6 +49,32 @@ jobs:
             -derivedDataPath build/ios-simulator \
             CODE_SIGNING_ALLOWED=NO \
             test
+
+      - name: Capture iPhone launch diagnostics
+        shell: bash
+        run: |
+          xcrun simctl boot 'iPhone 16 Pro' 2>/dev/null || true
+          xcrun simctl bootstatus 'iPhone 16 Pro' -b
+          xcrun simctl install 'iPhone 16 Pro' \
+            build/ios-simulator/Build/Products/Debug-iphonesimulator/VidroX.app
+          xcrun simctl launch --terminate-running-process \
+            'iPhone 16 Pro' com.jetcar.vidrox
+          sleep 15
+          mkdir -p build/ios-diagnostics
+          xcrun simctl io 'iPhone 16 Pro' screenshot \
+            build/ios-diagnostics/launch.png
+          xcrun simctl spawn 'iPhone 16 Pro' log show \
+            --last 2m --style compact \
+            --predicate 'process == "VidroX"' \
+            > build/ios-diagnostics/launch.log
+
+      - name: Upload iPhone launch diagnostics
+        uses: actions/upload-artifact@v7
+        with:
+          name: VidroX-ios-launch-diagnostics
+          path: build/ios-diagnostics
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Build unsigned iPhone application
         run: |

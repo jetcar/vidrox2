@@ -1,5 +1,7 @@
 # VidroX for iPhone Tasks
 
+Implementation and CI verification are complete. Physical-device installation through Sideloadly remains the user acceptance step.
+
 ## Task 1: Add the iOS project and WebView shell
 
 **Description:** Define the XcodeGen project, SwiftUI app entry point, and a minimal `WKWebView` that loads YouTube TV.

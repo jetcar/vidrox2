@@ -21,6 +21,8 @@ enum WebContentConfiguration {
         configuration.mediaTypesRequiringUserActionForPlayback = []
         configuration.defaultWebpagePreferences.allowsContentJavaScript = true
 
+        // WebKit user scripts run before page content when registered at document start.
+        // Source: https://developer.apple.com/documentation/webkit/wkuserscriptinjectiontime
         addUserScript(named: "ios_bridge", to: configuration.userContentController, bundle: bundle)
         addUserScript(named: "userscripts", to: configuration.userContentController, bundle: bundle)
         configuration.userContentController.add(scriptBridge, name: ScriptBridge.networkHandlerName)
@@ -30,6 +32,8 @@ enum WebContentConfiguration {
 
     @MainActor
     static func installContentRules(on controller: WKUserContentController) async throws {
+        // WebKit compiles JSON rule lists before applying them to a content controller.
+        // Source: https://developer.apple.com/documentation/webkit/wkcontentruleliststore
         let encodedRules = try contentRuleJSON()
         let ruleList = try await WKContentRuleListStore.default().compileContentRuleList(
             forIdentifier: "VidroXAdvertisingHosts",

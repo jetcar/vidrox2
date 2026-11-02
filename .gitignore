@@ -27,3 +27,6 @@ local.properties
 /tools/youtube-tv-capture/node_modules/
 /tools/youtube-tv-capture/youtube-tv.state.base64.txt
 /.idea/copilotDiffState.xml
+/ios/VidroX.xcodeproj/
+/graphify-out/.graphify_root
+/graphify-out/cache/

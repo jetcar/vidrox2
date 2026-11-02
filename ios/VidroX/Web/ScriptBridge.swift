@@ -3,6 +3,7 @@ import WebKit
 
 @MainActor
 final class ScriptBridge: NSObject, WKScriptMessageHandler {
+    // Source: https://developer.apple.com/documentation/webkit/wkscriptmessagehandler
     static let networkHandlerName = "networkBridge"
     static let exitHandlerName = "exitBridge"
 

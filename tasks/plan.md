@@ -31,34 +31,34 @@ XcodeGen project
 
 ### Phase 1: Build Foundation
 
-- [ ] Task 1: Add the generated iOS project and a minimal WKWebView shell.
+- [x] Task 1: Add the generated iOS project and a minimal WKWebView shell.
 
 ### Checkpoint: Foundation
 
-- [ ] XcodeGen creates the project on macOS.
-- [ ] The simulator build opens the YouTube TV URL.
+- [x] XcodeGen creates the project on macOS.
+- [x] The simulator build opens the YouTube TV URL.
 
 ### Phase 2: Blocking and Native Integration
 
-- [ ] Task 2: Inject shared scripts and compile WebKit ad-host rules.
-- [ ] Task 3: Implement the validated SponsorBlock and exit bridges.
+- [x] Task 2: Inject shared scripts and compile WebKit ad-host rules.
+- [x] Task 3: Implement the validated SponsorBlock and exit bridges.
 
 ### Checkpoint: Web Integration
 
-- [ ] Unit tests cover content rules, URL validation, and SponsorBlock filtering.
-- [ ] The shared userscript can call both compatibility bridge objects.
+- [x] Unit tests cover content rules, URL validation, and SponsorBlock filtering.
+- [x] The shared userscript can call both compatibility bridge objects.
 
 ### Phase 3: iPhone UX and Distribution
 
-- [ ] Task 4: Add loading, offline/retry, Escape, touch D-pad, and version UI.
-- [ ] Task 5: Add macOS CI tests and unsigned IPA artifact packaging.
+- [x] Task 4: Add loading, offline/retry, Escape, touch D-pad, and version UI.
+- [x] Task 5: Add macOS CI tests and unsigned IPA artifact packaging.
 
 ### Checkpoint: Complete
 
-- [ ] Simulator tests pass.
-- [ ] Unsigned device build succeeds.
-- [ ] IPA structure and bundled resources are verified.
-- [ ] Installation instructions cover Sideloadly and seven-day refresh.
+- [x] Simulator tests pass.
+- [x] Unsigned device build succeeds.
+- [x] IPA structure and bundled resources are verified.
+- [x] Installation instructions cover Sideloadly and seven-day refresh.
 
 ## Risks and Mitigations
 

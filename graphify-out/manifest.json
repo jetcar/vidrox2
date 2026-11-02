@@ -1,0 +1,410 @@
+{
+  ".claude/settings.local.json": {
+    "mtime": 1783240475.9354253,
+    "seen": 1793609997.558141,
+    "ast_hash": "4745265ac677dd695eabb77229e49551",
+    "semantic_hash": ""
+  },
+  ".vscode/settings.json": {
+    "mtime": 1774711575.7123206,
+    "seen": 1793609997.5581458,
+    "ast_hash": "aacc9aefefc691da70212f37bc3d4b47",
+    "semantic_hash": ""
+  },
+  "app/build.gradle.kts": {
+    "mtime": 1783251055.9937444,
+    "seen": 1793609997.558148,
+    "ast_hash": "0e800d0c95b2bddfbc7e38f46f03103e",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/MainActivity.kt": {
+    "mtime": 1774896321.532612,
+    "seen": 1793609997.5581489,
+    "ast_hash": "2eab79b2d0267841f263cb1ed54d0fa9",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/DownloaderVM.kt": {
+    "mtime": 1790495597.501679,
+    "seen": 1793609997.5581498,
+    "ast_hash": "ddb3c4ace021af7d9d531a8cdfb6e7fa",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/YouTubeVM.kt": {
+    "mtime": 1774868021.6060874,
+    "seen": 1793609997.558151,
+    "ast_hash": "13330e3f15d609d38cfe63af92e9e28e",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/components/Downloader.kt": {
+    "mtime": 1790495635.9748554,
+    "seen": 1793609997.558152,
+    "ast_hash": "488f6108ecdfad35681764963488f913",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/components/UpdateDialog.kt": {
+    "mtime": 1790495629.771098,
+    "seen": 1793609997.5581527,
+    "ast_hash": "ece3d4b3fa6f04cc6a659d12ed5bd840",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/screens/LayoutDebugBorders.kt": {
+    "mtime": 1775069386.4904675,
+    "seen": 1793609997.5581536,
+    "ast_hash": "db4329010bbe66f9d568fcc8e22dc18f",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/screens/SplashLoading.kt": {
+    "mtime": 1774944038.115289,
+    "seen": 1793609997.5581548,
+    "ast_hash": "012432f0f0d49e04cc715a9417ed018a",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/screens/YoutubeWV.kt": {
+    "mtime": 1783251121.2156913,
+    "seen": 1793609997.5581558,
+    "ast_hash": "8b8e645b6b2367dd6db558cbfb4fe1fa",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/screens/YoutubeWVOverlays.kt": {
+    "mtime": 1774944032.533217,
+    "seen": 1793609997.5581567,
+    "ast_hash": "51c7976ae038379ca215f15ca9eefaed",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/screens/YoutubeWVWebViewSupport.kt": {
+    "mtime": 1783251077.1701963,
+    "seen": 1793609997.5581577,
+    "ast_hash": "a23ce766712283d6098756187da662c7",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/theme/Color.kt": {
+    "mtime": 1774726893.9980319,
+    "seen": 1793609997.5581589,
+    "ast_hash": "adcec6f1a3284c422108697f99e0fe73",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/theme/Theme.kt": {
+    "mtime": 1774788692.7763813,
+    "seen": 1793609997.5581596,
+    "ast_hash": "3bfdb5645f34add295f3be10a7c74dc4",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/ui/theme/Type.kt": {
+    "mtime": 1774726893.9980319,
+    "seen": 1793609997.5581603,
+    "ast_hash": "5d4afa775b10c76dedfb78f7b6ab1ce8",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/utils/ExitBridge.kt": {
+    "mtime": 1774726893.9980319,
+    "seen": 1793609997.5581615,
+    "ast_hash": "791d7eebf574aed0c371509caac2771c",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/utils/JavaScriptEvaluator.kt": {
+    "mtime": 1774940036.7951035,
+    "seen": 1793609997.5581625,
+    "ast_hash": "cc458a6877254f38ac08b101639eb210",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/utils/NetworkBridge.kt": {
+    "mtime": 1774940037.735235,
+    "seen": 1793609997.5581632,
+    "ast_hash": "91efd58226b0526f3c35067419f3d1a3",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/utils/UpdateInstallReceiver.kt": {
+    "mtime": 1790495609.2257626,
+    "seen": 1793609997.5581641,
+    "ast_hash": "80277149f332aa34bc1c2ef79b822d7b",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/utils/fetchScripts.kt": {
+    "mtime": 1775072654.4101994,
+    "seen": 1793609997.558165,
+    "ast_hash": "9393f2bdea23ec8fd6fc9d95772305cd",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/utils/managePerms.kt": {
+    "mtime": 1774940040.2611759,
+    "seen": 1793609997.558166,
+    "ast_hash": "924a617e1c928b3e523298d1a9386226",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/utils/manageUpdate.kt": {
+    "mtime": 1790495571.8558905,
+    "seen": 1793609997.5581672,
+    "ast_hash": "e4011ae5c344b49faa67edcaaa7fa75f",
+    "semantic_hash": ""
+  },
+  "app/src/main/java/com/jetcar/vidrox/utils/readRaw.kt": {
+    "mtime": 1774726893.999008,
+    "seen": 1793609997.5581684,
+    "ast_hash": "202552543338326f393d4c62fab13970",
+    "semantic_hash": ""
+  },
+  "app/src/main/res/raw/back_bridge.js": {
+    "mtime": 1768073366.5877979,
+    "seen": 1793609997.5581694,
+    "ast_hash": "9ae3b66bcc22e2660e7bcfde72c89ea7",
+    "semantic_hash": ""
+  },
+  "app/src/main/res/raw/userscripts.js": {
+    "mtime": 1790493889.8907099,
+    "seen": 1793609997.5581703,
+    "ast_hash": "aab87373b7e3c0a9110af52b0b38d51d",
+    "semantic_hash": ""
+  },
+  "assets/userscripts.js": {
+    "mtime": 1774727865.3639143,
+    "seen": 1793609997.558171,
+    "ast_hash": "7d73f3744cd3928335c43c477335e7cf",
+    "semantic_hash": ""
+  },
+  "build.gradle.kts": {
+    "mtime": 1768073366.595428,
+    "seen": 1793609997.5581722,
+    "ast_hash": "84e569f7438a2e11a927c47e06b8b8ce",
+    "semantic_hash": ""
+  },
+  "gradlew": {
+    "mtime": 1783240318.7408037,
+    "seen": 1793609997.558173,
+    "ast_hash": "c6ea21dea2d500b277296894708cf792",
+    "semantic_hash": ""
+  },
+  "ios/VidroXTests/ContentRuleTests.swift": {
+    "mtime": 1793609314.193412,
+    "seen": 1793609997.558174,
+    "ast_hash": "6f3ca2b7930731fb1c77744e32197a0f",
+    "semantic_hash": ""
+  },
+  "ios/VidroXTests/SponsorBlockClientTests.swift": {
+    "mtime": 1793609363.3254569,
+    "seen": 1793609997.558175,
+    "ast_hash": "8480199fe72532fd6e80733d8fb1ce4f",
+    "semantic_hash": ""
+  },
+  "ios/VidroXTests/WebViewModelTests.swift": {
+    "mtime": 1793609500.6269937,
+    "seen": 1793609997.5581758,
+    "ast_hash": "8a80b331ccfb09c8468b57b232081ce5",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/App/ContentView.swift": {
+    "mtime": 1793609426.1776524,
+    "seen": 1793609997.558177,
+    "ast_hash": "4fa11a4662f94f479803e763de85721e",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/App/VidroXApp.swift": {
+    "mtime": 1793609276.2190175,
+    "seen": 1793609997.5581777,
+    "ast_hash": "08f2953a8697814fbd768387708e505b",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/ios_bridge.js": {
+    "mtime": 1793609314.1924293,
+    "seen": 1793609997.558179,
+    "ast_hash": "be0b6778f9175692a51c49ba4aa8dff6",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/UI/DirectionPadView.swift": {
+    "mtime": 1793609426.1796544,
+    "seen": 1793609997.5581796,
+    "ast_hash": "f6b3f96975e891edb2e9419739c951c3",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/UI/StatusOverlay.swift": {
+    "mtime": 1793609426.1806536,
+    "seen": 1793609997.5581806,
+    "ast_hash": "f9fc0f98ce06f2be454c51c2f1459f62",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Web/ScriptBridge.swift": {
+    "mtime": 1793609985.1181686,
+    "seen": 1793609997.5581813,
+    "ast_hash": "a380a39fed8ef0c8c47163660fdc00b8",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Web/SponsorBlockClient.swift": {
+    "mtime": 1793609363.3244555,
+    "seen": 1793609997.5581825,
+    "ast_hash": "9bffcd679eaa237b1d2717165f550fd2",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Web/WebContentConfiguration.swift": {
+    "mtime": 1793609985.117168,
+    "seen": 1793609997.5581834,
+    "ast_hash": "019d9f453162ad4d1daa37db4e941952",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Web/WebViewModel.swift": {
+    "mtime": 1793609441.7695444,
+    "seen": 1793609997.5581844,
+    "ast_hash": "f7ccd8f68b5278d3878ba8e4e2c7bb53",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Web/YouTubeWebView.swift": {
+    "mtime": 1793609441.7705617,
+    "seen": 1793609997.5581856,
+    "ast_hash": "d413c14af70dc6bbfb678d925be83a75",
+    "semantic_hash": ""
+  },
+  "ios/scripts/package-ipa.sh": {
+    "mtime": 1793609500.6279874,
+    "seen": 1793609997.5581865,
+    "ast_hash": "fb17138f601c4f1160eb980d3cb26dbe",
+    "semantic_hash": ""
+  },
+  "settings.gradle.kts": {
+    "mtime": 1774711778.489277,
+    "seen": 1793609997.5581882,
+    "ast_hash": "fc7d7e52ee1e9687b3f1cf7a24b789a2",
+    "semantic_hash": ""
+  },
+  "tools/youtube-tv-capture/ai-analyze.mjs": {
+    "mtime": 1783240318.7418087,
+    "seen": 1793609997.5581894,
+    "ast_hash": "0b640f5efb3a7aaebdff5df75aa57c88",
+    "semantic_hash": ""
+  },
+  "tools/youtube-tv-capture/analyze.mjs": {
+    "mtime": 1783240318.7428033,
+    "seen": 1793609997.55819,
+    "ast_hash": "9519edfd95ebf722736edb17b0ee256f",
+    "semantic_hash": ""
+  },
+  "tools/youtube-tv-capture/capture.mjs": {
+    "mtime": 1790493463.273589,
+    "seen": 1793609997.558191,
+    "ast_hash": "145a285ada111bb729bd8c664966bf33",
+    "semantic_hash": ""
+  },
+  "tools/youtube-tv-capture/package.json": {
+    "mtime": 1776455098.4434114,
+    "seen": 1793609997.5581918,
+    "ast_hash": "39cc8e18a3b3eabcdae77c72887f7611",
+    "semantic_hash": ""
+  },
+  "tools/youtube-tv-capture/save-storage-state.mjs": {
+    "mtime": 1774887140.38975,
+    "seen": 1793609997.558193,
+    "ast_hash": "f3f3c92b0c13da186f068aef0e008872",
+    "semantic_hash": ""
+  },
+  ".github/workflows/capture-youtube-tv-fixtures.yml": {
+    "mtime": 1790493463.2484913,
+    "seen": 1793609997.558194,
+    "ast_hash": "ac96f8968f7191291d499b5538fa9c1d",
+    "semantic_hash": ""
+  },
+  ".github/workflows/ios-ipa.yml": {
+    "mtime": 1793609985.115096,
+    "seen": 1793609997.5581949,
+    "ast_hash": "0a7b1b2ae88695c7aa6bf646c2216406",
+    "semantic_hash": ""
+  },
+  ".github/workflows/release-drafter.yml": {
+    "mtime": 1790495650.1583197,
+    "seen": 1793609997.5581958,
+    "ast_hash": "b7af4f7e4b79099dc341e5018a00eda4",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1793609500.6289878,
+    "seen": 1793609997.5581965,
+    "ast_hash": "a787aa04020bfc0c9f56bd5318433c7d",
+    "semantic_hash": ""
+  },
+  "SPEC-ios.md": {
+    "mtime": 1793608902.8333755,
+    "seen": 1793609997.5581975,
+    "ast_hash": "87e02e9dca24afb445a31c386a654f4d",
+    "semantic_hash": ""
+  },
+  "docs/decisions/001-ios-unsigned-ipa.md": {
+    "mtime": 1793609223.0671673,
+    "seen": 1793609997.5581985,
+    "ast_hash": "6d7a22a27302d91e61384a30d7858bbc",
+    "semantic_hash": ""
+  },
+  "docs/shorts-fixtures.md": {
+    "mtime": 1774887188.995871,
+    "seen": 1793609997.5581996,
+    "ast_hash": "8c750386d004e54223ed0f7cb452c55b",
+    "semantic_hash": ""
+  },
+  "ios/project.yml": {
+    "mtime": 1793609500.6259925,
+    "seen": 1793609997.5582006,
+    "ast_hash": "fcc2a617d13f7cfa6652d1267b0dd46d",
+    "semantic_hash": ""
+  },
+  "tasks/plan.md": {
+    "mtime": 1793609985.1181686,
+    "seen": 1793609997.5582016,
+    "ast_hash": "4c60f000a8d6cb58abbb464a2ce03921",
+    "semantic_hash": ""
+  },
+  "tasks/todo.md": {
+    "mtime": 1793609985.1191669,
+    "seen": 1793609997.5582023,
+    "ast_hash": "9c08443be9824cd9925cc4581da28bd0",
+    "semantic_hash": ""
+  },
+  "app/src/main/res/drawable/banner_fg.png": {
+    "mtime": 1774788868.9402003,
+    "seen": 1793609997.5582035,
+    "ast_hash": "26c30758dc69c8a13c437068606060fe",
+    "semantic_hash": ""
+  },
+  "app/src/main/res/drawable/ic_banner.png": {
+    "mtime": 1774892367.0717247,
+    "seen": 1793609997.5582044,
+    "ast_hash": "425ac634026b56a60975a8c2e05d5955",
+    "semantic_hash": ""
+  },
+  "app/src/main/res/mipmap-hdpi-v4/ic_launcher.png": {
+    "mtime": 1768073366.584753,
+    "seen": 1793609997.5582051,
+    "ast_hash": "020573150c1b7fcc6a26e6d8c40cdab6",
+    "semantic_hash": ""
+  },
+  "app/src/main/res/mipmap-mdpi-v4/ic_launcher.png": {
+    "mtime": 1768073366.5857637,
+    "seen": 1793609997.5582063,
+    "ast_hash": "f4db115c4fa1a4c01895a5d02e6fac76",
+    "semantic_hash": ""
+  },
+  "app/src/main/res/mipmap-xhdpi-v4/ic_launcher.png": {
+    "mtime": 1768073366.586274,
+    "seen": 1793609997.558207,
+    "ast_hash": "7c36e0ecb7afd537698b10b2f6409e1c",
+    "semantic_hash": ""
+  },
+  "app/src/main/res/mipmap-xxhdpi-v4/ic_launcher.png": {
+    "mtime": 1768073366.5867798,
+    "seen": 1793609997.558208,
+    "ast_hash": "16be3fcc1b8f2b0aabe6438c1bbdbcf5",
+    "semantic_hash": ""
+  },
+  "app/src/main/res/mipmap-xxxhdpi-v4/ic_launcher.png": {
+    "mtime": 1768073366.5867798,
+    "seen": 1793609997.558209,
+    "ast_hash": "c416f8ec7ae59d63469587a3c7a98567",
+    "semantic_hash": ""
+  },
+  "assets/VidroX_banner.png": {
+    "mtime": 1774798717.2182655,
+    "seen": 1793609997.55821,
+    "ast_hash": "6bf68ddc273897bee1713f0929e8f2c5",
+    "semantic_hash": ""
+  },
+  "assets/get-it-on-github.png": {
+    "mtime": 1768073366.5938928,
+    "seen": 1793609997.5582108,
+    "ast_hash": "31a450a8f73450bfeb9a059be91d973d",
+    "semantic_hash": ""
+  }
+}

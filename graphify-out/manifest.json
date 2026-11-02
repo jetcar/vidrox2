@@ -186,9 +186,9 @@
     "semantic_hash": ""
   },
   "ios/VidroXTests/WebViewModelTests.swift": {
-    "mtime": 1793616350.0413952,
-    "seen": 1793616363.6520197,
-    "ast_hash": "464f8d471c86aeb30949f807561383a4",
+    "mtime": 1793617155.243393,
+    "seen": 1793617162.5324342,
+    "ast_hash": "37fdc65a703a7149a745694705c5351f",
     "semantic_hash": ""
   },
   "ios/VidroX/App/ContentView.swift": {
@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   "ios/VidroX/Web/WebViewModel.swift": {
-    "mtime": 1793616350.0413952,
-    "seen": 1793616363.652032,
-    "ast_hash": "6247f3f9c7e20d2642d9a1fc4ed4d274",
+    "mtime": 1793617155.2423925,
+    "seen": 1793617162.532448,
+    "ast_hash": "159232a7cae2892eaf6ccd1232755a4a",
     "semantic_hash": ""
   },
   "ios/VidroX/Web/YouTubeWebView.swift": {
@@ -336,9 +336,9 @@
     "semantic_hash": ""
   },
   "ios/project.yml": {
-    "mtime": 1793616318.6677847,
-    "seen": 1793616363.6520505,
-    "ast_hash": "b8fb9b418dd28003d3a0c11c7fc4d25c",
+    "mtime": 1793617155.2443924,
+    "seen": 1793617162.5324671,
+    "ast_hash": "358d84dfb78bff309758141092ef4fcd",
     "semantic_hash": ""
   },
   "tasks/plan.md": {

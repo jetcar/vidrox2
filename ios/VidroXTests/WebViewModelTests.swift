@@ -46,4 +46,12 @@ final class WebViewModelTests: XCTestCase {
         XCTAssertTrue(script.contains("key: \"Escape\""))
         XCTAssertTrue(script.contains("keyCode: 27"))
     }
+
+    func testControlsRemainVisible() {
+        let model = WebViewModel()
+
+        model.showControls()
+
+        XCTAssertTrue(model.controlsVisible)
+    }
 }

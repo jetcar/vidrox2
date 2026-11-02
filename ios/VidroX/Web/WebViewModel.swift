@@ -30,7 +30,6 @@ final class WebViewModel: ObservableObject {
     @Published private(set) var controlsVisible = true
 
     private weak var webView: WKWebView?
-    private var hideControlsTask: Task<Void, Never>?
 
     var versionLabel: String {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
@@ -83,12 +82,6 @@ final class WebViewModel: ObservableObject {
 
     func showControls() {
         controlsVisible = true
-        hideControlsTask?.cancel()
-        hideControlsTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .seconds(4))
-            guard !Task.isCancelled else { return }
-            self?.controlsVisible = false
-        }
     }
 
     func sendRemoteKey(_ remoteKey: RemoteKey) {
@@ -119,7 +112,4 @@ final class WebViewModel: ObservableObject {
         navigateBack()
     }
 
-    deinit {
-        hideControlsTask?.cancel()
-    }
 }

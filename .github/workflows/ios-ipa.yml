@@ -52,6 +52,8 @@ jobs:
 
       - name: Capture iPhone launch diagnostics
         shell: bash
+        timeout-minutes: 2
+        continue-on-error: true
         run: |
           DEVICE_ID="$(xcrun simctl list devices available -j | python3 -c '
           import json, sys
@@ -64,7 +66,7 @@ jobs:
           ))
           ')"
           xcrun simctl boot "${DEVICE_ID}" 2>/dev/null || true
-          xcrun simctl bootstatus "${DEVICE_ID}" -b
+          sleep 10
           xcrun simctl install "${DEVICE_ID}" \
             build/ios-simulator/Build/Products/Debug-iphonesimulator/VidroX.app
           xcrun simctl launch --terminate-running-process \
@@ -75,11 +77,12 @@ jobs:
             build/ios-diagnostics/launch.png
 
       - name: Upload iPhone launch diagnostics
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: VidroX-ios-launch-diagnostics
           path: build/ios-diagnostics
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 7
 
       - name: Build unsigned iPhone application

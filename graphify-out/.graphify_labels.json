@@ -1,5 +1,5 @@
 {
-  "0": "WebViewModel",
+  "0": ".webView",
   "1": "YoutubeWVWebViewSupport.kt",
   "2": "raw/userscripts.js",
   "3": "ScriptBridge",
@@ -33,5 +33,10 @@
   "31": "package-ipa.sh",
   "32": "build.gradle.kts",
   "33": "ios_bridge.js",
-  "34": "settings.gradle.kts"
+  "34": "settings.gradle.kts",
+  "35": "Coordinator",
+  "36": "WebViewModel",
+  "37": "ContentView",
+  "38": "RemoteKey",
+  "39": ".body"
 }

@@ -17,7 +17,7 @@ struct YouTubeWebView: UIViewRepresentable {
             scriptBridge: context.coordinator.scriptBridge
         )
 
-        let webView = WKWebView(frame: .zero, configuration: configuration)
+        let webView = TelevisionWebView(frame: .zero, configuration: configuration)
         context.coordinator.connect(to: webView)
         webView.customUserAgent = Self.televisionUserAgent
         webView.scrollView.bounces = false
@@ -25,6 +25,9 @@ struct YouTubeWebView: UIViewRepresentable {
             assertionFailure("The built-in YouTube TV URL is invalid")
             return webView
         }
+        // Start navigation immediately. Content-rule compilation can stall on
+        // a freshly signed device build and must never hold the first frame.
+        webView.load(URLRequest(url: youtubeTVURL))
         Task { @MainActor in
             do {
                 try await WebContentConfiguration.installContentRules(
@@ -34,7 +37,6 @@ struct YouTubeWebView: UIViewRepresentable {
                 // Userscript-based filtering still works if content-rule compilation fails.
                 assertionFailure("Unable to compile WebKit content rules: \(error)")
             }
-            webView.load(URLRequest(url: youtubeTVURL))
         }
         return webView
     }
@@ -124,5 +126,27 @@ struct YouTubeWebView: UIViewRepresentable {
         func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
             model.didFailLoading(URLError(.networkConnectionLost))
         }
+    }
+}
+
+final class TelevisionWebView: WKWebView {
+    static let televisionCanvasSize = CGSize(width: 7_000, height: 4_000)
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let fittedZoom = Self.pageZoom(for: bounds.size)
+        if abs(pageZoom - fittedZoom) > 0.000_001 {
+            pageZoom = fittedZoom
+        }
+    }
+
+    static func pageZoom(for viewportSize: CGSize) -> CGFloat {
+        guard viewportSize.width > 0, viewportSize.height > 0 else {
+            return 1
+        }
+        return min(
+            viewportSize.width / televisionCanvasSize.width,
+            viewportSize.height / televisionCanvasSize.height
+        )
     }
 }

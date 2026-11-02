@@ -11,7 +11,7 @@ final class TelevisionWebViewTests: XCTestCase {
 
         XCTAssertEqual(
             zoom,
-            CGFloat(393) / 4_000 * TelevisionWebView.zoomSafetyFactor,
+            CGFloat(393) / 2_160 * TelevisionWebView.zoomSafetyFactor,
             accuracy: 0.000_001
         )
     }
@@ -23,7 +23,7 @@ final class TelevisionWebViewTests: XCTestCase {
 
         XCTAssertEqual(
             zoom,
-            CGFloat(393) / 7_000 * TelevisionWebView.zoomSafetyFactor,
+            CGFloat(393) / 3_840 * TelevisionWebView.zoomSafetyFactor,
             accuracy: 0.000_001
         )
     }
@@ -37,7 +37,12 @@ final class TelevisionWebViewTests: XCTestCase {
         let zoom = TelevisionWebView.pageZoom(for: viewport)
         let renderedHeight = TelevisionWebView.televisionCanvasSize.height * zoom
 
-        XCTAssertLessThanOrEqual(renderedHeight, viewport.height * 0.94)
-        XCTAssertGreaterThanOrEqual(viewport.height - renderedHeight, 23)
+        XCTAssertLessThanOrEqual(renderedHeight, viewport.height * 0.98)
+        XCTAssertGreaterThanOrEqual(viewport.height - renderedHeight, 7)
+    }
+
+    func testTelevisionCanvasMatchesInjectedFourKViewport() {
+        XCTAssertEqual(TelevisionWebView.televisionCanvasSize.width, 3_840)
+        XCTAssertEqual(TelevisionWebView.televisionCanvasSize.height, 2_160)
     }
 }

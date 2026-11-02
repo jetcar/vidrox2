@@ -1,17 +1,17 @@
 # Graph Report - vidrox  (2026-11-02)
 
 ## Corpus Check
-- 59 files · ~28,985 words
+- 59 files · ~29,040 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 15 file(s) not represented in the graph (top: .xml 5, (none) 4, .properties 2)
 
 ## Summary
-- 636 nodes · 1072 edges · 35 communities (21 shown, 14 thin omitted)
-- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 51 edges (avg confidence: 0.86)
+- 642 nodes · 1084 edges · 45 communities (23 shown, 22 thin omitted)
+- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 52 edges (avg confidence: 0.86)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `dc29b884`
+- Built from commit: `12fb9eed`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,16 +21,16 @@
 - raw/userscripts.js
 - ScriptBridge
 - DownloaderVM.kt
+- Coordinator
 - capture.mjs
-- .body
+- View
 - assets/userscripts.js
-- Downloader.kt
-- .pageZoom
+- SplashLoading.kt
+- Foundation
 - analyze.mjs
 - Implementation Plan: VidroX for iPhone
 - ai-analyze.mjs
 - YoutubeWVOverlays.kt
-- UpdateDialog.kt
 - managePerms.kt
 - .onCreate
 - ADR-001: Build an unsigned iOS package for Sideloadly
@@ -42,14 +42,23 @@
 - MainActivity.kt
 - ReleaseData
 - package-ipa.sh
+- NetworkBridge.kt
 - manageUpdate.kt
+- RemoteKey
+- ContentView
+- .pageZoom
+- UpdateInstallReceiver.kt
+- .body
+- UpdateViewModel
+- NetworkBridge
+- readRaw
 
 ## God Nodes (most connected - your core abstractions)
-1. `WebViewModel` - 29 edges
+1. `WebViewModel` - 31 edges
 2. `YoutubeWV()` - 25 edges
 3. `Coordinator` - 14 edges
 4. `ScriptBridge` - 13 edges
-5. `RemoteKey` - 11 edges
+5. `RemoteKey` - 12 edges
 6. `WebViewClient` - 10 edges
 7. `SponsorBlockHandler` - 10 edges
 8. `SponsorBlockHandler` - 10 edges
@@ -71,15 +80,15 @@
 ## Import Cycles
 - None detected.
 
-## Communities (35 total, 14 thin omitted)
+## Communities (45 total, 22 thin omitted)
 
 ### Community 0 - "WebViewModel"
-Cohesion: 0.06
-Nodes (14): RemoteKey, down, escape, .event, left, right, select, up (+6 more)
+Cohesion: 0.12
+Nodes (3): WebViewModel, .versionLabel, WebViewModelTests
 
 ### Community 1 - "YoutubeWVWebViewSupport.kt"
 Cohesion: 0.08
-Nodes (14): YoutubeWV(), NetworkCallback, configureCookies(), configureFocusAndTouch(), configureScale(), configureWebSettings(), createLoggingWebViewClient(), WebViewClient (+6 more)
+Nodes (15): YoutubeWV(), NetworkCallback, configureCookies(), configureFocusAndTouch(), configureScale(), configureWebSettings(), createLoggingWebViewClient(), WebViewClient (+7 more)
 
 ### Community 2 - "raw/userscripts.js"
 Cohesion: 0.08
@@ -89,29 +98,25 @@ Nodes (28): addMenuButton(), applyShortsHidingCSS(), captureAdRangesFromPlayerRe
 Cohesion: 0.08
 Nodes (8): ScriptBridge, ClientError, disallowedEndpoint, invalidResponse, invalidURL, unsuccessfulStatus, SponsorBlockClient, SponsorBlockClientTests
 
-### Community 4 - "DownloaderVM.kt"
-Cohesion: 0.08
-Nodes (3): InvalidUpdateException, UpdateViewModel, UpdateInstallReceiver
-
 ### Community 6 - "capture.mjs"
-Cohesion: 0.07
-Nodes (31): playwright, AD_RESPONSE_KEYWORDS, buildCaptureTargets(), buildResponseFileName(), captureTarget(), DEFAULT_CAPTURES, isTextualContentType(), main() (+23 more)
-
-### Community 7 - ".body"
 Cohesion: 0.09
-Nodes (15): ContentView, .body, VidroXApp, .body, ButtonStyle, .remoteControl, DirectionPadView, .body (+7 more)
+Nodes (30): playwright, AD_RESPONSE_KEYWORDS, buildCaptureTargets(), buildResponseFileName(), captureTarget(), DEFAULT_CAPTURES, isTextualContentType(), main() (+22 more)
+
+### Community 7 - "View"
+Cohesion: 0.24
+Nodes (5): ButtonStyle, .remoteControl, DirectionPadView, .body, RemoteControlButtonStyle
 
 ### Community 8 - "assets/userscripts.js"
 Cohesion: 0.12
 Nodes (16): addMenuButton(), applyShortsHidingCSS(), customAction(), execute_once_dom_loaded(), getSearchBar(), getShelfTitleText(), installShortsHidingObserver(), isShortsEndpoint() (+8 more)
 
-### Community 10 - ".pageZoom"
-Cohesion: 0.08
-Nodes (10): Combine, CoreGraphics, Foundation, WebContentConfiguration, ContentRuleTests, ContentViewLayoutTests, TelevisionWebViewTests, VidroX (+2 more)
+### Community 10 - "Foundation"
+Cohesion: 0.10
+Nodes (9): Combine, CoreGraphics, Foundation, WebContentConfiguration, ContentRuleTests, ContentViewLayoutTests, VidroX, WebKit (+1 more)
 
 ### Community 11 - "analyze.mjs"
-Cohesion: 0.23
-Nodes (14): AD_CLASS_PATTERNS, AD_JSON_KEY_SET, AD_JSON_KEYS, AD_KEYWORDS, analyzeFixtures(), collectAdPayloadSignals(), extractExternalScriptUrls(), findAdNetworkEndpoints() (+6 more)
+Cohesion: 0.14
+Nodes (15): AD_CLASS_PATTERNS, AD_JSON_KEY_SET, AD_JSON_KEYS, AD_KEYWORDS, analyzeFixtures(), collectAdPayloadSignals(), extractExternalScriptUrls(), findAdNetworkEndpoints() (+7 more)
 
 ### Community 12 - "Implementation Plan: VidroX for iPhone"
 Cohesion: 0.11
@@ -122,15 +127,11 @@ Cohesion: 0.17
 Nodes (17): AD_CLASS_PATTERNS, AD_JSON_KEY_SET, AD_JSON_KEYS, AD_URL_KEYWORDS, buildPrompt(), callGitHubModels(), collectAdPayloadSignals(), __dirname (+9 more)
 
 ### Community 14 - "YoutubeWVOverlays.kt"
-Cohesion: 0.18
+Cohesion: 0.17
 Nodes (3): DirectionPadOverlay(), NavigationButton(), OfflineOverlay()
 
-### Community 15 - "UpdateDialog.kt"
-Cohesion: 0.17
-Nodes (3): UpdateAppScreen(), UpdateDialog(), YTButton()
-
 ### Community 17 - "managePerms.kt"
-Cohesion: 0.19
+Cohesion: 0.21
 Nodes (3): hasPermission(), rememberWebChromeClient(), WebChromeClient
 
 ### Community 19 - "ADR-001: Build an unsigned iOS package for Sideloadly"
@@ -138,8 +139,8 @@ Cohesion: 0.17
 Nodes (11): Ad Hoc signed IPA, ADR-001: Build an unsigned iOS package for Sideloadly, Alternatives Considered, Consequences, Context, Date, Decision, Local Xcode build (+3 more)
 
 ### Community 20 - "VidroX"
-Cohesion: 0.17
-Nodes (11): After Installation, Build Instructions, Building from Source, Contributing, Features, How Ad Blocking Works, How Shorts Blocking Works, iPhone build for Sideloadly (+3 more)
+Cohesion: 0.18
+Nodes (10): After Installation, Build Instructions, Building from Source, Contributing, Features, How Shorts Blocking Works, iPhone build for Sideloadly, Prerequisites (+2 more)
 
 ### Community 21 - "Spec: VidroX for iPhone"
 Cohesion: 0.18
@@ -153,29 +154,45 @@ Nodes (8): Create a storage state locally, Good maintenance workflow, How to use
 Cohesion: 0.22
 Nodes (8): Checkpoint: Complete, Checkpoint: Web Integration, Task 1: Add the iOS project and WebView shell, Task 2: Inject scripts and block advertising hosts, Task 3: Implement native JavaScript bridges, Task 4: Add iPhone controls and connection UI, Task 5: Build and publish the unsigned IPA, VidroX for iPhone Tasks
 
+### Community 26 - "ReleaseData"
+Cohesion: 0.21
+Nodes (5): UpdateAppScreen(), UpdateDialog(), YTButton(), YoutubeVM, ReleaseData
+
 ### Community 36 - "manageUpdate.kt"
-Cohesion: 0.10
-Nodes (10): fetchScripts(), JavaScriptEvaluator, compareVersions(), fetchUpdate(), findApkAsset(), getLocalVersion(), getSkipVersion(), getUpdate() (+2 more)
+Cohesion: 0.26
+Nodes (7): JavaScriptEvaluator, compareVersions(), fetchUpdate(), findApkAsset(), getLocalVersion(), getSkipVersion(), getUpdate()
+
+### Community 37 - "RemoteKey"
+Cohesion: 0.18
+Nodes (8): RemoteKey, down, escape, .event, left, right, select, up
+
+### Community 38 - "ContentView"
+Cohesion: 0.20
+Nodes (5): ContentView, VidroXApp, .body, SwiftUI, UIKit
+
+### Community 41 - ".body"
+Cohesion: 0.24
+Nodes (5): .body, LoadingOverlay, .body, OfflineOverlay, .body
 
 ## Knowledge Gaps
 - **93 isolated node(s):** `CoreGraphics`, `.body`, `.body`, `invalidURL`, `disallowedEndpoint` (+88 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 228 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 231 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **22 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `WebViewModel` connect `WebViewModel` to `.pageZoom`, `.body`?**
-  _High betweenness centrality (0.205) - this node is a cross-community bridge._
+- **Why does `WebViewModel` connect `WebViewModel` to `Coordinator`, `RemoteKey`, `ContentView`, `View`, `.body`, `Foundation`?**
+  _High betweenness centrality (0.209) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `WebViewModel` (e.g. with `ContentView` and `.testCancelledNavigationDoesNotShowOfflineState()`) actually correct?**
   _`WebViewModel` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `CoreGraphics`, `.body`, `.body` to the rest of the system?**
   _93 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `WebViewModel` be split into smaller, more focused modules?**
-  _Cohesion score 0.0649895178197065 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12307692307692308 - nodes in this community are weakly interconnected._
 - **Why does `ExitBridge` connect `Implementation Plan: VidroX for iPhone` to `YoutubeWV.kt`, `YoutubeWVWebViewSupport.kt`?**
   _High betweenness centrality (0.140) - this node is a cross-community bridge._
 - **Are the 11 inferred relationships involving `YoutubeWV()` (e.g. with `SplashLoading()` and `DirectionPadOverlay()`) actually correct?**
   _`YoutubeWV()` has 11 INFERRED edges - model-reasoned connections that need verification._
 - **Should `YoutubeWVWebViewSupport.kt` be split into smaller, more focused modules?**
-  _Cohesion score 0.07777777777777778 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07536231884057971 - nodes in this community are weakly interconnected._

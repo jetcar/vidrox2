@@ -4,19 +4,6 @@
   "graph": {},
   "nodes": [
     {
-      "id": "ios_vidrox_web_webviewmodel_remotekey",
-      "label": "RemoteKey",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "remotekey",
-      "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L7"
-    },
-    {
       "id": "ios_vidrox_web_webviewmodel_webviewmodel",
       "label": "WebViewModel",
       "_callable": true,
@@ -27,45 +14,6 @@
       "file_type": "code",
       "norm_label": "webviewmodel",
       "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L5"
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview_coordinator",
-      "label": "Coordinator",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "coordinator",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L57"
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview_televisionwebview",
-      "label": "TelevisionWebView",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "televisionwebview",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L137"
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview_youtubewebview",
-      "label": "YouTubeWebView",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "youtubewebview",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
       "source_location": "L5"
     },
     {
@@ -114,7 +62,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "webcontentconfiguration",
       "source_file": "ios/VidroX/Web/WebContentConfiguration.swift",
@@ -127,7 +75,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "contentruletests",
       "source_file": "ios/VidroXTests/ContentRuleTests.swift",
@@ -140,23 +88,10 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "contentviewlayouttests",
       "source_file": "ios/VidroXTests/ContentViewLayoutTests.swift",
-      "source_location": "L5"
-    },
-    {
-      "id": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests",
-      "label": "TelevisionWebViewTests",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": ".pageZoom",
-      "file_type": "code",
-      "norm_label": "televisionwebviewtests",
-      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
       "source_location": "L5"
     },
     {
@@ -303,17 +238,69 @@
       "source_location": "L5"
     },
     {
-      "id": "app_src_main_java_com_jetcar_vidrox_utils_networkbridge_networkbridge",
-      "label": "NetworkBridge",
+      "id": "ios_vidrox_web_webviewmodel_remotekey",
+      "label": "RemoteKey",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 37,
+      "community_name": "RemoteKey",
       "file_type": "code",
-      "norm_label": "networkbridge",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/NetworkBridge.kt",
-      "source_location": "L16"
+      "norm_label": "remotekey",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L7"
+    },
+    {
+      "id": "ios_vidrox_app_contentview_contentview",
+      "label": "ContentView",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ContentView",
+      "file_type": "code",
+      "norm_label": "contentview",
+      "source_file": "ios/VidroX/App/ContentView.swift",
+      "source_location": "L3"
+    },
+    {
+      "id": "ios_vidrox_app_vidroxapp_vidroxapp",
+      "label": "VidroXApp",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ContentView",
+      "file_type": "code",
+      "norm_label": "vidroxapp",
+      "source_file": "ios/VidroX/App/VidroXApp.swift",
+      "source_location": "L3"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_televisionwebview",
+      "label": "TelevisionWebView",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": ".pageZoom",
+      "file_type": "code",
+      "norm_label": "televisionwebview",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L137"
+    },
+    {
+      "id": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests",
+      "label": "TelevisionWebViewTests",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": ".pageZoom",
+      "file_type": "code",
+      "norm_label": "televisionwebviewtests",
+      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
+      "source_location": "L5"
     },
     {
       "id": "app_src_main_java_com_jetcar_vidrox_ui_downloadervm_invalidupdateexception",
@@ -329,95 +316,17 @@
       "source_location": "L36"
     },
     {
-      "id": "app_src_main_java_com_jetcar_vidrox_ui_downloadervm_updateviewmodel",
-      "label": "UpdateViewModel",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
-      "file_type": "code",
-      "norm_label": "updateviewmodel",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/ui/DownloaderVM.kt",
-      "source_location": "L38"
-    },
-    {
       "id": "app_src_main_java_com_jetcar_vidrox_utils_updateinstallreceiver_updateinstallreceiver",
       "label": "UpdateInstallReceiver",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 40,
+      "community_name": "UpdateInstallReceiver.kt",
       "file_type": "code",
       "norm_label": "updateinstallreceiver",
       "source_file": "app/src/main/java/com/jetcar/vidrox/utils/UpdateInstallReceiver.kt",
       "source_location": "L14"
-    },
-    {
-      "id": "ios_vidrox_app_contentview_contentview",
-      "label": "ContentView",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "contentview",
-      "source_file": "ios/VidroX/App/ContentView.swift",
-      "source_location": "L3"
-    },
-    {
-      "id": "ios_vidrox_app_vidroxapp_vidroxapp",
-      "label": "VidroXApp",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "vidroxapp",
-      "source_file": "ios/VidroX/App/VidroXApp.swift",
-      "source_location": "L3"
-    },
-    {
-      "id": "ios_vidrox_ui_directionpadview_buttonstyle",
-      "label": "ButtonStyle",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "buttonstyle",
-      "source_file": "ios/VidroX/UI/DirectionPadView.swift",
-      "source_location": "L53"
-    },
-    {
-      "id": "ios_vidrox_ui_directionpadview_directionpadview",
-      "label": "DirectionPadView",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "directionpadview",
-      "source_file": "ios/VidroX/UI/DirectionPadView.swift",
-      "source_location": "L3"
-    },
-    {
-      "id": "ios_vidrox_ui_directionpadview_remotecontrolbuttonstyle",
-      "label": "RemoteControlButtonStyle",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "remotecontrolbuttonstyle",
-      "source_file": "ios/VidroX/UI/DirectionPadView.swift",
-      "source_location": "L39"
     },
     {
       "id": "ios_vidrox_ui_statusoverlay_loadingoverlay",
@@ -425,7 +334,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 7,
+      "community": 41,
       "community_name": ".body",
       "file_type": "code",
       "norm_label": "loadingoverlay",
@@ -438,12 +347,103 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 7,
+      "community": 41,
       "community_name": ".body",
       "file_type": "code",
       "norm_label": "offlineoverlay",
       "source_file": "ios/VidroX/UI/StatusOverlay.swift",
       "source_location": "L24"
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_ui_downloadervm_updateviewmodel",
+      "label": "UpdateViewModel",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 42,
+      "community_name": "UpdateViewModel",
+      "file_type": "code",
+      "norm_label": "updateviewmodel",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/ui/DownloaderVM.kt",
+      "source_location": "L38"
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_utils_networkbridge_networkbridge",
+      "label": "NetworkBridge",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 43,
+      "community_name": "NetworkBridge",
+      "file_type": "code",
+      "norm_label": "networkbridge",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/NetworkBridge.kt",
+      "source_location": "L16"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_coordinator",
+      "label": "Coordinator",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": "coordinator",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L57"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_youtubewebview",
+      "label": "YouTubeWebView",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": "youtubewebview",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L5"
+    },
+    {
+      "id": "ios_vidrox_ui_directionpadview_buttonstyle",
+      "label": "ButtonStyle",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "View",
+      "file_type": "code",
+      "norm_label": "buttonstyle",
+      "source_file": "ios/VidroX/UI/DirectionPadView.swift",
+      "source_location": "L53"
+    },
+    {
+      "id": "ios_vidrox_ui_directionpadview_directionpadview",
+      "label": "DirectionPadView",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "View",
+      "file_type": "code",
+      "norm_label": "directionpadview",
+      "source_file": "ios/VidroX/UI/DirectionPadView.swift",
+      "source_location": "L3"
+    },
+    {
+      "id": "ios_vidrox_ui_directionpadview_remotecontrolbuttonstyle",
+      "label": "RemoteControlButtonStyle",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "View",
+      "file_type": "code",
+      "norm_label": "remotecontrolbuttonstyle",
+      "source_file": "ios/VidroX/UI/DirectionPadView.swift",
+      "source_location": "L39"
     },
     {
       "id": "assets_userscripts_sponsorblockhandler",
@@ -459,18 +459,6 @@
       "source_location": "L831"
     },
     {
-      "id": "ios_vidrox_web_webviewmodel_webviewmodel_attach",
-      "label": ".attach()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": ".attach()",
-      "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L40"
-    },
-    {
       "id": "ios_vidrox_web_webviewmodel_webviewmodel_deinit",
       "label": ".deinit()",
       "_callable": true,
@@ -484,13 +472,13 @@
             "callee": "cancel",
             "receiver_type": "Task",
             "lang": "swift",
-            "line": "L120"
+            "line": "L123"
           }
         ]
       },
       "norm_label": ".deinit()",
       "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L119"
+      "source_location": "L122"
     },
     {
       "id": "ios_vidrox_web_webviewmodel_webviewmodel_detach",
@@ -553,28 +541,6 @@
       "source_location": "L50"
     },
     {
-      "id": "ios_vidrox_web_webviewmodel_webviewmodel_handleexitrequest",
-      "label": ".handleExitRequest()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "metadata": {
-        "unresolved_calls": [
-          {
-            "callee": "goBack",
-            "receiver_type": "WKWebView",
-            "lang": "swift",
-            "line": "L113"
-          }
-        ]
-      },
-      "norm_label": ".handleexitrequest()",
-      "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L111"
-    },
-    {
       "id": "ios_vidrox_web_webviewmodel_webviewmodel_reload",
       "label": ".reload()",
       "_callable": true,
@@ -585,28 +551,6 @@
       "norm_label": ".reload()",
       "source_file": "ios/VidroX/Web/WebViewModel.swift",
       "source_location": "L78"
-    },
-    {
-      "id": "ios_vidrox_web_webviewmodel_webviewmodel_sendremotekey",
-      "label": ".sendRemoteKey()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "metadata": {
-        "unresolved_calls": [
-          {
-            "callee": "evaluateJavaScript",
-            "receiver_type": "WKWebView",
-            "lang": "swift",
-            "line": "L108"
-          }
-        ]
-      },
-      "norm_label": ".sendremotekey()",
-      "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L94"
     },
     {
       "id": "ios_vidrox_web_webviewmodel_webviewmodel_showcontrols",
@@ -635,62 +579,6 @@
       "norm_label": ".showcontrols()",
       "source_file": "ios/VidroX/Web/WebViewModel.swift",
       "source_location": "L84"
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview_coordinator_connect",
-      "label": ".connect()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "metadata": {
-        "unresolved_calls": [
-          {
-            "callee": "addGestureRecognizer",
-            "receiver_type": "WKWebView",
-            "lang": "swift",
-            "line": "L77"
-          }
-        ]
-      },
-      "norm_label": ".connect()",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L75"
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview_coordinator_disconnect",
-      "label": ".disconnect()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "metadata": {
-        "unresolved_calls": [
-          {
-            "callee": "removeGestureRecognizer",
-            "receiver_type": "WKWebView",
-            "lang": "swift",
-            "line": "L88"
-          }
-        ]
-      },
-      "norm_label": ".disconnect()",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L86"
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview_coordinator_init",
-      "label": ".init()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": ".init()",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L69"
     },
     {
       "id": "ios_vidrox_web_youtubewebview_coordinator_userinteracted",
@@ -737,86 +625,6 @@
       "norm_label": ".webviewwebcontentprocessdidterminate()",
       "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
       "source_location": "L131"
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview_televisionwebview_layoutsubviews",
-      "label": ".layoutSubviews()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": ".layoutsubviews()",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L141"
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview_youtubewebview_dismantleuiview",
-      "label": ".dismantleUIView()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "metadata": {
-        "unresolved_calls": [
-          {
-            "callee": "stopLoading",
-            "receiver_type": "WKWebView",
-            "lang": "swift",
-            "line": "L50"
-          }
-        ]
-      },
-      "norm_label": ".dismantleuiview()",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L49"
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview_youtubewebview_makecoordinator",
-      "label": ".makeCoordinator()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": ".makecoordinator()",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L11"
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview_youtubewebview_makeuiview",
-      "label": ".makeUIView()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "metadata": {
-        "unresolved_calls": [
-          {
-            "callee": "load",
-            "receiver_type": "WKWebView",
-            "lang": "swift",
-            "line": "L33"
-          }
-        ]
-      },
-      "norm_label": ".makeuiview()",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L15"
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview_youtubewebview_updateuiview",
-      "label": ".updateUIView()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": ".updateuiview()",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L47"
     },
     {
       "id": "ios_vidroxtests_webviewmodeltests_webviewmodeltests_testcancellednavigationdoesnotshowofflinestate",
@@ -1124,7 +932,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": ".adduserscript()",
       "source_file": "ios/VidroX/Web/WebContentConfiguration.swift",
@@ -1136,7 +944,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "metadata": {
         "unresolved_calls": [
@@ -1164,7 +972,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "metadata": {
         "unresolved_calls": [
@@ -1192,7 +1000,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "metadata": {
         "unresolved_calls": [
@@ -1209,24 +1017,12 @@
       "source_location": "L14"
     },
     {
-      "id": "ios_vidrox_web_youtubewebview_televisionwebview_pagezoom",
-      "label": ".pageZoom()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": ".pageZoom",
-      "file_type": "code",
-      "norm_label": ".pagezoom()",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L149"
-    },
-    {
       "id": "ios_vidroxtests_contentruletests_contentruletests_testcontentrulejsoncontainseveryadvertisinghost",
       "label": ".testContentRuleJSONContainsEveryAdvertisingHost()",
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "metadata": {
         "unresolved_calls": [
@@ -1254,7 +1050,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "metadata": {
         "unresolved_calls": [
@@ -1271,64 +1067,28 @@
       "source_location": "L23"
     },
     {
+      "id": "ios_vidroxtests_contentviewlayouttests_contentviewlayouttests_testtelevisioncontentusessixteenbyninelayout",
+      "label": ".testTelevisionContentUsesSixteenByNineLayout()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "Foundation",
+      "file_type": "code",
+      "norm_label": ".testtelevisioncontentusessixteenbyninelayout()",
+      "source_file": "ios/VidroXTests/ContentViewLayoutTests.swift",
+      "source_location": "L12"
+    },
+    {
       "id": "ios_vidroxtests_contentviewlayouttests_contentviewlayouttests_testwebcontenthasextratopclearance",
       "label": ".testWebContentHasExtraTopClearance()",
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": ".testwebcontenthasextratopclearance()",
       "source_file": "ios/VidroXTests/ContentViewLayoutTests.swift",
       "source_location": "L7"
-    },
-    {
-      "id": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests_testlandscapeiphoneviewportfitsentiretelevisioncanvas",
-      "label": ".testLandscapeIPhoneViewportFitsEntireTelevisionCanvas()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": ".pageZoom",
-      "file_type": "code",
-      "norm_label": ".testlandscapeiphoneviewportfitsentiretelevisioncanvas()",
-      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
-      "source_location": "L7"
-    },
-    {
-      "id": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests_testpagezoomleavesoverscanclearance",
-      "label": ".testPageZoomLeavesOverscanClearance()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": ".pageZoom",
-      "file_type": "code",
-      "norm_label": ".testpagezoomleavesoverscanclearance()",
-      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
-      "source_location": "L35"
-    },
-    {
-      "id": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests_testportraitviewportuseswidthaslimitingdimension",
-      "label": ".testPortraitViewportUsesWidthAsLimitingDimension()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": ".pageZoom",
-      "file_type": "code",
-      "norm_label": ".testportraitviewportuseswidthaslimitingdimension()",
-      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
-      "source_location": "L19"
-    },
-    {
-      "id": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests_testzeroviewportkeepsdefaultzoom",
-      "label": ".testZeroViewportKeepsDefaultZoom()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": ".pageZoom",
-      "file_type": "code",
-      "norm_label": ".testzeroviewportkeepsdefaultzoom()",
-      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
-      "source_location": "L31"
     },
     {
       "id": "tools_youtube_tv_capture_analyze_analyzefixtures",
@@ -1437,6 +1197,18 @@
       "norm_label": "isadrendererkey()",
       "source_file": "tools/youtube-tv-capture/analyze.mjs",
       "source_location": "L94"
+    },
+    {
+      "id": "tools_youtube_tv_capture_save_storage_state_main",
+      "label": "main()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "analyze.mjs",
+      "file_type": "code",
+      "norm_label": "main()",
+      "source_file": "tools/youtube-tv-capture/save-storage-state.mjs",
+      "source_location": "L11"
     },
     {
       "id": "app_src_main_java_com_jetcar_vidrox_utils_exitbridge_exitbridge_onexitcalled",
@@ -1605,42 +1377,6 @@
       "norm_label": "offlineoverlay()",
       "source_file": "app/src/main/java/com/jetcar/vidrox/ui/screens/YoutubeWVOverlays.kt",
       "source_location": "L32"
-    },
-    {
-      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_downloader_updateappscreen",
-      "label": "UpdateAppScreen()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "UpdateDialog.kt",
-      "file_type": "code",
-      "norm_label": "updateappscreen()",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/ui/components/Downloader.kt",
-      "source_location": "L33"
-    },
-    {
-      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_updatedialog_updatedialog",
-      "label": "UpdateDialog()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "UpdateDialog.kt",
-      "file_type": "code",
-      "norm_label": "updatedialog()",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/ui/components/UpdateDialog.kt",
-      "source_location": "L40"
-    },
-    {
-      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_updatedialog_ytbutton",
-      "label": "YTButton()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "UpdateDialog.kt",
-      "file_type": "code",
-      "norm_label": "ytbutton()",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/ui/components/UpdateDialog.kt",
-      "source_location": "L122"
     },
     {
       "id": "app_src_main_java_com_jetcar_vidrox_utils_manageperms_haspermission",
@@ -2219,6 +1955,42 @@
       "source_location": "L13"
     },
     {
+      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_downloader_updateappscreen",
+      "label": "UpdateAppScreen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "ReleaseData",
+      "file_type": "code",
+      "norm_label": "updateappscreen()",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/ui/components/Downloader.kt",
+      "source_location": "L33"
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_updatedialog_updatedialog",
+      "label": "UpdateDialog()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "ReleaseData",
+      "file_type": "code",
+      "norm_label": "updatedialog()",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/ui/components/UpdateDialog.kt",
+      "source_location": "L40"
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_updatedialog_ytbutton",
+      "label": "YTButton()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "ReleaseData",
+      "file_type": "code",
+      "norm_label": "ytbutton()",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/ui/components/UpdateDialog.kt",
+      "source_location": "L122"
+    },
+    {
       "id": "app_src_main_java_com_jetcar_vidrox_ui_youtubevm_youtubevm_clearupdate",
       "label": ".clearUpdate()",
       "_callable": true,
@@ -2475,8 +2247,8 @@
       "label": "fetchScripts()",
       "_callable": true,
       "_origin": "ast",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "file_type": "code",
       "norm_label": "fetchscripts()",
       "source_file": "app/src/main/java/com/jetcar/vidrox/utils/fetchScripts.kt",
@@ -2567,48 +2339,166 @@
       "source_location": "L46"
     },
     {
-      "id": "app_src_main_java_com_jetcar_vidrox_utils_networkbridge_networkbridge_fetch",
-      "label": ".fetch()",
+      "id": "ios_vidrox_web_webviewmodel_webviewmodel_javascript",
+      "label": ".javaScript()",
       "_callable": true,
       "_origin": "ast",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 37,
+      "community_name": "RemoteKey",
       "file_type": "code",
-      "norm_label": ".fetch()",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/NetworkBridge.kt",
-      "source_location": "L25"
+      "norm_label": ".javascript()",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L99"
     },
     {
-      "id": "app_src_main_java_com_jetcar_vidrox_utils_networkbridge_networkbridge_filtersponsorblock",
-      "label": ".filterSponsorBlock()",
+      "id": "ios_vidroxtests_webviewmodeltests_webviewmodeltests_testbacknavigationdispatchesescapekey",
+      "label": ".testBackNavigationDispatchesEscapeKey()",
       "_callable": true,
       "_origin": "ast",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 37,
+      "community_name": "RemoteKey",
       "file_type": "code",
-      "norm_label": ".filtersponsorblock()",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/NetworkBridge.kt",
-      "source_location": "L46"
+      "norm_label": ".testbacknavigationdispatchesescapekey()",
+      "source_file": "ios/VidroXTests/WebViewModelTests.swift",
+      "source_location": "L43"
     },
     {
-      "id": "app_src_main_java_com_jetcar_vidrox_utils_readraw_readraw",
-      "label": "readRaw()",
+      "id": "ios_vidrox_web_youtubewebview_televisionwebview_layoutsubviews",
+      "label": ".layoutSubviews()",
       "_callable": true,
       "_origin": "ast",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 39,
+      "community_name": ".pageZoom",
       "file_type": "code",
-      "norm_label": "readraw()",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/readRaw.kt",
-      "source_location": "L5"
+      "norm_label": ".layoutsubviews()",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L141"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_televisionwebview_pagezoom",
+      "label": ".pageZoom()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": ".pageZoom",
+      "file_type": "code",
+      "norm_label": ".pagezoom()",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L149"
+    },
+    {
+      "id": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests_testlandscapeiphoneviewportfitsentiretelevisioncanvas",
+      "label": ".testLandscapeIPhoneViewportFitsEntireTelevisionCanvas()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": ".pageZoom",
+      "file_type": "code",
+      "norm_label": ".testlandscapeiphoneviewportfitsentiretelevisioncanvas()",
+      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
+      "source_location": "L7"
+    },
+    {
+      "id": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests_testpagezoomleavesoverscanclearance",
+      "label": ".testPageZoomLeavesOverscanClearance()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": ".pageZoom",
+      "file_type": "code",
+      "norm_label": ".testpagezoomleavesoverscanclearance()",
+      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
+      "source_location": "L35"
+    },
+    {
+      "id": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests_testportraitviewportuseswidthaslimitingdimension",
+      "label": ".testPortraitViewportUsesWidthAsLimitingDimension()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": ".pageZoom",
+      "file_type": "code",
+      "norm_label": ".testportraitviewportuseswidthaslimitingdimension()",
+      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
+      "source_location": "L19"
+    },
+    {
+      "id": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests_testtelevisioncanvasmatchesinjectedfourkviewport",
+      "label": ".testTelevisionCanvasMatchesInjectedFourKViewport()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": ".pageZoom",
+      "file_type": "code",
+      "norm_label": ".testtelevisioncanvasmatchesinjectedfourkviewport()",
+      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
+      "source_location": "L44"
+    },
+    {
+      "id": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests_testzeroviewportkeepsdefaultzoom",
+      "label": ".testZeroViewportKeepsDefaultZoom()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": ".pageZoom",
+      "file_type": "code",
+      "norm_label": ".testzeroviewportkeepsdefaultzoom()",
+      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
+      "source_location": "L31"
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_utils_updateinstallreceiver_updateinstallreceiver_onreceive",
+      "label": ".onReceive()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "UpdateInstallReceiver.kt",
+      "file_type": "code",
+      "norm_label": ".onreceive()",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/UpdateInstallReceiver.kt",
+      "source_location": "L15"
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_webviewmodel_navigateback",
+      "label": ".navigateBack()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": ".body",
+      "file_type": "code",
+      "norm_label": ".navigateback()",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L114"
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_webviewmodel_sendremotekey",
+      "label": ".sendRemoteKey()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": ".body",
+      "file_type": "code",
+      "metadata": {
+        "unresolved_calls": [
+          {
+            "callee": "evaluateJavaScript",
+            "receiver_type": "WKWebView",
+            "lang": "swift",
+            "line": "L96"
+          }
+        ]
+      },
+      "norm_label": ".sendremotekey()",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L94"
     },
     {
       "id": "app_src_main_java_com_jetcar_vidrox_ui_downloadervm_updateviewmodel_commitinstallsession",
       "label": ".commitInstallSession()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 42,
+      "community_name": "UpdateViewModel",
       "file_type": "code",
       "norm_label": ".commitinstallsession()",
       "source_file": "app/src/main/java/com/jetcar/vidrox/ui/DownloaderVM.kt",
@@ -2619,8 +2509,8 @@
       "label": ".downloadApk()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 42,
+      "community_name": "UpdateViewModel",
       "file_type": "code",
       "norm_label": ".downloadapk()",
       "source_file": "app/src/main/java/com/jetcar/vidrox/ui/DownloaderVM.kt",
@@ -2631,8 +2521,8 @@
       "label": ".downloadFile()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 42,
+      "community_name": "UpdateViewModel",
       "file_type": "code",
       "norm_label": ".downloadfile()",
       "source_file": "app/src/main/java/com/jetcar/vidrox/ui/DownloaderVM.kt",
@@ -2643,8 +2533,8 @@
       "label": ".installApk()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 42,
+      "community_name": "UpdateViewModel",
       "file_type": "code",
       "norm_label": ".installapk()",
       "source_file": "app/src/main/java/com/jetcar/vidrox/ui/DownloaderVM.kt",
@@ -2655,24 +2545,196 @@
       "label": ".isInstallableUpdate()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 42,
+      "community_name": "UpdateViewModel",
       "file_type": "code",
       "norm_label": ".isinstallableupdate()",
       "source_file": "app/src/main/java/com/jetcar/vidrox/ui/DownloaderVM.kt",
       "source_location": "L142"
     },
     {
-      "id": "app_src_main_java_com_jetcar_vidrox_utils_updateinstallreceiver_updateinstallreceiver_onreceive",
-      "label": ".onReceive()",
+      "id": "app_src_main_java_com_jetcar_vidrox_utils_networkbridge_networkbridge_fetch",
+      "label": ".fetch()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 43,
+      "community_name": "NetworkBridge",
       "file_type": "code",
-      "norm_label": ".onreceive()",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/UpdateInstallReceiver.kt",
+      "norm_label": ".fetch()",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/NetworkBridge.kt",
+      "source_location": "L25"
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_utils_networkbridge_networkbridge_filtersponsorblock",
+      "label": ".filterSponsorBlock()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 43,
+      "community_name": "NetworkBridge",
+      "file_type": "code",
+      "norm_label": ".filtersponsorblock()",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/NetworkBridge.kt",
+      "source_location": "L46"
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_utils_readraw_readraw",
+      "label": "readRaw()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 44,
+      "community_name": "readRaw",
+      "file_type": "code",
+      "norm_label": "readraw()",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/readRaw.kt",
+      "source_location": "L5"
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_webviewmodel_attach",
+      "label": ".attach()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": ".attach()",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L40"
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_webviewmodel_handleexitrequest",
+      "label": ".handleExitRequest()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": ".handleexitrequest()",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L118"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_coordinator_connect",
+      "label": ".connect()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "metadata": {
+        "unresolved_calls": [
+          {
+            "callee": "addGestureRecognizer",
+            "receiver_type": "WKWebView",
+            "lang": "swift",
+            "line": "L77"
+          }
+        ]
+      },
+      "norm_label": ".connect()",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L75"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_coordinator_disconnect",
+      "label": ".disconnect()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "metadata": {
+        "unresolved_calls": [
+          {
+            "callee": "removeGestureRecognizer",
+            "receiver_type": "WKWebView",
+            "lang": "swift",
+            "line": "L88"
+          }
+        ]
+      },
+      "norm_label": ".disconnect()",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L86"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_coordinator_init",
+      "label": ".init()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": ".init()",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L69"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_youtubewebview_dismantleuiview",
+      "label": ".dismantleUIView()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "metadata": {
+        "unresolved_calls": [
+          {
+            "callee": "stopLoading",
+            "receiver_type": "WKWebView",
+            "lang": "swift",
+            "line": "L50"
+          }
+        ]
+      },
+      "norm_label": ".dismantleuiview()",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L49"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_youtubewebview_makecoordinator",
+      "label": ".makeCoordinator()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": ".makecoordinator()",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L11"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_youtubewebview_makeuiview",
+      "label": ".makeUIView()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "metadata": {
+        "unresolved_calls": [
+          {
+            "callee": "load",
+            "receiver_type": "WKWebView",
+            "lang": "swift",
+            "line": "L33"
+          }
+        ]
+      },
+      "norm_label": ".makeuiview()",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
       "source_location": "L15"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_youtubewebview_updateuiview",
+      "label": ".updateUIView()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": ".updateuiview()",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L47"
     },
     {
       "id": "tools_youtube_tv_capture_capture_buildcapturetargets",
@@ -2795,24 +2857,12 @@
       "source_location": "L73"
     },
     {
-      "id": "tools_youtube_tv_capture_save_storage_state_main",
-      "label": "main()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "capture.mjs",
-      "file_type": "code",
-      "norm_label": "main()",
-      "source_file": "tools/youtube-tv-capture/save-storage-state.mjs",
-      "source_location": "L11"
-    },
-    {
       "id": "ios_vidrox_ui_directionpadview_directionpadview_remotebutton",
       "label": ".remoteButton()",
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": ".body",
+      "community_name": "View",
       "file_type": "code",
       "norm_label": ".remotebutton()",
       "source_file": "ios/VidroX/UI/DirectionPadView.swift",
@@ -2824,7 +2874,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": ".body",
+      "community_name": "View",
       "file_type": "code",
       "metadata": {
         "unresolved_calls": [
@@ -3146,88 +3196,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "file_type": "code",
       "norm_label": "splashloading()",
       "source_file": "app/src/main/java/com/jetcar/vidrox/ui/screens/SplashLoading.kt",
       "source_location": "L28"
-    },
-    {
-      "id": "ios_vidrox_web_webviewmodel_remotekey_down",
-      "label": "down",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "down",
-      "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L9"
-    },
-    {
-      "id": "ios_vidrox_web_webviewmodel_remotekey_escape",
-      "label": "escape",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "escape",
-      "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L13"
-    },
-    {
-      "id": "ios_vidrox_web_webviewmodel_remotekey_event",
-      "label": ".event",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": ".event",
-      "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L15"
-    },
-    {
-      "id": "ios_vidrox_web_webviewmodel_remotekey_left",
-      "label": "left",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "left",
-      "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L10"
-    },
-    {
-      "id": "ios_vidrox_web_webviewmodel_remotekey_right",
-      "label": "right",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "right",
-      "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L11"
-    },
-    {
-      "id": "ios_vidrox_web_webviewmodel_remotekey_select",
-      "label": "select",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "select",
-      "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L12"
-    },
-    {
-      "id": "ios_vidrox_web_webviewmodel_remotekey_up",
-      "label": "up",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "up",
-      "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L8"
     },
     {
       "id": "ios_vidrox_web_webviewmodel_swift_error",
@@ -3237,28 +3210,6 @@
       "community_name": "WebViewModel",
       "file_type": "code",
       "norm_label": "error",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "ios_vidrox_web_webviewmodel_swift_int",
-      "label": "Int",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "int",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "ios_vidrox_web_webviewmodel_swift_string",
-      "label": "String",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "string",
       "source_file": "",
       "source_location": ""
     },
@@ -3296,17 +3247,6 @@
       "source_location": "L35"
     },
     {
-      "id": "ios_vidrox_web_youtubewebview_swift_context",
-      "label": "Context",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "context",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "ios_vidrox_web_youtubewebview_swift_error",
       "label": "Error",
       "_origin": "ast",
@@ -3318,17 +3258,6 @@
       "source_location": ""
     },
     {
-      "id": "ios_vidrox_web_youtubewebview_swift_wkwebview",
-      "label": "WKWebView",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "wkwebview",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "never",
       "label": "Never",
       "_origin": "ast",
@@ -3336,17 +3265,6 @@
       "community_name": "WebViewModel",
       "file_type": "code",
       "norm_label": "never",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "nsobject",
-      "label": "NSObject",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "nsobject",
       "source_file": "",
       "source_location": ""
     },
@@ -3373,17 +3291,6 @@
       "source_location": ""
     },
     {
-      "id": "uiviewrepresentable",
-      "label": "UIViewRepresentable",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "WebViewModel",
-      "file_type": "code",
-      "norm_label": "uiviewrepresentable",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "wknavigation",
       "label": "WKNavigation",
       "_origin": "ast",
@@ -3395,13 +3302,13 @@
       "source_location": ""
     },
     {
-      "id": "wknavigationdelegate",
-      "label": "WKNavigationDelegate",
+      "id": "xctestcase",
+      "label": "XCTestCase",
       "_origin": "ast",
       "community": 0,
       "community_name": "WebViewModel",
       "file_type": "code",
-      "norm_label": "wknavigationdelegate",
+      "norm_label": "xctestcase",
       "source_file": "",
       "source_location": ""
     },
@@ -3538,33 +3445,23 @@
       "source_location": ""
     },
     {
-      "id": "cgfloat",
-      "label": "CGFloat",
+      "id": "readme_how_ad_blocking_works",
+      "label": "How Ad Blocking Works",
       "_origin": "ast",
-      "community": 10,
-      "community_name": ".pageZoom",
-      "file_type": "code",
-      "norm_label": "cgfloat",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "cgsize",
-      "label": "CGSize",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": ".pageZoom",
-      "file_type": "code",
-      "norm_label": "cgsize",
-      "source_file": "",
-      "source_location": ""
+      "community": 1,
+      "community_name": "YoutubeWVWebViewSupport.kt",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "how ad blocking works",
+      "source_file": "README.md",
+      "source_location": "L91"
     },
     {
       "id": "combine",
       "label": "Combine",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "combine",
       "source_file": "ios/VidroX/Web/WebViewModel.swift",
@@ -3576,7 +3473,7 @@
       "label": "CoreGraphics",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "coregraphics",
       "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
@@ -3588,7 +3485,7 @@
       "label": "Foundation",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "foundation",
       "source_file": "ios/VidroX/Web/WebViewModel.swift",
@@ -3600,7 +3497,7 @@
       "label": "ScriptBridge.swift",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "scriptbridge.swift",
       "source_file": "ios/VidroX/Web/ScriptBridge.swift",
@@ -3611,7 +3508,7 @@
       "label": "SponsorBlockClient.swift",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "sponsorblockclient.swift",
       "source_file": "ios/VidroX/Web/SponsorBlockClient.swift",
@@ -3622,7 +3519,7 @@
       "label": "WebContentConfiguration.swift",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "webcontentconfiguration.swift",
       "source_file": "ios/VidroX/Web/WebContentConfiguration.swift",
@@ -3633,7 +3530,7 @@
       "label": "Bundle",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "bundle",
       "source_file": "",
@@ -3644,7 +3541,7 @@
       "label": "String",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "string",
       "source_file": "",
@@ -3655,7 +3552,7 @@
       "label": "WKUserContentController",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "wkusercontentcontroller",
       "source_file": "",
@@ -3666,7 +3563,7 @@
       "label": "WebViewModel.swift",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "webviewmodel.swift",
       "source_file": "ios/VidroX/Web/WebViewModel.swift",
@@ -3677,7 +3574,7 @@
       "label": "ContentRuleTests.swift",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "contentruletests.swift",
       "source_file": "ios/VidroXTests/ContentRuleTests.swift",
@@ -3688,7 +3585,7 @@
       "label": "ContentViewLayoutTests.swift",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "contentviewlayouttests.swift",
       "source_file": "ios/VidroXTests/ContentViewLayoutTests.swift",
@@ -3699,7 +3596,7 @@
       "label": "SponsorBlockClientTests.swift",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "sponsorblockclienttests.swift",
       "source_file": "ios/VidroXTests/SponsorBlockClientTests.swift",
@@ -3710,7 +3607,7 @@
       "label": "TelevisionWebViewTests.swift",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "televisionwebviewtests.swift",
       "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
@@ -3721,7 +3618,7 @@
       "label": "WebViewModelTests.swift",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "webviewmodeltests.swift",
       "source_file": "ios/VidroXTests/WebViewModelTests.swift",
@@ -3732,7 +3629,7 @@
       "label": "VidroX",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "vidrox",
       "source_file": "ios/VidroXTests/WebViewModelTests.swift",
@@ -3744,7 +3641,7 @@
       "label": "WebKit",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "webkit",
       "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
@@ -3756,7 +3653,7 @@
       "label": "WKWebViewConfiguration",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "wkwebviewconfiguration",
       "source_file": "",
@@ -3767,23 +3664,12 @@
       "label": "XCTest",
       "_origin": "ast",
       "community": 10,
-      "community_name": ".pageZoom",
+      "community_name": "Foundation",
       "file_type": "code",
       "norm_label": "xctest",
       "source_file": "ios/VidroXTests/WebViewModelTests.swift",
       "source_location": "L2",
       "type": "module"
-    },
-    {
-      "id": "xctestcase",
-      "label": "XCTestCase",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": ".pageZoom",
-      "file_type": "code",
-      "norm_label": "xctestcase",
-      "source_file": "",
-      "source_location": ""
     },
     {
       "id": "tools_youtube_tv_capture_analyze",
@@ -3850,6 +3736,28 @@
       "norm_label": "fixtures_dir",
       "source_file": "tools/youtube-tv-capture/analyze.mjs",
       "source_location": "L5"
+    },
+    {
+      "id": "tools_youtube_tv_capture_save_storage_state",
+      "label": "save-storage-state.mjs",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "analyze.mjs",
+      "file_type": "code",
+      "norm_label": "save-storage-state.mjs",
+      "source_file": "tools/youtube-tv-capture/save-storage-state.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "tools_youtube_tv_capture_save_storage_state_output_path",
+      "label": "OUTPUT_PATH",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "analyze.mjs",
+      "file_type": "code",
+      "norm_label": "output_path",
+      "source_file": "tools/youtube-tv-capture/save-storage-state.mjs",
+      "source_location": "L7"
     },
     {
       "id": "app_src_main_java_com_jetcar_vidrox_utils_exitbridge",
@@ -4197,15 +4105,15 @@
       "source_location": ""
     },
     {
-      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_downloader_kt_composable",
-      "label": "Composable",
+      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_downloader",
+      "label": "Downloader.kt",
       "_origin": "ast",
       "community": 15,
       "community_name": "UpdateDialog.kt",
       "file_type": "code",
-      "norm_label": "composable",
-      "source_file": "",
-      "source_location": ""
+      "norm_label": "downloader.kt",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/ui/components/Downloader.kt",
+      "source_location": "L1"
     },
     {
       "id": "app_src_main_java_com_jetcar_vidrox_ui_components_updatedialog",
@@ -4217,28 +4125,6 @@
       "norm_label": "updatedialog.kt",
       "source_file": "app/src/main/java/com/jetcar/vidrox/ui/components/UpdateDialog.kt",
       "source_location": "L1"
-    },
-    {
-      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_updatedialog_kt_composable",
-      "label": "Composable",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "UpdateDialog.kt",
-      "file_type": "code",
-      "norm_label": "composable",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_updatedialog_kt_modifier",
-      "label": "Modifier",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "UpdateDialog.kt",
-      "file_type": "code",
-      "norm_label": "modifier",
-      "source_file": "",
-      "source_location": ""
     },
     {
       "id": "app_src_main_java_com_jetcar_vidrox_ui_screens_youtubewv",
@@ -4609,18 +4495,6 @@
       "norm_label": "features",
       "source_file": "README.md",
       "source_location": "L14"
-    },
-    {
-      "id": "readme_how_ad_blocking_works",
-      "label": "How Ad Blocking Works",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "VidroX",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "how ad blocking works",
-      "source_file": "README.md",
-      "source_location": "L91"
     },
     {
       "id": "readme_how_shorts_blocking_works",
@@ -5108,6 +4982,39 @@
       "source_location": ""
     },
     {
+      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_downloader_kt_composable",
+      "label": "Composable",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "ReleaseData",
+      "file_type": "code",
+      "norm_label": "composable",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_updatedialog_kt_composable",
+      "label": "Composable",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "ReleaseData",
+      "file_type": "code",
+      "norm_label": "composable",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_updatedialog_kt_modifier",
+      "label": "Modifier",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "ReleaseData",
+      "file_type": "code",
+      "norm_label": "modifier",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "app_src_main_java_com_jetcar_vidrox_ui_youtubevm",
       "label": "YouTubeVM.kt",
       "_origin": "ast",
@@ -5502,8 +5409,8 @@
       "id": "app_src_main_java_com_jetcar_vidrox_utils_fetchscripts",
       "label": "fetchScripts.kt",
       "_origin": "ast",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "file_type": "code",
       "norm_label": "fetchscripts.kt",
       "source_file": "app/src/main/java/com/jetcar/vidrox/utils/fetchScripts.kt",
@@ -5513,12 +5420,23 @@
       "id": "app_src_main_java_com_jetcar_vidrox_utils_fetchscripts_kt_context",
       "label": "Context",
       "_origin": "ast",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "file_type": "code",
       "norm_label": "context",
       "source_file": "",
       "source_location": ""
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_utils_networkbridge",
+      "label": "NetworkBridge.kt",
+      "_origin": "ast",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
+      "file_type": "code",
+      "norm_label": "networkbridge.kt",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/NetworkBridge.kt",
+      "source_location": "L1"
     },
     {
       "id": "app_src_main_java_com_jetcar_vidrox_utils_javascriptevaluator",
@@ -5565,50 +5483,6 @@
       "source_location": ""
     },
     {
-      "id": "app_src_main_java_com_jetcar_vidrox_utils_networkbridge",
-      "label": "NetworkBridge.kt",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
-      "file_type": "code",
-      "norm_label": "networkbridge.kt",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/NetworkBridge.kt",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_src_main_java_com_jetcar_vidrox_utils_networkbridge_kt_javascriptinterface",
-      "label": "JavascriptInterface",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
-      "file_type": "code",
-      "norm_label": "javascriptinterface",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "app_src_main_java_com_jetcar_vidrox_utils_readraw",
-      "label": "readRaw.kt",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
-      "file_type": "code",
-      "norm_label": "readraw.kt",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/readRaw.kt",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_src_main_java_com_jetcar_vidrox_utils_readraw_kt_context",
-      "label": "Context",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
-      "file_type": "code",
-      "norm_label": "context",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "jsonarray",
       "label": "JSONArray",
       "_origin": "ast",
@@ -5631,6 +5505,228 @@
       "source_location": ""
     },
     {
+      "id": "ios_vidrox_web_webviewmodel_remotekey_down",
+      "label": "down",
+      "_origin": "ast",
+      "community": 37,
+      "community_name": "RemoteKey",
+      "file_type": "code",
+      "norm_label": "down",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L9"
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_remotekey_escape",
+      "label": "escape",
+      "_origin": "ast",
+      "community": 37,
+      "community_name": "RemoteKey",
+      "file_type": "code",
+      "norm_label": "escape",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L13"
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_remotekey_event",
+      "label": ".event",
+      "_origin": "ast",
+      "community": 37,
+      "community_name": "RemoteKey",
+      "file_type": "code",
+      "norm_label": ".event",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L15"
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_remotekey_left",
+      "label": "left",
+      "_origin": "ast",
+      "community": 37,
+      "community_name": "RemoteKey",
+      "file_type": "code",
+      "norm_label": "left",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L10"
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_remotekey_right",
+      "label": "right",
+      "_origin": "ast",
+      "community": 37,
+      "community_name": "RemoteKey",
+      "file_type": "code",
+      "norm_label": "right",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L11"
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_remotekey_select",
+      "label": "select",
+      "_origin": "ast",
+      "community": 37,
+      "community_name": "RemoteKey",
+      "file_type": "code",
+      "norm_label": "select",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L12"
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_remotekey_up",
+      "label": "up",
+      "_origin": "ast",
+      "community": 37,
+      "community_name": "RemoteKey",
+      "file_type": "code",
+      "norm_label": "up",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L8"
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_swift_int",
+      "label": "Int",
+      "_origin": "ast",
+      "community": 37,
+      "community_name": "RemoteKey",
+      "file_type": "code",
+      "norm_label": "int",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "ios_vidrox_web_webviewmodel_swift_string",
+      "label": "String",
+      "_origin": "ast",
+      "community": 37,
+      "community_name": "RemoteKey",
+      "file_type": "code",
+      "norm_label": "string",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "app",
+      "label": "App",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ContentView",
+      "file_type": "code",
+      "norm_label": "app",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "ios_vidrox_app_contentview",
+      "label": "ContentView.swift",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ContentView",
+      "file_type": "code",
+      "norm_label": "contentview.swift",
+      "source_file": "ios/VidroX/App/ContentView.swift",
+      "source_location": "L1"
+    },
+    {
+      "id": "ios_vidrox_app_contentview_swift_cgfloat",
+      "label": "CGFloat",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ContentView",
+      "file_type": "code",
+      "norm_label": "cgfloat",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "ios_vidrox_app_vidroxapp",
+      "label": "VidroXApp.swift",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ContentView",
+      "file_type": "code",
+      "norm_label": "vidroxapp.swift",
+      "source_file": "ios/VidroX/App/VidroXApp.swift",
+      "source_location": "L1"
+    },
+    {
+      "id": "ios_vidrox_app_vidroxapp_vidroxapp_body",
+      "label": ".body",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ContentView",
+      "file_type": "code",
+      "norm_label": ".body",
+      "source_file": "ios/VidroX/App/VidroXApp.swift",
+      "source_location": "L5"
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview",
+      "label": "YouTubeWebView.swift",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ContentView",
+      "file_type": "code",
+      "norm_label": "youtubewebview.swift",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L1"
+    },
+    {
+      "id": "scene",
+      "label": "Scene",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ContentView",
+      "file_type": "code",
+      "norm_label": "scene",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "swiftui",
+      "label": "SwiftUI",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ContentView",
+      "file_type": "code",
+      "norm_label": "swiftui",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L1",
+      "type": "module"
+    },
+    {
+      "id": "uikit",
+      "label": "UIKit",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ContentView",
+      "file_type": "code",
+      "norm_label": "uikit",
+      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
+      "source_location": "L2",
+      "type": "module"
+    },
+    {
+      "id": "cgsize",
+      "label": "CGSize",
+      "_origin": "ast",
+      "community": 39,
+      "community_name": ".pageZoom",
+      "file_type": "code",
+      "norm_label": "cgsize",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_swift_cgfloat",
+      "label": "CGFloat",
+      "_origin": "ast",
+      "community": 39,
+      "community_name": ".pageZoom",
+      "file_type": "code",
+      "norm_label": "cgfloat",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "app_src_main_java_com_jetcar_vidrox_ui_downloadervm",
       "label": "DownloaderVM.kt",
       "_origin": "ast",
@@ -5642,24 +5738,13 @@
       "source_location": "L1"
     },
     {
-      "id": "app_src_main_java_com_jetcar_vidrox_ui_downloadervm_kt_context",
-      "label": "Context",
+      "id": "ioexception",
+      "label": "IOException",
       "_origin": "ast",
       "community": 4,
       "community_name": "DownloaderVM.kt",
       "file_type": "code",
-      "norm_label": "context",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "app_src_main_java_com_jetcar_vidrox_ui_downloadervm_kt_viewmodel",
-      "label": "ViewModel",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
-      "file_type": "code",
-      "norm_label": "viewmodel",
+      "norm_label": "ioexception",
       "source_file": "",
       "source_location": ""
     },
@@ -5667,8 +5752,8 @@
       "id": "app_src_main_java_com_jetcar_vidrox_utils_updateinstallreceiver",
       "label": "UpdateInstallReceiver.kt",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 40,
+      "community_name": "UpdateInstallReceiver.kt",
       "file_type": "code",
       "norm_label": "updateinstallreceiver.kt",
       "source_file": "app/src/main/java/com/jetcar/vidrox/utils/UpdateInstallReceiver.kt",
@@ -5678,8 +5763,8 @@
       "id": "app_src_main_java_com_jetcar_vidrox_utils_updateinstallreceiver_kt_context",
       "label": "Context",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 40,
+      "community_name": "UpdateInstallReceiver.kt",
       "file_type": "code",
       "norm_label": "context",
       "source_file": "",
@@ -5689,8 +5774,8 @@
       "id": "broadcastreceiver",
       "label": "BroadcastReceiver",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 40,
+      "community_name": "UpdateInstallReceiver.kt",
       "file_type": "code",
       "norm_label": "broadcastreceiver",
       "source_file": "",
@@ -5700,21 +5785,186 @@
       "id": "intent",
       "label": "Intent",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 40,
+      "community_name": "UpdateInstallReceiver.kt",
       "file_type": "code",
       "norm_label": "intent",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "ioexception",
-      "label": "IOException",
+      "id": "double",
+      "label": "Double",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
+      "community": 41,
+      "community_name": ".body",
       "file_type": "code",
-      "norm_label": "ioexception",
+      "norm_label": "double",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "ios_vidrox_app_contentview_contentview_body",
+      "label": ".body",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": ".body",
+      "file_type": "code",
+      "norm_label": ".body",
+      "source_file": "ios/VidroX/App/ContentView.swift",
+      "source_location": "L14"
+    },
+    {
+      "id": "ios_vidrox_ui_statusoverlay",
+      "label": "StatusOverlay.swift",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": ".body",
+      "file_type": "code",
+      "norm_label": "statusoverlay.swift",
+      "source_file": "ios/VidroX/UI/StatusOverlay.swift",
+      "source_location": "L1"
+    },
+    {
+      "id": "ios_vidrox_ui_statusoverlay_loadingoverlay_body",
+      "label": ".body",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": ".body",
+      "file_type": "code",
+      "norm_label": ".body",
+      "source_file": "ios/VidroX/UI/StatusOverlay.swift",
+      "source_location": "L6"
+    },
+    {
+      "id": "ios_vidrox_ui_statusoverlay_offlineoverlay_body",
+      "label": ".body",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": ".body",
+      "file_type": "code",
+      "norm_label": ".body",
+      "source_file": "ios/VidroX/UI/StatusOverlay.swift",
+      "source_location": "L27"
+    },
+    {
+      "id": "ios_vidrox_ui_statusoverlay_swift_void",
+      "label": "Void",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": ".body",
+      "file_type": "code",
+      "norm_label": "void",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_ui_downloadervm_kt_context",
+      "label": "Context",
+      "_origin": "ast",
+      "community": 42,
+      "community_name": "UpdateViewModel",
+      "file_type": "code",
+      "norm_label": "context",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_ui_downloadervm_kt_viewmodel",
+      "label": "ViewModel",
+      "_origin": "ast",
+      "community": 42,
+      "community_name": "UpdateViewModel",
+      "file_type": "code",
+      "norm_label": "viewmodel",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_utils_networkbridge_kt_javascriptinterface",
+      "label": "JavascriptInterface",
+      "_origin": "ast",
+      "community": 43,
+      "community_name": "NetworkBridge",
+      "file_type": "code",
+      "norm_label": "javascriptinterface",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_utils_readraw",
+      "label": "readRaw.kt",
+      "_origin": "ast",
+      "community": 44,
+      "community_name": "readRaw",
+      "file_type": "code",
+      "norm_label": "readraw.kt",
+      "source_file": "app/src/main/java/com/jetcar/vidrox/utils/readRaw.kt",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_src_main_java_com_jetcar_vidrox_utils_readraw_kt_context",
+      "label": "Context",
+      "_origin": "ast",
+      "community": 44,
+      "community_name": "readRaw",
+      "file_type": "code",
+      "norm_label": "context",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_swift_context",
+      "label": "Context",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": "context",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "ios_vidrox_web_youtubewebview_swift_wkwebview",
+      "label": "WKWebView",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": "wkwebview",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "nsobject",
+      "label": "NSObject",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": "nsobject",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "uiviewrepresentable",
+      "label": "UIViewRepresentable",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": "uiviewrepresentable",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "wknavigationdelegate",
+      "label": "WKNavigationDelegate",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Coordinator",
+      "file_type": "code",
+      "norm_label": "wknavigationdelegate",
       "source_file": "",
       "source_location": ""
     },
@@ -5950,28 +6200,6 @@
       "source_location": "L4"
     },
     {
-      "id": "tools_youtube_tv_capture_save_storage_state",
-      "label": "save-storage-state.mjs",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "capture.mjs",
-      "file_type": "code",
-      "norm_label": "save-storage-state.mjs",
-      "source_file": "tools/youtube-tv-capture/save-storage-state.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "tools_youtube_tv_capture_save_storage_state_output_path",
-      "label": "OUTPUT_PATH",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "capture.mjs",
-      "file_type": "code",
-      "norm_label": "output_path",
-      "source_file": "tools/youtube-tv-capture/save-storage-state.mjs",
-      "source_location": "L7"
-    },
-    {
       "id": "ref_playwright",
       "label": "playwright",
       "_origin": "ast",
@@ -5983,88 +6211,22 @@
       "source_location": "L13"
     },
     {
-      "id": "app",
-      "label": "App",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "app",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "configuration",
       "label": "Configuration",
       "_origin": "ast",
       "community": 7,
-      "community_name": ".body",
+      "community_name": "View",
       "file_type": "code",
       "norm_label": "configuration",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "double",
-      "label": "Double",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "double",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "ios_vidrox_app_contentview",
-      "label": "ContentView.swift",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "contentview.swift",
-      "source_file": "ios/VidroX/App/ContentView.swift",
-      "source_location": "L1"
-    },
-    {
-      "id": "ios_vidrox_app_contentview_contentview_body",
-      "label": ".body",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": ".body",
-      "source_file": "ios/VidroX/App/ContentView.swift",
-      "source_location": "L13"
-    },
-    {
-      "id": "ios_vidrox_app_vidroxapp",
-      "label": "VidroXApp.swift",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "vidroxapp.swift",
-      "source_file": "ios/VidroX/App/VidroXApp.swift",
-      "source_location": "L1"
-    },
-    {
-      "id": "ios_vidrox_app_vidroxapp_vidroxapp_body",
-      "label": ".body",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": ".body",
-      "source_file": "ios/VidroX/App/VidroXApp.swift",
-      "source_location": "L5"
-    },
-    {
       "id": "ios_vidrox_ui_directionpadview",
       "label": "DirectionPadView.swift",
       "_origin": "ast",
       "community": 7,
-      "community_name": ".body",
+      "community_name": "View",
       "file_type": "code",
       "norm_label": "directionpadview.swift",
       "source_file": "ios/VidroX/UI/DirectionPadView.swift",
@@ -6075,7 +6237,7 @@
       "label": ".remoteControl",
       "_origin": "ast",
       "community": 7,
-      "community_name": ".body",
+      "community_name": "View",
       "file_type": "code",
       "norm_label": ".remotecontrol",
       "source_file": "ios/VidroX/UI/DirectionPadView.swift",
@@ -6086,7 +6248,7 @@
       "label": ".body",
       "_origin": "ast",
       "community": 7,
-      "community_name": ".body",
+      "community_name": "View",
       "file_type": "code",
       "norm_label": ".body",
       "source_file": "ios/VidroX/UI/DirectionPadView.swift",
@@ -6097,7 +6259,7 @@
       "label": "String",
       "_origin": "ast",
       "community": 7,
-      "community_name": ".body",
+      "community_name": "View",
       "file_type": "code",
       "norm_label": "string",
       "source_file": "",
@@ -6108,108 +6270,18 @@
       "label": "Void",
       "_origin": "ast",
       "community": 7,
-      "community_name": ".body",
+      "community_name": "View",
       "file_type": "code",
       "norm_label": "void",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "ios_vidrox_ui_statusoverlay",
-      "label": "StatusOverlay.swift",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "statusoverlay.swift",
-      "source_file": "ios/VidroX/UI/StatusOverlay.swift",
-      "source_location": "L1"
-    },
-    {
-      "id": "ios_vidrox_ui_statusoverlay_loadingoverlay_body",
-      "label": ".body",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": ".body",
-      "source_file": "ios/VidroX/UI/StatusOverlay.swift",
-      "source_location": "L6"
-    },
-    {
-      "id": "ios_vidrox_ui_statusoverlay_offlineoverlay_body",
-      "label": ".body",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": ".body",
-      "source_file": "ios/VidroX/UI/StatusOverlay.swift",
-      "source_location": "L27"
-    },
-    {
-      "id": "ios_vidrox_ui_statusoverlay_swift_void",
-      "label": "Void",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "void",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "ios_vidrox_web_youtubewebview",
-      "label": "YouTubeWebView.swift",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "youtubewebview.swift",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L1"
-    },
-    {
-      "id": "scene",
-      "label": "Scene",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "scene",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "swiftui",
-      "label": "SwiftUI",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "swiftui",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L1",
-      "type": "module"
-    },
-    {
-      "id": "uikit",
-      "label": "UIKit",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": ".body",
-      "file_type": "code",
-      "norm_label": "uikit",
-      "source_file": "ios/VidroX/Web/YouTubeWebView.swift",
-      "source_location": "L2",
-      "type": "module"
     },
     {
       "id": "view",
       "label": "View",
       "_origin": "ast",
       "community": 7,
-      "community_name": ".body",
+      "community_name": "View",
       "file_type": "code",
       "norm_label": "view",
       "source_file": "",
@@ -6249,22 +6321,11 @@
       "source_location": "L883"
     },
     {
-      "id": "app_src_main_java_com_jetcar_vidrox_ui_components_downloader",
-      "label": "Downloader.kt",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "Downloader.kt",
-      "file_type": "code",
-      "norm_label": "downloader.kt",
-      "source_file": "app/src/main/java/com/jetcar/vidrox/ui/components/Downloader.kt",
-      "source_location": "L1"
-    },
-    {
       "id": "app_src_main_java_com_jetcar_vidrox_ui_screens_splashloading",
       "label": "SplashLoading.kt",
       "_origin": "ast",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "file_type": "code",
       "norm_label": "splashloading.kt",
       "source_file": "app/src/main/java/com/jetcar/vidrox/ui/screens/SplashLoading.kt",
@@ -6275,7 +6336,7 @@
       "label": "Composable",
       "_origin": "ast",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "file_type": "code",
       "norm_label": "composable",
       "source_file": "",
@@ -6286,7 +6347,7 @@
       "label": "Color.kt",
       "_origin": "ast",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "file_type": "code",
       "norm_label": "color.kt",
       "source_file": "app/src/main/java/com/jetcar/vidrox/ui/theme/Color.kt",
@@ -6401,6 +6462,54 @@
       "type": "external"
     },
     {
+      "id": "ref_node_fs",
+      "label": "ref_node_fs",
+      "_origin": "semantic",
+      "community": 11,
+      "community_name": "analyze.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_fs",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_path",
+      "label": "ref_node_path",
+      "_origin": "semantic",
+      "community": 11,
+      "community_name": "analyze.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_path",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_process",
+      "label": "ref_node_process",
+      "_origin": "semantic",
+      "community": 11,
+      "community_name": "analyze.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_process",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_readline",
+      "label": "ref_node_readline",
+      "_origin": "semantic",
+      "community": 11,
+      "community_name": "analyze.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_readline",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "ref_node_url",
       "label": "ref_node_url",
       "_origin": "semantic",
@@ -6445,6 +6554,18 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "button",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "buttondefaults",
+      "label": "buttondefaults",
+      "_origin": "semantic",
+      "community": 14,
+      "community_name": "YoutubeWVOverlays.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "buttondefaults",
       "source_file": "",
       "type": "external"
     },
@@ -6497,14 +6618,14 @@
       "type": "external"
     },
     {
-      "id": "padding",
-      "label": "padding",
+      "id": "size",
+      "label": "size",
       "_origin": "semantic",
       "community": 14,
       "community_name": "YoutubeWVOverlays.kt",
       "external": true,
       "file_type": "concept",
-      "norm_label": "padding",
+      "norm_label": "size",
       "source_file": "",
       "type": "external"
     },
@@ -6533,14 +6654,38 @@
       "type": "external"
     },
     {
-      "id": "buttondefaults",
-      "label": "buttondefaults",
+      "id": "background",
+      "label": "background",
       "_origin": "semantic",
       "community": 15,
       "community_name": "UpdateDialog.kt",
       "external": true,
       "file_type": "concept",
-      "norm_label": "buttondefaults",
+      "norm_label": "background",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "border",
+      "label": "border",
+      "_origin": "semantic",
+      "community": 15,
+      "community_name": "UpdateDialog.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "border",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "collectasstate",
+      "label": "collectasstate",
+      "_origin": "semantic",
+      "community": 15,
+      "community_name": "UpdateDialog.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "collectasstate",
       "source_file": "",
       "type": "external"
     },
@@ -6569,6 +6714,18 @@
       "type": "external"
     },
     {
+      "id": "fillmaxwidth",
+      "label": "fillmaxwidth",
+      "_origin": "semantic",
+      "community": 15,
+      "community_name": "UpdateDialog.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "fillmaxwidth",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "focusrequester",
       "label": "focusrequester",
       "_origin": "semantic",
@@ -6593,6 +6750,42 @@
       "type": "external"
     },
     {
+      "id": "launchedeffect",
+      "label": "launchedeffect",
+      "_origin": "semantic",
+      "community": 15,
+      "community_name": "UpdateDialog.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "launchedeffect",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "linearprogressindicator",
+      "label": "linearprogressindicator",
+      "_origin": "semantic",
+      "community": 15,
+      "community_name": "UpdateDialog.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "linearprogressindicator",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "localcontext",
+      "label": "localcontext",
+      "_origin": "semantic",
+      "community": 15,
+      "community_name": "UpdateDialog.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "localcontext",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "mutableintstateof",
       "label": "mutableintstateof",
       "_origin": "semantic",
@@ -6601,6 +6794,18 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "mutableintstateof",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "remembercoroutinescope",
+      "label": "remembercoroutinescope",
+      "_origin": "semantic",
+      "community": 15,
+      "community_name": "UpdateDialog.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "remembercoroutinescope",
       "source_file": "",
       "type": "external"
     },
@@ -6617,14 +6822,50 @@
       "type": "external"
     },
     {
-      "id": "row",
-      "label": "row",
+      "id": "roundedcornershape",
+      "label": "roundedcornershape",
       "_origin": "semantic",
       "community": 15,
       "community_name": "UpdateDialog.kt",
       "external": true,
       "file_type": "concept",
-      "norm_label": "row",
+      "norm_label": "roundedcornershape",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "spacer",
+      "label": "spacer",
+      "_origin": "semantic",
+      "community": 15,
+      "community_name": "UpdateDialog.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "spacer",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "surface",
+      "label": "surface",
+      "_origin": "semantic",
+      "community": 15,
+      "community_name": "UpdateDialog.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "surface",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "width",
+      "label": "width",
+      "_origin": "semantic",
+      "community": 15,
+      "community_name": "UpdateDialog.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "width",
       "source_file": "",
       "type": "external"
     },
@@ -6689,18 +6930,6 @@
       "type": "external"
     },
     {
-      "id": "launchedeffect",
-      "label": "launchedeffect",
-      "_origin": "semantic",
-      "community": 16,
-      "community_name": "YoutubeWV.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "launchedeffect",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "lifecycle",
       "label": "lifecycle",
       "_origin": "semantic",
@@ -6761,14 +6990,14 @@
       "type": "external"
     },
     {
-      "id": "remembercoroutinescope",
-      "label": "remembercoroutinescope",
+      "id": "remember",
+      "label": "remember",
       "_origin": "semantic",
       "community": 16,
       "community_name": "YoutubeWV.kt",
       "external": true,
       "file_type": "concept",
-      "norm_label": "remembercoroutinescope",
+      "norm_label": "remember",
       "source_file": "",
       "type": "external"
     },
@@ -6781,6 +7010,18 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "setvalue",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "viewmodel",
+      "label": "viewmodel",
+      "_origin": "semantic",
+      "community": 16,
+      "community_name": "YoutubeWV.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "viewmodel",
       "source_file": "",
       "type": "external"
     },
@@ -6833,18 +7074,6 @@
       "type": "external"
     },
     {
-      "id": "remember",
-      "label": "remember",
-      "_origin": "semantic",
-      "community": 17,
-      "community_name": "managePerms.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "remember",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "rememberlauncherforactivityresult",
       "label": "rememberlauncherforactivityresult",
       "_origin": "semantic",
@@ -6865,18 +7094,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "darkcolorscheme",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "experimentaltvmaterial3api",
-      "label": "experimentaltvmaterial3api",
-      "_origin": "semantic",
-      "community": 18,
-      "community_name": ".onCreate",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "experimentaltvmaterial3api",
       "source_file": "",
       "type": "external"
     },
@@ -6913,18 +7130,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "materialtheme",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "border",
-      "label": "border",
-      "_origin": "semantic",
-      "community": 22,
-      "community_name": "LayoutDebugBorders.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "border",
       "source_file": "",
       "type": "external"
     },
@@ -7025,6 +7230,18 @@
       "type": "external"
     },
     {
+      "id": "experimentaltvmaterial3api",
+      "label": "experimentaltvmaterial3api",
+      "_origin": "semantic",
+      "community": 27,
+      "community_name": "Type.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "experimentaltvmaterial3api",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "fontfamily",
       "label": "fontfamily",
       "_origin": "semantic",
@@ -7100,8 +7317,8 @@
       "id": "body",
       "label": "body",
       "_origin": "semantic",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "body",
@@ -7112,8 +7329,8 @@
       "id": "coroutinescope",
       "label": "coroutinescope",
       "_origin": "semantic",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "coroutinescope",
@@ -7121,11 +7338,23 @@
       "type": "external"
     },
     {
+      "id": "dispatchers",
+      "label": "dispatchers",
+      "_origin": "semantic",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "dispatchers",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "get",
       "label": "get",
       "_origin": "semantic",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "get",
@@ -7136,8 +7365,8 @@
       "id": "httpclient",
       "label": "httpclient",
       "_origin": "semantic",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "httpclient",
@@ -7148,8 +7377,8 @@
       "id": "httpresponse",
       "label": "httpresponse",
       "_origin": "semantic",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "httpresponse",
@@ -7160,8 +7389,8 @@
       "id": "launch",
       "label": "launch",
       "_origin": "semantic",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "launch",
@@ -7172,8 +7401,8 @@
       "id": "okhttp",
       "label": "okhttp",
       "_origin": "semantic",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "okhttp",
@@ -7184,8 +7413,8 @@
       "id": "r",
       "label": "r",
       "_origin": "semantic",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "r",
@@ -7196,8 +7425,8 @@
       "id": "withcontext",
       "label": "withcontext",
       "_origin": "semantic",
-      "community": 36,
-      "community_name": "manageUpdate.kt",
+      "community": 35,
+      "community_name": "NetworkBridge.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "withcontext",
@@ -7253,18 +7482,6 @@
       "type": "external"
     },
     {
-      "id": "dispatchers",
-      "label": "dispatchers",
-      "_origin": "semantic",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "dispatchers",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "file",
       "label": "file",
       "_origin": "semantic",
@@ -7277,18 +7494,6 @@
       "type": "external"
     },
     {
-      "id": "intentcompat",
-      "label": "intentcompat",
-      "_origin": "semantic",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "intentcompat",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "issuccess",
       "label": "issuccess",
       "_origin": "semantic",
@@ -7297,18 +7502,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "issuccess",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "log",
-      "label": "log",
-      "_origin": "semantic",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "log",
       "source_file": "",
       "type": "external"
     },
@@ -7333,18 +7526,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "mutablestateflow",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "packageinstaller",
-      "label": "packageinstaller",
-      "_origin": "semantic",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "packageinstaller",
       "source_file": "",
       "type": "external"
     },
@@ -7385,18 +7566,6 @@
       "type": "external"
     },
     {
-      "id": "toast",
-      "label": "toast",
-      "_origin": "semantic",
-      "community": 4,
-      "community_name": "DownloaderVM.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "toast",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "toinputstream",
       "label": "toinputstream",
       "_origin": "semantic",
@@ -7433,50 +7602,50 @@
       "type": "external"
     },
     {
-      "id": "ref_node_fs",
-      "label": "ref_node_fs",
+      "id": "intentcompat",
+      "label": "intentcompat",
       "_origin": "semantic",
-      "community": 6,
-      "community_name": "capture.mjs",
+      "community": 40,
+      "community_name": "UpdateInstallReceiver.kt",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_fs",
+      "norm_label": "intentcompat",
       "source_file": "",
       "type": "external"
     },
     {
-      "id": "ref_node_path",
-      "label": "ref_node_path",
+      "id": "log",
+      "label": "log",
       "_origin": "semantic",
-      "community": 6,
-      "community_name": "capture.mjs",
+      "community": 40,
+      "community_name": "UpdateInstallReceiver.kt",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_path",
+      "norm_label": "log",
       "source_file": "",
       "type": "external"
     },
     {
-      "id": "ref_node_process",
-      "label": "ref_node_process",
+      "id": "packageinstaller",
+      "label": "packageinstaller",
       "_origin": "semantic",
-      "community": 6,
-      "community_name": "capture.mjs",
+      "community": 40,
+      "community_name": "UpdateInstallReceiver.kt",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_process",
+      "norm_label": "packageinstaller",
       "source_file": "",
       "type": "external"
     },
     {
-      "id": "ref_node_readline",
-      "label": "ref_node_readline",
+      "id": "toast",
+      "label": "toast",
       "_origin": "semantic",
-      "community": 6,
-      "community_name": "capture.mjs",
+      "community": 40,
+      "community_name": "UpdateInstallReceiver.kt",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_readline",
+      "norm_label": "toast",
       "source_file": "",
       "type": "external"
     },
@@ -7485,34 +7654,10 @@
       "label": "animatefloatasstate",
       "_origin": "semantic",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "animatefloatasstate",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "background",
-      "label": "background",
-      "_origin": "semantic",
-      "community": 9,
-      "community_name": "Downloader.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "background",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "collectasstate",
-      "label": "collectasstate",
-      "_origin": "semantic",
-      "community": 9,
-      "community_name": "Downloader.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "collectasstate",
       "source_file": "",
       "type": "external"
     },
@@ -7521,22 +7666,10 @@
       "label": "column",
       "_origin": "semantic",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "column",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "fillmaxwidth",
-      "label": "fillmaxwidth",
-      "_origin": "semantic",
-      "community": 9,
-      "community_name": "Downloader.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "fillmaxwidth",
       "source_file": "",
       "type": "external"
     },
@@ -7545,7 +7678,7 @@
       "label": "getvalue",
       "_origin": "semantic",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "getvalue",
@@ -7557,7 +7690,7 @@
       "label": "icon",
       "_origin": "semantic",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "icon",
@@ -7569,7 +7702,7 @@
       "label": "image",
       "_origin": "semantic",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "image",
@@ -7577,26 +7710,14 @@
       "type": "external"
     },
     {
-      "id": "linearprogressindicator",
-      "label": "linearprogressindicator",
+      "id": "padding",
+      "label": "padding",
       "_origin": "semantic",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "external": true,
       "file_type": "concept",
-      "norm_label": "linearprogressindicator",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "localcontext",
-      "label": "localcontext",
-      "_origin": "semantic",
-      "community": 9,
-      "community_name": "Downloader.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "localcontext",
+      "norm_label": "padding",
       "source_file": "",
       "type": "external"
     },
@@ -7605,7 +7726,7 @@
       "label": "painterresource",
       "_origin": "semantic",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "painterresource",
@@ -7617,7 +7738,7 @@
       "label": "progressindicatordefaults",
       "_origin": "semantic",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "progressindicatordefaults",
@@ -7625,38 +7746,14 @@
       "type": "external"
     },
     {
-      "id": "roundedcornershape",
-      "label": "roundedcornershape",
+      "id": "row",
+      "label": "row",
       "_origin": "semantic",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "external": true,
       "file_type": "concept",
-      "norm_label": "roundedcornershape",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "size",
-      "label": "size",
-      "_origin": "semantic",
-      "community": 9,
-      "community_name": "Downloader.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "size",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "spacer",
-      "label": "spacer",
-      "_origin": "semantic",
-      "community": 9,
-      "community_name": "Downloader.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "spacer",
+      "norm_label": "row",
       "source_file": "",
       "type": "external"
     },
@@ -7665,46 +7762,10 @@
       "label": "strokecap",
       "_origin": "semantic",
       "community": 9,
-      "community_name": "Downloader.kt",
+      "community_name": "SplashLoading.kt",
       "external": true,
       "file_type": "concept",
       "norm_label": "strokecap",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "surface",
-      "label": "surface",
-      "_origin": "semantic",
-      "community": 9,
-      "community_name": "Downloader.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "surface",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "viewmodel",
-      "label": "viewmodel",
-      "_origin": "semantic",
-      "community": 9,
-      "community_name": "Downloader.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "viewmodel",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "width",
-      "label": "width",
-      "_origin": "semantic",
-      "community": 9,
-      "community_name": "Downloader.kt",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "width",
       "source_file": "",
       "type": "external"
     }
@@ -9200,6 +9261,18 @@
     },
     {
       "source": "ios_vidrox_web_webviewmodel_webviewmodel_handleexitrequest",
+      "target": "ios_vidrox_web_webviewmodel_webviewmodel_navigateback",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "ios_vidrox_web_webviewmodel_webviewmodel_navigateback",
       "target": "ios_vidrox_web_webviewmodel_webviewmodel_sendremotekey",
       "relation": "calls",
       "_origin": "ast",
@@ -9244,6 +9317,18 @@
       "context": "call",
       "source_file": "ios/VidroX/Web/WebViewModel.swift",
       "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "ios_vidrox_web_webviewmodel_webviewmodel_sendremotekey",
+      "target": "ios_vidrox_web_webviewmodel_webviewmodel_javascript",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -9460,6 +9545,18 @@
       "context": "call",
       "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
       "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "ios_vidroxtests_webviewmodeltests_webviewmodeltests_testbacknavigationdispatchesescapekey",
+      "target": "ios_vidrox_web_webviewmodel_webviewmodel_javascript",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "ios/VidroXTests/WebViewModelTests.swift",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -10327,6 +10424,18 @@
       "weight": 1.0
     },
     {
+      "source": "ios_vidrox_app_contentview_contentview",
+      "target": "ios_vidrox_app_contentview_swift_cgfloat",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "field",
+      "source_file": "ios/VidroX/App/ContentView.swift",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
       "source": "ios_vidrox_app_vidroxapp_vidroxapp",
       "target": "scene",
       "relation": "references",
@@ -10496,7 +10605,7 @@
     },
     {
       "source": "ios_vidrox_web_youtubewebview_televisionwebview",
-      "target": "cgfloat",
+      "target": "ios_vidrox_web_youtubewebview_swift_cgfloat",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -16151,6 +16260,18 @@
       "weight": 1.0
     },
     {
+      "source": "ios_vidrox_web_webviewmodel_webviewmodel_javascript",
+      "target": "ios_vidrox_web_webviewmodel_remotekey",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "parameter_type",
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
       "source": "ios_vidrox_web_webviewmodel_webviewmodel_sendremotekey",
       "target": "ios_vidrox_web_webviewmodel_remotekey",
       "relation": "references",
@@ -16394,8 +16515,23 @@
       "weight": 1.0
     },
     {
+      "source": "ios_vidrox_web_webviewmodel_webviewmodel_javascript",
+      "target": "ios_vidrox_web_webviewmodel_swift_string",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "return_type",
+      "metadata": {
+        "swift_plain_return": true
+      },
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
       "source": "ios_vidrox_web_youtubewebview_televisionwebview_pagezoom",
-      "target": "cgfloat",
+      "target": "ios_vidrox_web_youtubewebview_swift_cgfloat",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -19815,7 +19951,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ios/VidroX/App/ContentView.swift",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -20040,13 +20176,24 @@
     },
     {
       "source": "ios_vidrox_web_webviewmodel_webviewmodel",
+      "target": "ios_vidrox_web_webviewmodel_webviewmodel_navigateback",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "ios_vidrox_web_webviewmodel_webviewmodel",
       "target": "ios_vidrox_web_webviewmodel_webviewmodel_handleexitrequest",
       "relation": "method",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L111",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -20057,7 +20204,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ios/VidroX/Web/WebViewModel.swift",
-      "source_location": "L119",
+      "source_location": "L122",
       "weight": 1.0
     },
     {
@@ -20168,6 +20315,17 @@
       "confidence_score": 1.0,
       "source_file": "ios/VidroX/Web/WebViewModel.swift",
       "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "ios_vidrox_web_webviewmodel_webviewmodel",
+      "target": "ios_vidrox_web_webviewmodel_webviewmodel_javascript",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ios/VidroX/Web/WebViewModel.swift",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -20326,6 +20484,17 @@
     },
     {
       "source": "ios_vidroxtests_contentviewlayouttests_contentviewlayouttests",
+      "target": "ios_vidroxtests_contentviewlayouttests_contentviewlayouttests_testtelevisioncontentusessixteenbyninelayout",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ios/VidroXTests/ContentViewLayoutTests.swift",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "ios_vidroxtests_contentviewlayouttests_contentviewlayouttests",
       "target": "ios_vidroxtests_contentviewlayouttests_contentviewlayouttests_testwebcontenthasextratopclearance",
       "relation": "method",
       "_origin": "ast",
@@ -20425,6 +20594,17 @@
     },
     {
       "source": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests",
+      "target": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests_testtelevisioncanvasmatchesinjectedfourkviewport",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ios/VidroXTests/TelevisionWebViewTests.swift",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests",
       "target": "ios_vidroxtests_televisionwebviewtests_televisionwebviewtests_testlandscapeiphoneviewportfitsentiretelevisioncanvas",
       "relation": "method",
       "_origin": "ast",
@@ -20454,6 +20634,17 @@
       "confidence_score": 1.0,
       "source_file": "ios/VidroXTests/WebViewModelTests.swift",
       "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "ios_vidroxtests_webviewmodeltests_webviewmodeltests",
+      "target": "ios_vidroxtests_webviewmodeltests_webviewmodeltests_testbacknavigationdispatchesescapekey",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ios/VidroXTests/WebViewModelTests.swift",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -20704,7 +20895,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "ios/VidroX/App/ContentView.swift",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -20716,7 +20907,19 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "ios/VidroX/App/ContentView.swift",
-      "source_location": "L17",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "ios_vidrox_app_contentview_contentview_body",
+      "target": "ios_vidrox_web_webviewmodel_webviewmodel_navigateback",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "call",
+      "source_file": "ios/VidroX/App/ContentView.swift",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -20728,19 +20931,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "ios/VidroX/App/ContentView.swift",
-      "source_location": "L21",
-      "weight": 1.0
-    },
-    {
-      "source": "ios_vidrox_app_contentview_contentview_body",
-      "target": "ios_vidrox_web_webviewmodel_webviewmodel_sendremotekey",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "context": "call",
-      "source_file": "ios/VidroX/App/ContentView.swift",
-      "source_location": "L28",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -20752,12 +20943,12 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "ios/VidroX/App/ContentView.swift",
-      "source_location": "L47",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
       "source": "ios_vidrox_app_contentview_contentview_body",
-      "target": "ios_vidrox_ui_statusoverlay_offlineoverlay",
+      "target": "ios_vidrox_web_webviewmodel_webviewmodel_sendremotekey",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "INFERRED",
@@ -20769,6 +20960,18 @@
     },
     {
       "source": "ios_vidrox_app_contentview_contentview_body",
+      "target": "ios_vidrox_ui_statusoverlay_offlineoverlay",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "call",
+      "source_file": "ios/VidroX/App/ContentView.swift",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "ios_vidrox_app_contentview_contentview_body",
       "target": "ios_vidrox_web_webviewmodel_webviewmodel_reload",
       "relation": "calls",
       "_origin": "ast",
@@ -20776,7 +20979,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "ios/VidroX/App/ContentView.swift",
-      "source_location": "L59",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -20788,7 +20991,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "ios/VidroX/App/ContentView.swift",
-      "source_location": "L67",
+      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -21081,5 +21284,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "dc29b884b4cc4df3e2a125f2984cf51584a49e13"
+  "built_at_commit": "12fb9eed6f2e8532a4afa2487fa5c7e58218ef0f"
 }

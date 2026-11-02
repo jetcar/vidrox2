@@ -135,8 +135,8 @@ struct YouTubeWebView: UIViewRepresentable {
 }
 
 final class TelevisionWebView: WKWebView {
-    static let televisionCanvasSize = CGSize(width: 7_000, height: 4_000)
-    static let zoomSafetyFactor: CGFloat = 0.94
+    static let televisionCanvasSize = CGSize(width: 3_840, height: 2_160)
+    static let zoomSafetyFactor: CGFloat = 0.98
 
     override func layoutSubviews() {
         super.layoutSubviews()

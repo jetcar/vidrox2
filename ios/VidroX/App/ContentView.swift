@@ -1,10 +1,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    static let televisionAspectRatio: CGFloat = 16.0 / 9.0
     static let webContentInsets = EdgeInsets(
-        top: 32,
+        top: 24,
         leading: 8,
-        bottom: 16,
+        bottom: 24,
         trailing: 8
     )
 
@@ -15,6 +16,7 @@ struct ContentView: View {
             Color.black.ignoresSafeArea()
 
             YouTubeWebView(model: model)
+                .aspectRatio(Self.televisionAspectRatio, contentMode: .fit)
                 .padding(Self.webContentInsets)
 
             VStack {

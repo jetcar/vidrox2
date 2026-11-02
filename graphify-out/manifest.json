@@ -192,9 +192,9 @@
     "semantic_hash": ""
   },
   "ios/VidroX/App/ContentView.swift": {
-    "mtime": 1793614247.0354247,
-    "seen": 1793614255.885821,
-    "ast_hash": "502e3196c4a57dd6580064d82c42bcc8",
+    "mtime": 1793615267.1963987,
+    "seen": 1793615273.066368,
+    "ast_hash": "ec8674f8a6a0bf19ab8bbf4afae9f052",
     "semantic_hash": ""
   },
   "ios/VidroX/App/VidroXApp.swift": {
@@ -246,9 +246,9 @@
     "semantic_hash": ""
   },
   "ios/VidroX/Web/YouTubeWebView.swift": {
-    "mtime": 1793612775.3463953,
-    "seen": 1793612785.0608613,
-    "ast_hash": "d0e0a2aff3acfad51a89533779eda9c6",
+    "mtime": 1793615267.1983972,
+    "seen": 1793615273.06638,
+    "ast_hash": "a2fdde78be6505418c0f6e89fca1b2a5",
     "semantic_hash": ""
   },
   "ios/scripts/package-ipa.sh": {
@@ -336,9 +336,9 @@
     "semantic_hash": ""
   },
   "ios/project.yml": {
-    "mtime": 1793614264.4505167,
-    "seen": 1793614269.8088076,
-    "ast_hash": "504a46936f92cde473b744ef54945189",
+    "mtime": 1793615267.1993954,
+    "seen": 1793615273.066397,
+    "ast_hash": "8b86de7158f00ccf77e96e1c48962038",
     "semantic_hash": ""
   },
   "tasks/plan.md": {
@@ -408,9 +408,9 @@
     "semantic_hash": ""
   },
   "ios/VidroXTests/TelevisionWebViewTests.swift": {
-    "mtime": 1793612779.0339496,
-    "seen": 1793612785.0608487,
-    "ast_hash": "045a26b25ad2a0cadc4f92a0ae7ef9a4",
+    "mtime": 1793615267.1993954,
+    "seen": 1793615273.0663657,
+    "ast_hash": "844eb15ea6e2e1b2f0fad4283d8a640f",
     "semantic_hash": ""
   },
   "ios/VidroX/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json": {
@@ -480,9 +480,9 @@
     "semantic_hash": ""
   },
   "ios/VidroXTests/ContentViewLayoutTests.swift": {
-    "mtime": 1793614250.7363155,
-    "seen": 1793614255.8858159,
-    "ast_hash": "3ba1af8cdb0f854ba17ed5c868d894ad",
+    "mtime": 1793615267.1983972,
+    "seen": 1793615273.0663629,
+    "ast_hash": "643981e346f060a322c6fa8a96e9e9f9",
     "semantic_hash": ""
   }
 }

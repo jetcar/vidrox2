@@ -2,10 +2,10 @@ import SwiftUI
 
 struct ContentView: View {
     static let webContentInsets = EdgeInsets(
-        top: 12,
-        leading: 4,
-        bottom: 8,
-        trailing: 4
+        top: 32,
+        leading: 8,
+        bottom: 16,
+        trailing: 8
     )
 
     @StateObject private var model = WebViewModel()

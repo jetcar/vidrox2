@@ -21,6 +21,9 @@ struct YouTubeWebView: UIViewRepresentable {
         context.coordinator.connect(to: webView)
         webView.customUserAgent = Self.televisionUserAgent
         webView.scrollView.bounces = false
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
+        webView.scrollView.contentInset = .zero
+        webView.scrollView.scrollIndicatorInsets = .zero
         guard let youtubeTVURL = URL(string: Self.youtubeTVURLString) else {
             assertionFailure("The built-in YouTube TV URL is invalid")
             return webView
@@ -96,6 +99,7 @@ struct YouTubeWebView: UIViewRepresentable {
         }
 
         func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation?) {
+            webView.scrollView.setContentOffset(.zero, animated: false)
             model.didStartLoading()
         }
 
@@ -104,6 +108,7 @@ struct YouTubeWebView: UIViewRepresentable {
         }
 
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation?) {
+            webView.scrollView.setContentOffset(.zero, animated: false)
             model.didFinishLoading()
         }
 
@@ -131,6 +136,7 @@ struct YouTubeWebView: UIViewRepresentable {
 
 final class TelevisionWebView: WKWebView {
     static let televisionCanvasSize = CGSize(width: 7_000, height: 4_000)
+    static let zoomSafetyFactor: CGFloat = 0.94
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -147,6 +153,6 @@ final class TelevisionWebView: WKWebView {
         return min(
             viewportSize.width / televisionCanvasSize.width,
             viewportSize.height / televisionCanvasSize.height
-        )
+        ) * zoomSafetyFactor
     }
 }

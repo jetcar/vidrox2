@@ -5,7 +5,7 @@ import XCTest
 @MainActor
 final class ContentViewLayoutTests: XCTestCase {
     func testWebContentHasExtraTopClearance() {
-        XCTAssertGreaterThanOrEqual(ContentView.webContentInsets.top, 12)
+        XCTAssertGreaterThanOrEqual(ContentView.webContentInsets.top, 32)
         XCTAssertGreaterThan(ContentView.webContentInsets.top, ContentView.webContentInsets.bottom)
     }
 }

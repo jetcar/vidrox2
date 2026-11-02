@@ -67,6 +67,20 @@ The generated APKs will be at:
 - Debug: `app/build/outputs/apk/debug/app-debug.apk`
 - Release: `app/build/outputs/apk/release/app-release.apk`
 
+## iPhone build for Sideloadly
+
+The iPhone version targets iOS 16 or later. It is built on GitHub Actions, so a Mac is not required.
+
+1. Open **Actions → iOS unsigned IPA → Run workflow** in GitHub.
+2. Download the `VidroX-unsigned-ipa` artifact after the workflow finishes.
+3. Extract `VidroX-unsigned.ipa` from the downloaded artifact archive.
+4. Open the IPA in [Sideloadly](https://sideloadly.io/), connect the iPhone, enter the Apple ID used for signing, and start the sideload.
+5. If iOS asks, enable Developer Mode and trust the developer profile in device settings.
+
+A free Apple developer account signs the application for seven days. Sideloadly Daemon can refresh it automatically when the iPhone is available over USB or configured Wi-Fi. Reuse the same Apple ID and bundle ID when updating so the existing installation is replaced.
+
+The workflow intentionally publishes an unsigned IPA and never needs Apple credentials, certificates, provisioning profiles, or device identifiers.
+
 ## After Installation
 
 To ensure shorts blocking works properly:

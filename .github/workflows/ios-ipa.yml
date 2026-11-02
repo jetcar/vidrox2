@@ -53,11 +53,18 @@ jobs:
       - name: Capture iPhone launch diagnostics
         shell: bash
         run: |
-          DEVICE_ID="$(xcrun simctl list devices booted -j | python3 -c '
+          DEVICE_ID="$(xcrun simctl list devices available -j | python3 -c '
           import json, sys
           devices = json.load(sys.stdin)["devices"]
-          print(next(device["udid"] for runtime in devices.values() for device in runtime))
+          print(next(
+              device["udid"]
+              for runtime in reversed(list(devices.values()))
+              for device in runtime
+              if device["name"] == "iPhone 16 Pro"
+          ))
           ')"
+          xcrun simctl boot "${DEVICE_ID}" 2>/dev/null || true
+          xcrun simctl bootstatus "${DEVICE_ID}" -b
           xcrun simctl install "${DEVICE_ID}" \
             build/ios-simulator/Build/Products/Debug-iphonesimulator/VidroX.app
           xcrun simctl launch --terminate-running-process \

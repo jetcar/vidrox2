@@ -252,9 +252,9 @@
     "semantic_hash": ""
   },
   "ios/scripts/package-ipa.sh": {
-    "mtime": 1793609500.6279874,
-    "seen": 1793609997.5581865,
-    "ast_hash": "fb17138f601c4f1160eb980d3cb26dbe",
+    "mtime": 1793613656.0219264,
+    "seen": 1793613697.56918,
+    "ast_hash": "27bbf14841a10e01693b9224a2b43f74",
     "semantic_hash": ""
   },
   "settings.gradle.kts": {
@@ -300,9 +300,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/ios-ipa.yml": {
-    "mtime": 1793612746.0394926,
-    "seen": 1793612755.2087038,
-    "ast_hash": "0e49f7df2e2d15d3717928d0e11f69b8",
+    "mtime": 1793613410.5852609,
+    "seen": 1793613697.5691893,
+    "ast_hash": "0a7b1b2ae88695c7aa6bf646c2216406",
     "semantic_hash": ""
   },
   ".github/workflows/release-drafter.yml": {
@@ -336,9 +336,9 @@
     "semantic_hash": ""
   },
   "ios/project.yml": {
-    "mtime": 1793612746.038495,
-    "seen": 1793612755.208711,
-    "ast_hash": "7f16a6219ea7784abc501e1df0cc2151",
+    "mtime": 1793613656.0209458,
+    "seen": 1793613697.569197,
+    "ast_hash": "f349b5b2c099c70802e0b78a55113ac9",
     "semantic_hash": ""
   },
   "tasks/plan.md": {
@@ -411,6 +411,72 @@
     "mtime": 1793612779.0339496,
     "seen": 1793612785.0608487,
     "ast_hash": "045a26b25ad2a0cadc4f92a0ae7ef9a4",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json": {
+    "mtime": 1793613634.2892087,
+    "seen": 1793613697.5691676,
+    "ast_hash": "a4581ab69c60ff9ab6058bc4c8b2b583",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/Assets.xcassets/Contents.json": {
+    "mtime": 1793613634.288187,
+    "seen": 1793613697.5691695,
+    "ast_hash": "ee613c71a35a7100f8a141a67180f5a7",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png": {
+    "mtime": 1793613642.5975885,
+    "seen": 1793613697.569212,
+    "ast_hash": "debadfe2a124b32116c66761c4f5cb01",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-20@2x.png": {
+    "mtime": 1793613642.5002813,
+    "seen": 1793613697.5692132,
+    "ast_hash": "ba161b55a27417b68fb37ccd5f5c722c",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-20@3x.png": {
+    "mtime": 1793613642.5072892,
+    "seen": 1793613697.5692146,
+    "ast_hash": "f399b77c7fdd642a59b6f9f3d3bfbd4a",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-29@2x.png": {
+    "mtime": 1793613642.5157983,
+    "seen": 1793613697.5692155,
+    "ast_hash": "cafae763da19fcf135363247bbb67194",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-29@3x.png": {
+    "mtime": 1793613642.5238154,
+    "seen": 1793613697.5692163,
+    "ast_hash": "a82b41284ebf67c034bb19d384fdfe8f",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-40@2x.png": {
+    "mtime": 1793613642.531815,
+    "seen": 1793613697.5692172,
+    "ast_hash": "3e3139dbc5805ec20d642a1c993db648",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-40@3x.png": {
+    "mtime": 1793613642.541366,
+    "seen": 1793613697.5692182,
+    "ast_hash": "afb8125574ff98f3fa08526e8495a79b",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-60@2x.png": {
+    "mtime": 1793613642.5519426,
+    "seen": 1793613697.569219,
+    "ast_hash": "afb8125574ff98f3fa08526e8495a79b",
+    "semantic_hash": ""
+  },
+  "ios/VidroX/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-60@3x.png": {
+    "mtime": 1793613642.5634515,
+    "seen": 1793613697.56922,
+    "ast_hash": "0259f3c91e08b425fd6b7237279bf852",
     "semantic_hash": ""
   }
 }

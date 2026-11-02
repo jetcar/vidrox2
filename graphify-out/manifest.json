@@ -192,9 +192,9 @@
     "semantic_hash": ""
   },
   "ios/VidroX/App/ContentView.swift": {
-    "mtime": 1793609426.1776524,
-    "seen": 1793609997.558177,
-    "ast_hash": "4fa11a4662f94f479803e763de85721e",
+    "mtime": 1793614247.0354247,
+    "seen": 1793614255.885821,
+    "ast_hash": "502e3196c4a57dd6580064d82c42bcc8",
     "semantic_hash": ""
   },
   "ios/VidroX/App/VidroXApp.swift": {
@@ -477,6 +477,12 @@
     "mtime": 1793613642.5634515,
     "seen": 1793613697.56922,
     "ast_hash": "0259f3c91e08b425fd6b7237279bf852",
+    "semantic_hash": ""
+  },
+  "ios/VidroXTests/ContentViewLayoutTests.swift": {
+    "mtime": 1793614250.7363155,
+    "seen": 1793614255.8858159,
+    "ast_hash": "3ba1af8cdb0f854ba17ed5c868d894ad",
     "semantic_hash": ""
   }
 }

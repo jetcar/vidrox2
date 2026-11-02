@@ -1,29 +1,29 @@
 # Graph Report - vidrox  (2026-11-02)
 
 ## Corpus Check
-- 56 files · ~27,177 words
+- 59 files · ~28,924 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 15 file(s) not represented in the graph (top: .xml 5, (none) 4, .properties 2)
 
 ## Summary
-- 632 nodes · 1063 edges · 40 communities (23 shown, 17 thin omitted)
+- 635 nodes · 1069 edges · 45 communities (21 shown, 24 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 51 edges (avg confidence: 0.86)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d4f8601e`
+- Built from commit: `5d0bb572`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- .webView
+- WebViewModel
 - YoutubeWVWebViewSupport.kt
 - raw/userscripts.js
-- ScriptBridge
+- SponsorBlockClient
 - DownloaderVM.kt
-- manageUpdate.kt
+- NetworkBridge.kt
 - capture.mjs
-- View
+- .body
 - assets/userscripts.js
 - Downloader.kt
 - Foundation
@@ -43,11 +43,16 @@
 - MainActivity.kt
 - ReleaseData
 - package-ipa.sh
-- Coordinator
-- WebViewModel
-- ContentView
-- RemoteKey
-- .body
+- ScriptBridge
+- manageUpdate.kt
+- .addUserScript
+- UpdateInstallReceiver.kt
+- .pageZoom
+- UpdateViewModel
+- ClientError
+- NetworkBridge
+- readRaw
+- XCTestCase
 
 ## God Nodes (most connected - your core abstractions)
 1. `WebViewModel` - 29 edges
@@ -76,7 +81,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (40 total, 17 thin omitted)
+## Communities (45 total, 24 thin omitted)
+
+### Community 0 - "WebViewModel"
+Cohesion: 0.07
+Nodes (13): RemoteKey, down, escape, .event, left, right, select, up (+5 more)
 
 ### Community 1 - "YoutubeWVWebViewSupport.kt"
 Cohesion: 0.08
@@ -86,33 +95,25 @@ Nodes (14): YoutubeWV(), NetworkCallback, configureCookies(), configureFocusAndT
 Cohesion: 0.08
 Nodes (28): addMenuButton(), applyShortsHidingCSS(), captureAdRangesFromPlayerResponse(), collectDeclaredAdRanges(), customAction(), execute_once_dom_loaded(), filterAdsFromSectionList(), filterShortsFromSectionList() (+20 more)
 
-### Community 3 - "ScriptBridge"
-Cohesion: 0.08
-Nodes (8): ScriptBridge, ClientError, disallowedEndpoint, invalidResponse, invalidURL, unsuccessfulStatus, SponsorBlockClient, SponsorBlockClientTests
-
-### Community 4 - "DownloaderVM.kt"
-Cohesion: 0.09
-Nodes (3): InvalidUpdateException, UpdateViewModel, UpdateInstallReceiver
-
-### Community 5 - "manageUpdate.kt"
-Cohesion: 0.10
-Nodes (10): fetchScripts(), JavaScriptEvaluator, compareVersions(), fetchUpdate(), findApkAsset(), getLocalVersion(), getSkipVersion(), getUpdate() (+2 more)
+### Community 3 - "SponsorBlockClient"
+Cohesion: 0.19
+Nodes (3): unsuccessfulStatus, SponsorBlockClient, SponsorBlockClientTests
 
 ### Community 6 - "capture.mjs"
 Cohesion: 0.09
 Nodes (30): playwright, AD_RESPONSE_KEYWORDS, buildCaptureTargets(), buildResponseFileName(), captureTarget(), DEFAULT_CAPTURES, isTextualContentType(), main() (+22 more)
 
-### Community 7 - "View"
-Cohesion: 0.24
-Nodes (5): ButtonStyle, .remoteControl, DirectionPadView, .body, RemoteControlButtonStyle
+### Community 7 - ".body"
+Cohesion: 0.09
+Nodes (15): ContentView, .body, VidroXApp, .body, ButtonStyle, .remoteControl, DirectionPadView, .body (+7 more)
 
 ### Community 8 - "assets/userscripts.js"
 Cohesion: 0.12
 Nodes (16): addMenuButton(), applyShortsHidingCSS(), customAction(), execute_once_dom_loaded(), getSearchBar(), getShelfTitleText(), installShortsHidingObserver(), isShortsEndpoint() (+8 more)
 
 ### Community 10 - "Foundation"
-Cohesion: 0.09
-Nodes (10): Combine, CoreGraphics, Foundation, WebContentConfiguration, TelevisionWebView, ContentRuleTests, TelevisionWebViewTests, VidroX (+2 more)
+Cohesion: 0.23
+Nodes (6): Combine, CoreGraphics, Foundation, VidroX, WebKit, XCTest
 
 ### Community 11 - "analyze.mjs"
 Cohesion: 0.14
@@ -158,37 +159,33 @@ Nodes (8): Create a storage state locally, Good maintenance workflow, How to use
 Cohesion: 0.22
 Nodes (8): Checkpoint: Complete, Checkpoint: Web Integration, Task 1: Add the iOS project and WebView shell, Task 2: Inject scripts and block advertising hosts, Task 3: Implement native JavaScript bridges, Task 4: Add iPhone controls and connection UI, Task 5: Build and publish the unsigned IPA, VidroX for iPhone Tasks
 
-### Community 37 - "ContentView"
-Cohesion: 0.22
-Nodes (5): ContentView, VidroXApp, .body, SwiftUI, UIKit
+### Community 36 - "manageUpdate.kt"
+Cohesion: 0.26
+Nodes (7): JavaScriptEvaluator, compareVersions(), fetchUpdate(), findApkAsset(), getLocalVersion(), getSkipVersion(), getUpdate()
 
-### Community 38 - "RemoteKey"
-Cohesion: 0.20
-Nodes (8): RemoteKey, down, escape, .event, left, right, select, up
-
-### Community 39 - ".body"
-Cohesion: 0.25
-Nodes (5): .body, LoadingOverlay, .body, OfflineOverlay, .body
+### Community 41 - "ClientError"
+Cohesion: 0.29
+Nodes (4): ClientError, disallowedEndpoint, invalidResponse, invalidURL
 
 ## Knowledge Gaps
 - **93 isolated node(s):** `CoreGraphics`, `.body`, `.body`, `invalidURL`, `disallowedEndpoint` (+88 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 228 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 229 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `WebViewModel` connect `WebViewModel` to `.webView`, `Coordinator`, `ContentView`, `RemoteKey`, `View`, `.body`, `Foundation`?**
-  _High betweenness centrality (0.214) - this node is a cross-community bridge._
+- **Why does `WebViewModel` connect `WebViewModel` to `Foundation`, `.body`?**
+  _High betweenness centrality (0.204) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `WebViewModel` (e.g. with `ContentView` and `.testCancelledNavigationDoesNotShowOfflineState()`) actually correct?**
   _`WebViewModel` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `CoreGraphics`, `.body`, `.body` to the rest of the system?**
   _93 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `YoutubeWVWebViewSupport.kt` be split into smaller, more focused modules?**
-  _Cohesion score 0.07777777777777778 - nodes in this community are weakly interconnected._
+- **Should `WebViewModel` be split into smaller, more focused modules?**
+  _Cohesion score 0.06980392156862746 - nodes in this community are weakly interconnected._
 - **Why does `ExitBridge` connect `Implementation Plan: VidroX for iPhone` to `YoutubeWV.kt`, `YoutubeWVWebViewSupport.kt`?**
   _High betweenness centrality (0.141) - this node is a cross-community bridge._
 - **Are the 11 inferred relationships involving `YoutubeWV()` (e.g. with `SplashLoading()` and `DirectionPadOverlay()`) actually correct?**
   _`YoutubeWV()` has 11 INFERRED edges - model-reasoned connections that need verification._
-- **Should `raw/userscripts.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.08080808080808081 - nodes in this community are weakly interconnected._
+- **Should `YoutubeWVWebViewSupport.kt` be split into smaller, more focused modules?**
+  _Cohesion score 0.07777777777777778 - nodes in this community are weakly interconnected._

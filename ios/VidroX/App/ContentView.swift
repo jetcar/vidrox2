@@ -1,12 +1,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    static let webContentInsets = EdgeInsets(
+        top: 12,
+        leading: 4,
+        bottom: 8,
+        trailing: 4
+    )
+
     @StateObject private var model = WebViewModel()
 
     var body: some View {
         ZStack {
+            Color.black.ignoresSafeArea()
+
             YouTubeWebView(model: model)
-                .ignoresSafeArea()
+                .padding(Self.webContentInsets)
 
             if !model.isPageLoaded && !model.isOffline {
                 LoadingOverlay(progress: model.loadingProgress)

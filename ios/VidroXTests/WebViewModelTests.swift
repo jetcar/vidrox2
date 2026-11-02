@@ -39,5 +39,11 @@ final class WebViewModelTests: XCTestCase {
 
         XCTAssertFalse(model.isOffline)
     }
-}
 
+    func testBackNavigationDispatchesEscapeKey() {
+        let script = WebViewModel.javaScript(for: .escape)
+
+        XCTAssertTrue(script.contains("key: \"Escape\""))
+        XCTAssertTrue(script.contains("keyCode: 27"))
+    }
+}

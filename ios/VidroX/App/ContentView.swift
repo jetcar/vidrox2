@@ -17,24 +17,32 @@ struct ContentView: View {
             YouTubeWebView(model: model)
                 .padding(Self.webContentInsets)
 
+            VStack {
+                HStack {
+                    Button {
+                        model.navigateBack()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                            .frame(width: 48, height: 48)
+                    }
+                    .buttonStyle(.remoteControl)
+                    .accessibilityLabel("Назад")
+
+                    Spacer()
+                }
+
+                Spacer()
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .zIndex(2)
+
             if !model.isPageLoaded && !model.isOffline {
                 LoadingOverlay(progress: model.loadingProgress)
             }
 
             if model.controlsVisible {
                 VStack {
-                    HStack {
-                        Button {
-                            model.sendRemoteKey(.escape)
-                        } label: {
-                            Image(systemName: "arrow.uturn.backward")
-                                .frame(width: 44, height: 44)
-                        }
-                        .buttonStyle(.remoteControl)
-
-                        Spacer()
-                    }
-
                     Spacer()
 
                     HStack(alignment: .bottom) {

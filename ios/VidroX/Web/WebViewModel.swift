@@ -93,8 +93,12 @@ final class WebViewModel: ObservableObject {
 
     func sendRemoteKey(_ remoteKey: RemoteKey) {
         showControls()
+        webView?.evaluateJavaScript(Self.javaScript(for: remoteKey))
+    }
+
+    static func javaScript(for remoteKey: RemoteKey) -> String {
         let event = remoteKey.event
-        let script = """
+        return """
         (function () {
           const init = {
             key: "\(event.key)", code: "\(event.code)",
@@ -105,15 +109,14 @@ final class WebViewModel: ObservableObject {
           document.dispatchEvent(new KeyboardEvent("keyup", init));
         })();
         """
-        webView?.evaluateJavaScript(script)
+    }
+
+    func navigateBack() {
+        sendRemoteKey(.escape)
     }
 
     func handleExitRequest() {
-        if webView?.canGoBack == true {
-            webView?.goBack()
-        } else {
-            sendRemoteKey(.escape)
-        }
+        navigateBack()
     }
 
     deinit {

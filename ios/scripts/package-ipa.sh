@@ -18,6 +18,7 @@ fi
 executable_name="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$info_plist")"
 for required_path in \
   "$app_path/$executable_name" \
+  "$app_path/Assets.car" \
   "$app_path/userscripts.js" \
   "$app_path/ios_bridge.js"
 do
@@ -26,6 +27,14 @@ do
     exit 1
   fi
 done
+
+icon_name="$(/usr/libexec/PlistBuddy -c \
+  'Print :CFBundleIcons:CFBundlePrimaryIcon:CFBundleIconName' \
+  "$info_plist")"
+if [[ "$icon_name" != "AppIcon" ]]; then
+  echo "Application icon catalog is not configured" >&2
+  exit 1
+fi
 
 output_directory="$(dirname "$output_path")"
 mkdir -p "$output_directory"
@@ -43,4 +52,3 @@ mkdir -p "$package_root/Payload"
 )
 
 echo "$output_path"
-

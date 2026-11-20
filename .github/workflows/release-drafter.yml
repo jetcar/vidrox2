@@ -218,6 +218,8 @@ jobs:
           name: ${{ needs.detect_release_need.outputs.release_tag }}
           target_commitish: ${{ github.sha }}
           generate_release_notes: true
+          preserve_order: true
+          fail_on_unmatched_files: true
           files: |
             release-artifacts/VidroX-${{ needs.detect_release_need.outputs.release_tag }}.apk
             release-artifacts/VidroX-Remote-${{ needs.detect_release_need.outputs.release_tag }}.apk

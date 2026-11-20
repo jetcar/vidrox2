@@ -12,9 +12,9 @@
     "semantic_hash": ""
   },
   "app/build.gradle.kts": {
-    "mtime": 1795182759.4046464,
-    "seen": 1795183102.6682694,
-    "ast_hash": "3a11e280a93c5eebc01393b21a73efb2",
+    "mtime": 1795187405.868328,
+    "seen": 1795187561.00572,
+    "ast_hash": "ef900b67ea6c8bb2a398f59bc9ebcbdc",
     "semantic_hash": ""
   },
   "app/src/main/java/com/jetcar/vidrox/MainActivity.kt": {
@@ -306,15 +306,15 @@
     "semantic_hash": ""
   },
   ".github/workflows/release-drafter.yml": {
-    "mtime": 1795182759.403647,
-    "seen": 1795183102.66835,
-    "ast_hash": "538dc3d1a788fbe89159ee35a9484523",
+    "mtime": 1795184049.3190682,
+    "seen": 1795184089.6274652,
+    "ast_hash": "46ee795d89df32f488de85a24def40b7",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1795182910.432935,
-    "seen": 1795183102.6683524,
-    "ast_hash": "32c2777b59e6a83d5876b5b18f32ab4a",
+    "mtime": 1795187517.43557,
+    "seen": 1795187561.0058112,
+    "ast_hash": "3a9ac19bdefc80d354fa81250515f69a",
     "semantic_hash": ""
   },
   "SPEC-ios.md": {
@@ -522,15 +522,15 @@
     "semantic_hash": ""
   },
   "remote/build.gradle.kts": {
-    "mtime": 1795182759.4056523,
-    "seen": 1795183102.6683302,
-    "ast_hash": "e197b6e93926acced408f39ddd3df8e1",
+    "mtime": 1795187405.870332,
+    "seen": 1795187561.0057807,
+    "ast_hash": "00d20e48dee3b2324ac534ddb9e7a8bd",
     "semantic_hash": ""
   },
   "remote/src/main/java/com/jetcar/vidrox/remote/MainActivity.kt": {
-    "mtime": 1795182910.431928,
-    "seen": 1795183102.668331,
-    "ast_hash": "6657c79036a888f0aabf7a9d9da99c55",
+    "mtime": 1795187700.14169,
+    "seen": 1795187806.8018377,
+    "ast_hash": "b77104ab8386ead192e70b921871b0ac",
     "semantic_hash": ""
   },
   "remote/src/main/java/com/jetcar/vidrox/remote/network/RemoteCommandClient.kt": {
@@ -558,9 +558,9 @@
     "semantic_hash": ""
   },
   "SPEC-android-controller.md": {
-    "mtime": 1795182918.4644043,
-    "seen": 1795183102.6683533,
-    "ast_hash": "3123f9661195d05c7edb99d0816c1c22",
+    "mtime": 1795184049.3220687,
+    "seen": 1795184089.6274688,
+    "ast_hash": "9f0517720e687a2ee3d34629def5c643",
     "semantic_hash": ""
   },
   "SPEC-android-receiver.md": {
@@ -576,15 +576,15 @@
     "semantic_hash": ""
   },
   "docs/decisions/002-android-local-remote.md": {
-    "mtime": 1795182122.8970764,
-    "seen": 1795182163.5122628,
-    "ast_hash": "19b28cad754ebe4f9695d7defcfba347",
+    "mtime": 1795187517.4365683,
+    "seen": 1795187561.0058184,
+    "ast_hash": "5c85912cd8857c8f170b4f41c24508a9",
     "semantic_hash": ""
   },
   "remote/src/main/java/com/jetcar/vidrox/remote/update/RemoteRelease.kt": {
-    "mtime": 1795182882.2157028,
-    "seen": 1795183102.6683362,
-    "ast_hash": "85483eba403b097a3b0aa02dc7295bdb",
+    "mtime": 1795184049.3200686,
+    "seen": 1795184089.627449,
+    "ast_hash": "391d0715d6a98b42c6cab9113e2b5a90",
     "semantic_hash": ""
   },
   "remote/src/main/java/com/jetcar/vidrox/remote/update/RemoteUpdateDialog.kt": {
@@ -606,9 +606,15 @@
     "semantic_hash": ""
   },
   "remote/src/test/java/com/jetcar/vidrox/remote/update/RemoteReleaseTest.kt": {
-    "mtime": 1795182882.2206976,
-    "seen": 1795183102.6683397,
-    "ast_hash": "0d9d22265c8e13d6abaa1ca1ed3529b3",
+    "mtime": 1795184049.3210683,
+    "seen": 1795184089.6274548,
+    "ast_hash": "ec8edbe60387f1d9b4b138836daef09b",
+    "semantic_hash": ""
+  },
+  "remote/src/main/java/com/jetcar/vidrox/remote/YouTubeBrowser.kt": {
+    "mtime": 1795187700.1396897,
+    "seen": 1795187806.801839,
+    "ast_hash": "7ff5f4d824de8d4e2de9d0aaded2b912",
     "semantic_hash": ""
   }
 }

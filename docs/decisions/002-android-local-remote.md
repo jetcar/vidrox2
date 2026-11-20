@@ -18,6 +18,8 @@ Advertise the receiver with Android Network Service Discovery using `_vidrox._tc
 
 The receiver exists only while the VidroX screen is active. It accepts a fixed command allowlist and canonical YouTube targets; it never accepts arbitrary JavaScript or arbitrary URLs.
 
+The phone controller hosts the mobile YouTube website in an Android WebView. It tracks main-frame history changes, including YouTube single-page navigation, and enables **На ТВ** only when the current address resolves to a canonical YouTube video. The browser stays alive behind the full-screen remote overlay so video selection is not lost while playback controls are used. Top-level navigation is limited to HTTPS YouTube and Google domains; arbitrary web addresses are never sent to the receiver.
+
 ## Alternatives Considered
 
 ### Google Cast SDK
@@ -44,6 +46,7 @@ The receiver exists only while the VidroX screen is active. It accepts a fixed c
 - Pairing prevents casual accidental control but does not encrypt traffic.
 - SDK 36 receives implicit LAN access through `INTERNET`; targeting SDK 37 later requires declaring and requesting `ACCESS_LOCAL_NETWORK`.
 - NSD registration and discovery follow the resumed application lifecycle and use a scoped Wi-Fi multicast lock for Android versions where the system does not manage mDNS reception.
+- YouTube requires JavaScript and DOM storage in the phone WebView. Video targets are still revalidated by the shared protocol and again by the receiver.
 
 ## References
 

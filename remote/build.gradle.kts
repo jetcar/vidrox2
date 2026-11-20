@@ -45,8 +45,8 @@ android {
         applicationId = "com.jetcar.vidrox.remote"
         minSdk = 24
         targetSdk = 36
-        versionCode = 2
-        versionName = "0.1.1"
+        versionCode = 1003
+        versionName = "0.1.3"
     }
 
     buildTypes {

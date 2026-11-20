@@ -75,9 +75,9 @@ Install both signed APKs from the latest GitHub Release (or from `build/android-
 - `VidroX-vX.Y.Z.apk` on the Android TV, tablet, or receiver device.
 - `VidroX-vX.Y.Z.remote.apk` on the Android phone.
 
-Open VidroX and leave it on screen. On the phone, open **VidroX Remote** while both devices are on the same non-guest Wi-Fi network. Select the discovered VidroX, enter the six-digit code shown in its upper-left corner, then paste a YouTube link or use **Share → VidroX Remote** from the YouTube app.
+Open VidroX and leave it on screen. On the phone, open **VidroX Remote** while both devices are on the same non-guest Wi-Fi network. In **Пульт**, select the discovered VidroX and enter the six-digit code shown in its upper-left corner. Browse YouTube directly in the app; on any video page, press **На ТВ** to open that video on VidroX without copying a link. **Share → VidroX Remote** remains available from other Android apps.
 
-The remote provides play/pause, seek ±10 seconds, back, D-pad, and select controls. The pairing code is remembered on both devices. Guest-network client isolation, VPNs, or router multicast blocking can prevent discovery.
+The bottom browser controls remain visible while YouTube is open. **Пульт** provides play/pause, seek ±10 seconds, back, D-pad, and select controls. The pairing code is remembered on both devices. Guest-network client isolation, VPNs, or router multicast blocking can prevent discovery.
 
 VidroX Remote checks the same latest GitHub Release at startup, selects only the `VidroX-vX.Y.Z.remote.apk` file, verifies its size, SHA-256 digest, and package name, then asks Android to install it. The filename keeps the receiver APK first in GitHub's asset list for compatibility with older VidroX versions.
 

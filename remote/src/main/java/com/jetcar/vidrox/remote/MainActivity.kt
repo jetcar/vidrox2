@@ -4,12 +4,14 @@ import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,6 +42,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -106,17 +109,13 @@ private fun RemoteScreen(sharedTarget: String) {
     var endpoints by remember { mutableStateOf<List<RemoteEndpoint>>(emptyList()) }
     var selected by remember { mutableStateOf<RemoteEndpoint?>(null) }
     var pairingCode by remember { mutableStateOf(preferences.getString("pairing_code", "").orEmpty()) }
-    var videoTarget by remember { mutableStateOf("") }
     var status by remember { mutableStateOf("поиск устройств…") }
+    var showRemote by rememberSaveable { mutableStateOf(false) }
     var availableUpdate by remember { mutableStateOf<RemoteRelease?>(null) }
     val commandClient = remember { RemoteCommandClient() }
 
     LaunchedEffect(Unit) {
         availableUpdate = getRemoteUpdate(context)
-    }
-
-    LaunchedEffect(sharedTarget) {
-        if (sharedTarget.isNotBlank()) videoTarget = sharedTarget
     }
 
     DisposableEffect(context, lifecycleOwner) {
@@ -158,7 +157,7 @@ private fun RemoteScreen(sharedTarget: String) {
         }
     }
 
-    fun send(action: RemoteAction, argument: String = "") {
+    fun send(action: RemoteAction, argument: String = "", onSuccess: () -> Unit = {}) {
         val endpoint = selected
         if (endpoint == null) {
             status = "VidroX не найден"
@@ -168,26 +167,43 @@ private fun RemoteScreen(sharedTarget: String) {
         status = "отправка…"
         commandClient.send(endpoint, command) { result ->
             status = result.fold(
-                onSuccess = { "готово" },
+                onSuccess = {
+                    onSuccess()
+                    "готово"
+                },
                 onFailure = { error -> humanError(error) },
             )
         }
     }
 
-    RemoteLayout(
-        endpoints = endpoints,
-        selected = selected,
-        pairingCode = pairingCode,
-        videoTarget = videoTarget,
-        status = status,
-        onSelect = { selected = it },
-        onPairingCodeChange = {
-            pairingCode = it.filter(Char::isDigit).take(6)
-            preferences.edit().putString("pairing_code", pairingCode).apply()
-        },
-        onVideoTargetChange = { videoTarget = it },
-        send = ::send,
-    )
+    Box(modifier = Modifier.fillMaxSize()) {
+        YouTubeBrowser(
+            sharedTarget = sharedTarget,
+            receiverLabel = selected?.label,
+            status = status,
+            onOpenRemote = { showRemote = true },
+            onSendVideo = { target, onSent -> send(RemoteAction.OPEN, target, onSent) },
+        )
+        if (showRemote) {
+            RemoteLayout(
+                endpoints = endpoints,
+                selected = selected,
+                pairingCode = pairingCode,
+                status = status,
+                onSelect = { selected = it },
+                onPairingCodeChange = {
+                    pairingCode = it.filter(Char::isDigit).take(6)
+                    preferences.edit().putString("pairing_code", pairingCode).apply()
+                },
+                onClose = { showRemote = false },
+                send = { action, argument -> send(action, argument) },
+            )
+        }
+    }
+
+    BackHandler(enabled = showRemote) {
+        showRemote = false
+    }
 
     availableUpdate?.let { release ->
         RemoteUpdateDialog(release = release) { availableUpdate = null }
@@ -199,11 +215,10 @@ private fun RemoteLayout(
     endpoints: List<RemoteEndpoint>,
     selected: RemoteEndpoint?,
     pairingCode: String,
-    videoTarget: String,
     status: String,
     onSelect: (RemoteEndpoint) -> Unit,
     onPairingCodeChange: (String) -> Unit,
-    onVideoTargetChange: (String) -> Unit,
+    onClose: () -> Unit,
     send: (RemoteAction, String) -> Unit,
 ) {
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
@@ -225,12 +240,10 @@ private fun RemoteLayout(
                         endpoints = endpoints,
                         selected = selected,
                         pairingCode = pairingCode,
-                        videoTarget = videoTarget,
                         status = status,
                         onSelect = onSelect,
                         onPairingCodeChange = onPairingCodeChange,
-                        onVideoTargetChange = onVideoTargetChange,
-                        send = send,
+                        onClose = onClose,
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight()
@@ -252,12 +265,10 @@ private fun RemoteLayout(
                         endpoints = endpoints,
                         selected = selected,
                         pairingCode = pairingCode,
-                        videoTarget = videoTarget,
                         status = status,
                         onSelect = onSelect,
                         onPairingCodeChange = onPairingCodeChange,
-                        onVideoTargetChange = onVideoTargetChange,
-                        send = send,
+                        onClose = onClose,
                         modifier = if (compact) {
                             Modifier
                                 .fillMaxWidth()
@@ -288,17 +299,22 @@ private fun ConnectionPanel(
     endpoints: List<RemoteEndpoint>,
     selected: RemoteEndpoint?,
     pairingCode: String,
-    videoTarget: String,
     status: String,
     onSelect: (RemoteEndpoint) -> Unit,
     onPairingCodeChange: (String) -> Unit,
-    onVideoTargetChange: (String) -> Unit,
-    send: (RemoteAction, String) -> Unit,
+    onClose: () -> Unit,
     modifier: Modifier,
     compact: Boolean,
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        Text("VidroX Remote", fontSize = if (compact) 22.sp else 28.sp, fontWeight = FontWeight.Bold)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text("VidroX Remote", fontSize = if (compact) 22.sp else 28.sp, fontWeight = FontWeight.Bold)
+            Button(onClick = onClose) { Text("YouTube") }
+        }
         Text(status, color = MaterialTheme.colorScheme.primary, fontSize = 14.sp)
         Spacer(Modifier.height(if (compact) 4.dp else 10.dp))
         Row(
@@ -322,19 +338,6 @@ private fun ConnectionPanel(
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         )
-        OutlinedTextField(
-            value = videoTarget,
-            onValueChange = onVideoTargetChange,
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text("Ссылка YouTube или ID видео") },
-            singleLine = true,
-        )
-        Button(
-            onClick = { send(RemoteAction.OPEN, videoTarget) },
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text("Послать видео")
-        }
     }
 }
 

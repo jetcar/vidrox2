@@ -128,3 +128,72 @@ Implementation and CI verification are complete. Physical-device installation th
 - [ ] Every success criterion in `SPEC-ios.md` is satisfied.
 - [ ] Android build remains unchanged.
 - [ ] The generated IPA is ready for the user's Sideloadly device test.
+
+---
+
+# Android VidroX Remote Tasks
+
+## Task A1: Shared protocol
+
+**Acceptance criteria:**
+- [x] Versioned commands round-trip through one shared implementation.
+- [x] Malformed codes, actions, arguments, targets, and oversized lines are rejected.
+
+**Verification:** `gradlew :remote-core:test`
+
+**Dependencies:** None
+
+## Task A2: Receiver
+
+**Acceptance criteria:**
+- [x] VidroX advertises only while its screen is active.
+- [x] The pairing code is visible and required for all commands.
+- [x] Allowed commands control only YouTube playback/navigation.
+
+**Verification:** `gradlew :app:testDebugUnitTest :app:assembleDebug`
+
+**Dependencies:** A1
+
+## Task A3: Discovery and client
+
+**Acceptance criteria:**
+- [x] The remote discovers and resolves `_vidrox._tcp.` receivers.
+- [x] Network calls have connect/read timeouts and do not run on the UI thread.
+
+**Verification:** `gradlew :remote:testDebugUnitTest`
+
+**Dependencies:** A1
+
+## Task A4: Phone UI
+
+**Acceptance criteria:**
+- [x] Receiver/code/video fields validate locally.
+- [x] Send, play/pause, ±10 seconds, back, D-pad, and select are always visible.
+- [x] The UI reports success and actionable errors in Russian.
+
+**Verification:** `gradlew :remote:assembleDebug`
+
+**Dependencies:** A3
+
+## Checkpoint: End to End
+
+- [x] All unit tests pass.
+- [x] Both signed release APKs build.
+
+## Task A5: Package APKs
+
+**Acceptance criteria:**
+- [x] `build/android-apk` contains both APKs with version numbers in filenames.
+
+**Verification:** inspect both APK manifests and archive contents.
+
+**Dependencies:** A2, A4
+
+## Task A6: Documentation
+
+**Acceptance criteria:**
+- [x] README explains installation, pairing, controls, and Wi-Fi limitations.
+
+**Verification:** instructions match the produced filenames.
+
+**Dependencies:** A5

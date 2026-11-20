@@ -19,8 +19,9 @@
 * **Shorts disabled by default** (can be re-enabled in settings).
 * Multi-layer shorts blocking with aggressive filtering.
 * Local userscripts (no external dependencies).
-* Auto-update with countdown via GitHub Releases.
+* Auto-update with countdown via GitHub Releases in both Android apps.
 * D-pad overlay for tablet/touch use.
+* Local Android phone remote with video sharing and playback controls.
 
 ## Building from Source
 
@@ -66,6 +67,19 @@ The generated APKs will be at:
 
 - Debug: `app/build/outputs/apk/debug/app-debug.apk`
 - Release: `app/build/outputs/apk/release/app-release.apk`
+
+## Android phone remote
+
+Install both signed APKs from the latest GitHub Release (or from `build/android-apk` after a local build):
+
+- `VidroX-vX.Y.Z.apk` on the Android TV, tablet, or receiver device.
+- `VidroX-Remote-vX.Y.Z.apk` on the Android phone.
+
+Open VidroX and leave it on screen. On the phone, open **VidroX Remote** while both devices are on the same non-guest Wi-Fi network. Select the discovered VidroX, enter the six-digit code shown in its upper-left corner, then paste a YouTube link or use **Share → VidroX Remote** from the YouTube app.
+
+The remote provides play/pause, seek ±10 seconds, back, D-pad, and select controls. The pairing code is remembered on both devices. Guest-network client isolation, VPNs, or router multicast blocking can prevent discovery.
+
+VidroX Remote checks the same latest GitHub Release at startup, selects only the `VidroX-Remote-*` APK, verifies its size, SHA-256 digest, and package name, then asks Android to install it.
 
 ## iPhone build for Sideloadly
 
@@ -121,7 +135,7 @@ Shorts can be re-enabled through the in-app settings menu.
 ## Contributing
 
 Issues and pull requests are welcome.
-Merging commits to the default branch automatically triggers the GitHub release workflow.
+Merging commits to the default branch automatically triggers the GitHub release workflow and publishes both signed Android APKs in one release.
 
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix.

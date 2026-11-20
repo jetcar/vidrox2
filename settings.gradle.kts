@@ -20,5 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "VidroX"
-include(":app")
- 
+include(":app", ":remote", ":remote-core")

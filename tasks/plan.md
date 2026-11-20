@@ -81,3 +81,60 @@ XcodeGen project
 ## Open Questions
 
 None.
+
+---
+
+# Implementation Plan: Android VidroX Remote
+
+## Overview
+
+Add a local-network receiver to the existing Android VidroX app and a separate Android phone remote. Share a strict command protocol, discover receivers with NSD, pair with a six-digit code, and produce two versioned APKs.
+
+## Architecture Decisions
+
+- Use `_vidrox._tcp.` DNS-SD discovery and a bounded TCP line protocol.
+- Keep protocol parsing and YouTube target validation in `remote-core`.
+- Keep the receiver lifecycle scoped to the active VidroX screen.
+- Keep the controller as an independent application ID and APK.
+
+See `docs/decisions/002-android-local-remote.md`.
+
+## Task List
+
+### Phase 1: Foundation
+
+- [x] Task A1: Add the shared protocol module and tests.
+- [x] Task A2: Add receiver server lifecycle and command dispatch.
+
+### Checkpoint: Receiver
+
+- [x] Protocol tests pass.
+- [x] Existing app builds with the receiver active.
+
+### Phase 2: Controller
+
+- [x] Task A3: Add NSD discovery and TCP command client.
+- [x] Task A4: Add the touch remote UI and validation.
+
+### Checkpoint: End to End
+
+- [x] Both apps build.
+- [ ] Manual same-LAN command flow is ready for device verification.
+
+### Phase 3: Distribution
+
+- [x] Task A5: Produce versioned installable APKs in one output folder.
+- [x] Task A6: Update usage and build documentation.
+
+## Risks and Mitigations
+
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Router isolates Wi-Fi clients | High | Show clear discovery/connect errors; document same non-guest network requirement. |
+| YouTube DOM/player changes | Medium | Use generic HTML video controls and existing keyboard navigation. |
+| Unauthorized LAN control | Medium | Require a per-session random code and validate every command. |
+| NSD API differences | Medium | Use the API 24-compatible discovery/resolve path. |
+
+## Open Questions
+
+None; implementation follows the user-approved separate Android remote direction.

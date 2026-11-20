@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -35,6 +37,8 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.tv.material3.Text
 import com.jetcar.vidrox.R
+import com.jetcar.vidrox.remote.RemoteControlServer
+import com.jetcar.vidrox.remote.WebViewRemoteDispatcher
 import com.jetcar.vidrox.ui.YoutubeVM
 import com.jetcar.vidrox.ui.components.UpdateDialog
 import com.jetcar.vidrox.utils.ExitBridge
@@ -78,6 +82,22 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
     val exitTrigger = remember { mutableStateOf(false) }
     val pageChromeClient = rememberWebChromeClient(context) { progress ->
         loadingProgress = progress
+    }
+    val pairingCode = remember {
+        val preferences = context.getSharedPreferences("vidrox_remote", Activity.MODE_PRIVATE)
+        preferences.getString("pairing_code", null)
+            ?: RemoteControlServer.generatePairingCode().also { generated ->
+                preferences.edit().putString("pairing_code", generated).apply()
+            }
+    }
+    val remoteStatus = remember { mutableStateOf("запуск…") }
+    val remoteDispatcher = remember {
+        WebViewRemoteDispatcher(
+            webViewProvider = { webViewRef.value },
+            readyProvider = { isPageLoaded.value },
+            javascriptEvaluator = javascriptEvaluator,
+            backScriptProvider = { readRaw(context, R.raw.back_bridge) },
+        )
     }
 
     val checkForUpdate: () -> Unit = {
@@ -166,6 +186,41 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
         connectivityManager?.registerDefaultNetworkCallback(callback)
         onDispose {
             connectivityManager?.unregisterNetworkCallback(callback)
+        }
+    }
+
+    DisposableEffect(context, pairingCode, lifecycleOwner) {
+        var remoteServer: RemoteControlServer? = null
+
+        fun startRemoteServer() {
+            if (remoteServer != null) return
+            remoteServer = RemoteControlServer(
+                context = context,
+                pairingCode = pairingCode,
+                onCommand = remoteDispatcher::dispatch,
+                onStatus = { status -> activity.runOnUiThread { remoteStatus.value = status } },
+            ).also(RemoteControlServer::start)
+        }
+
+        fun stopRemoteServer() {
+            remoteServer?.close()
+            remoteServer = null
+        }
+
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_RESUME -> startRemoteServer()
+                Lifecycle.Event.ON_PAUSE -> stopRemoteServer()
+                else -> Unit
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            startRemoteServer()
+        }
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            stopRemoteServer()
         }
     }
 
@@ -322,5 +377,18 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
                 onRefresh = refreshContent,
             )
         }
+
+
+        Text(
+            text = "Пульт: $pairingCode • ${remoteStatus.value}",
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .safeDrawingPadding()
+                .padding(NAV_PAD_PADDING)
+                .background(Color.Black.copy(alpha = 0.72f))
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            color = Color.White,
+            fontSize = 16.sp,
+        )
     }
 }

@@ -23,14 +23,15 @@ suspend fun fetchUpdate() : ReleaseData {
     val client = HttpClient(OkHttp)
     val req = client.get(fetchUrl)
     val res = JSONObject(req.body() as String)
+    val tagName = res.getString("tag_name")
 
     val commitSHA = Regex("\\b[a-fA-F0-9]{40}\\b")
 
     val assets = res.getJSONArray("assets")
-    val apkAsset = findApkAsset(assets)
+    val apkAsset = findApkAsset(assets, "VidroX-$tagName.apk")
 
     return ReleaseData(
-        tagName = res.getString("tag_name"),
+        tagName = tagName,
         changelog = res.getString("body")
             .substringAfter("</ins>").replace(commitSHA, "").replace(Regex("\\s{2,}"), " "),
         downloadUrl = apkAsset.getString("browser_download_url"),
@@ -72,16 +73,15 @@ private fun getLocalVersion(context: Context): String {
 
 // Only an .apk asset is ever offered: handing any other file to the
 // installer fails with "There was a problem parsing the package".
-private fun findApkAsset(assets: JSONArray): JSONObject {
+private fun findApkAsset(assets: JSONArray, expectedName: String): JSONObject {
     for (index in 0 until assets.length()) {
         val asset = assets.getJSONObject(index)
-        val url = asset.optString("browser_download_url")
-        if (url.endsWith(".apk", ignoreCase = true)) {
+        if (asset.optString("name").equals(expectedName, ignoreCase = true)) {
             return asset
         }
     }
 
-    throw IllegalStateException("Latest release has no APK asset")
+    throw IllegalStateException("Latest release has no $expectedName asset")
 }
 
 private fun compareVersions(left: String, right: String): Int {

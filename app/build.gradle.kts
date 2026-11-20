@@ -61,8 +61,8 @@ android {
         applicationId = "com.jetcar.vidrox"
         minSdk = 24
         targetSdk = 36
-        versionCode = 5
-        versionName = "0.0.5"
+        versionCode = 7
+        versionName = "0.1.1"
 
     }
 
@@ -97,6 +97,7 @@ kotlin {
 }
 
 dependencies {
+    implementation(project(":remote-core"))
     implementation(libs.ktor.client.core)
     implementation (libs.ktor.ktor.client.okhttp)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -116,4 +117,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation(libs.junit)
 }

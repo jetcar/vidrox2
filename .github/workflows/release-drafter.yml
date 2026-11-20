@@ -3,6 +3,10 @@ name: Release Preparation
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
+concurrency:
+  group: android-release-preparation
+  cancel-in-progress: false
+
 on:
   push:
     branches:
@@ -135,11 +139,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Update app version for this build
+      - name: Update Android app versions for this build
         shell: bash
         run: |
           perl -0pi -e 's/versionCode = \d+/versionCode = $ENV{RELEASE_VERSION_CODE}/' app/build.gradle.kts
           perl -0pi -e 's/versionName = ".*?"/versionName = "$ENV{RELEASE_VERSION}"/' app/build.gradle.kts
+          perl -0pi -e 's/versionCode = \d+/versionCode = $ENV{RELEASE_VERSION_CODE}/' remote/build.gradle.kts
+          perl -0pi -e 's/versionName = ".*?"/versionName = "$ENV{RELEASE_VERSION}"/' remote/build.gradle.kts
         env:
           RELEASE_VERSION: ${{ needs.detect_release_need.outputs.release_version }}
           RELEASE_VERSION_CODE: ${{ needs.detect_release_need.outputs.release_version_code }}
@@ -178,15 +184,17 @@ jobs:
       - name: Build project
         run: ./gradlew --no-daemon assembleRelease
 
-      - name: Rename APK to app name
+      - name: Prepare release APKs
         run: |
-          cp app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/VidroX-${{ needs.detect_release_need.outputs.release_tag }}.apk
+          mkdir -p release-artifacts
+          cp app/build/outputs/apk/release/app-release.apk release-artifacts/VidroX-${{ needs.detect_release_need.outputs.release_tag }}.apk
+          cp remote/build/outputs/apk/release/remote-release.apk release-artifacts/VidroX-Remote-${{ needs.detect_release_need.outputs.release_tag }}.apk
 
-      - name: Upload APK artifact
+      - name: Upload Android APK artifacts
         uses: actions/upload-artifact@v5
         with:
-          name: app-release-apk
-          path: app/build/outputs/apk/release/VidroX-${{ needs.detect_release_need.outputs.release_tag }}.apk
+          name: android-release-apks
+          path: release-artifacts/*.apk
 
   publish_release:
     needs:
@@ -200,7 +208,7 @@ jobs:
       - name: Download APK artifact
         uses: actions/download-artifact@v5
         with:
-          name: app-release-apk
+          name: android-release-apks
           path: release-artifacts
 
       - name: Publish GitHub release
@@ -212,5 +220,6 @@ jobs:
           generate_release_notes: true
           files: |
             release-artifacts/VidroX-${{ needs.detect_release_need.outputs.release_tag }}.apk
+            release-artifacts/VidroX-Remote-${{ needs.detect_release_need.outputs.release_tag }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

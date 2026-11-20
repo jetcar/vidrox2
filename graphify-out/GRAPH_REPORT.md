@@ -1,17 +1,17 @@
 # Graph Report - vidrox  (2026-11-20)
 
 ## Corpus Check
-- 81 files · ~36,531 words
+- 81 files · ~37,020 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 18 file(s) not represented in the graph (top: .xml 8, (none) 4, .properties 2)
 
 ## Summary
-- 899 nodes · 1644 edges · 48 communities (25 shown, 23 thin omitted)
+- 898 nodes · 1642 edges · 54 communities (29 shown, 25 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.86)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5433e4fa`
+- Built from commit: `b8e11fd2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,12 +19,14 @@
 - WebViewModel
 - YoutubeWVWebViewSupport.kt
 - raw/userscripts.js
-- ScriptBridge
+- SponsorBlockClient
 - DownloaderVM.kt
+- ScriptBridge
 - capture.mjs
+- Coordinator
 - assets/userscripts.js
 - remote/MainActivity.kt
-- .pageZoom
+- Foundation
 - WebViewClient
 - Implementation Plan: VidroX for iPhone
 - ai-analyze.mjs
@@ -37,20 +39,24 @@
 - LayoutDebugBorders.kt
 - YouTube TV fixture capture for filtering
 - Android VidroX Remote Tasks
-- RemoteCommand
+- RemoteAction
 - package-ipa.sh
+- View
 - RemoteRelease.kt
+- RemoteKey
+- .pageZoom
 - RemoteControlServer.kt
 - ADR-002: Use NSD and a local TCP protocol for Android remote control
-- RemoteDiscovery
+- .addUserScript
+- .body
 - manageUpdate.kt
-- RemoteAction
-- RemoteControlServer
+- SwiftUI
+- ClientError
+- LoadingOverlay
+- XCTestCase
 - Specification: VidroX Remote Protocol
 - Specification: VidroX Remote for Android
 - CAPABILITY-MAP-android-remote.md
-- RegistrationListener
-- RemoteProtocolException
 
 ## God Nodes (most connected - your core abstractions)
 1. `WebViewModel` - 28 edges
@@ -69,41 +75,37 @@
   SPEC-android-receiver.md → app/src/main/java/com/jetcar/vidrox/ui/screens/YoutubeWV.kt
 - `YouTubeBrowser()` --calls--> `WebChromeClient`  [EXTRACTED]
   remote/src/main/java/com/jetcar/vidrox/remote/YouTubeBrowser.kt → app/src/main/java/com/jetcar/vidrox/utils/managePerms.kt
+- `.body` --calls--> `ContentView`  [INFERRED]
+  ios/VidroX/App/VidroXApp.swift → ios/VidroX/App/ContentView.swift
 - `ControlButton()` --references--> `RemoteAction`  [EXTRACTED]
   remote/src/main/java/com/jetcar/vidrox/remote/MainActivity.kt → remote-core/src/main/kotlin/com/jetcar/vidrox/remote/core/RemoteProtocol.kt
 - `YoutubeWV()` --calls--> `SplashLoading()`  [INFERRED]
   app/src/main/java/com/jetcar/vidrox/ui/screens/YoutubeWV.kt → app/src/main/java/com/jetcar/vidrox/ui/screens/SplashLoading.kt
-- `YoutubeWV()` --calls--> `DirectionPadOverlay()`  [INFERRED]
-  app/src/main/java/com/jetcar/vidrox/ui/screens/YoutubeWV.kt → app/src/main/java/com/jetcar/vidrox/ui/screens/YoutubeWVOverlays.kt
 
 ## Import Cycles
 - None detected.
 
-## Communities (48 total, 23 thin omitted)
+## Communities (54 total, 25 thin omitted)
 
 ### Community 0 - "WebViewModel"
-Cohesion: 0.05
-Nodes (23): .body, ButtonStyle, .remoteControl, DirectionPadView, .body, RemoteControlButtonStyle, LoadingOverlay, .body (+15 more)
+Cohesion: 0.17
+Nodes (3): WebViewModel, .versionLabel, WebViewModelTests
 
 ### Community 1 - "YoutubeWVWebViewSupport.kt"
-Cohesion: 0.05
-Nodes (22): WebViewRemoteDispatcher, YoutubeWV(), NetworkCallback, configureCookies(), configureFocusAndTouch(), configureScale(), configureWebSettings(), createLoggingWebViewClient() (+14 more)
+Cohesion: 0.06
+Nodes (20): YoutubeWV(), NetworkCallback, configureCookies(), configureFocusAndTouch(), configureScale(), configureWebSettings(), createLoggingWebViewClient(), WebViewClient (+12 more)
 
 ### Community 2 - "raw/userscripts.js"
-Cohesion: 0.07
-Nodes (29): NetworkBridge, addMenuButton(), applyShortsHidingCSS(), captureAdRangesFromPlayerResponse(), collectDeclaredAdRanges(), customAction(), execute_once_dom_loaded(), filterAdsFromSectionList() (+21 more)
-
-### Community 3 - "ScriptBridge"
 Cohesion: 0.08
-Nodes (8): ScriptBridge, ClientError, disallowedEndpoint, invalidResponse, invalidURL, unsuccessfulStatus, SponsorBlockClient, SponsorBlockClientTests
+Nodes (28): addMenuButton(), applyShortsHidingCSS(), captureAdRangesFromPlayerResponse(), collectDeclaredAdRanges(), customAction(), execute_once_dom_loaded(), filterAdsFromSectionList(), filterShortsFromSectionList() (+20 more)
 
 ### Community 4 - "DownloaderVM.kt"
 Cohesion: 0.06
-Nodes (7): InvalidUpdateException, UpdateViewModel, fetchScripts(), UpdateInstallReceiver, RemoteUpdateInstallReceiver, InvalidRemoteUpdate, RemoteUpdateViewModel
+Nodes (7): InvalidUpdateException, UpdateViewModel, fetchScripts(), NetworkBridge, UpdateInstallReceiver, RemoteUpdateInstallReceiver, InvalidRemoteUpdate
 
 ### Community 6 - "capture.mjs"
-Cohesion: 0.09
-Nodes (30): playwright, AD_RESPONSE_KEYWORDS, buildCaptureTargets(), buildResponseFileName(), captureTarget(), DEFAULT_CAPTURES, isTextualContentType(), main() (+22 more)
+Cohesion: 0.06
+Nodes (45): playwright, AD_CLASS_PATTERNS, AD_JSON_KEY_SET, AD_JSON_KEYS, AD_KEYWORDS, analyzeFixtures(), collectAdPayloadSignals(), extractExternalScriptUrls() (+37 more)
 
 ### Community 8 - "assets/userscripts.js"
 Cohesion: 0.12
@@ -113,17 +115,17 @@ Nodes (16): addMenuButton(), applyShortsHidingCSS(), customAction(), execute_onc
 Cohesion: 0.05
 Nodes (10): UpdateAppScreen(), UpdateDialog(), YTButton(), SplashLoading(), DirectionPadOverlay(), NavigationButton(), OfflineOverlay(), RemoteUpdateDialog() (+2 more)
 
-### Community 10 - ".pageZoom"
-Cohesion: 0.06
-Nodes (16): Combine, CoreGraphics, Foundation, ContentView, VidroXApp, .body, WebContentConfiguration, TelevisionWebView (+8 more)
+### Community 10 - "Foundation"
+Cohesion: 0.21
+Nodes (6): Combine, CoreGraphics, Foundation, VidroX, WebKit, XCTest
 
 ### Community 12 - "Implementation Plan: VidroX for iPhone"
 Cohesion: 0.07
 Nodes (26): ExitBridge, Architecture Decisions, Architecture Decisions, Checkpoint: Complete, Checkpoint: End to End, Checkpoint: Foundation, Checkpoint: Receiver, Checkpoint: Web Integration (+18 more)
 
 ### Community 13 - "ai-analyze.mjs"
-Cohesion: 0.08
-Nodes (32): AD_CLASS_PATTERNS, AD_JSON_KEY_SET, AD_JSON_KEYS, AD_URL_KEYWORDS, buildPrompt(), callGitHubModels(), collectAdPayloadSignals(), __dirname (+24 more)
+Cohesion: 0.17
+Nodes (17): AD_CLASS_PATTERNS, AD_JSON_KEY_SET, AD_JSON_KEYS, AD_URL_KEYWORDS, buildPrompt(), callGitHubModels(), collectAdPayloadSignals(), __dirname (+9 more)
 
 ### Community 17 - "managePerms.kt"
 Cohesion: 0.23
@@ -153,25 +155,45 @@ Nodes (8): Create a storage state locally, Good maintenance workflow, How to use
 Cohesion: 0.12
 Nodes (16): Android VidroX Remote Tasks, Checkpoint: Complete, Checkpoint: End to End, Checkpoint: Web Integration, Task 1: Add the iOS project and WebView shell, Task 2: Inject scripts and block advertising hosts, Task 3: Implement native JavaScript bridges, Task 4: Add iPhone controls and connection UI (+8 more)
 
+### Community 25 - "RemoteAction"
+Cohesion: 0.07
+Nodes (18): WebViewRemoteDispatcher, dispatchDpadKey(), RemoteAction, BACK, DOWN, LEFT, OPEN, PLAY_PAUSE (+10 more)
+
+### Community 35 - "View"
+Cohesion: 0.24
+Nodes (5): ButtonStyle, .remoteControl, DirectionPadView, .body, RemoteControlButtonStyle
+
 ### Community 36 - "RemoteRelease.kt"
-Cohesion: 0.22
-Nodes (8): compareVersions(), fetchRemoteRelease(), findRemoteApkAsset(), getRemoteUpdate(), localVersion(), remoteAssetName(), RemoteRelease, RemoteReleaseTest
+Cohesion: 0.15
+Nodes (9): compareVersions(), fetchRemoteRelease(), findRemoteApkAsset(), getRemoteUpdate(), localVersion(), remoteAssetName(), RemoteRelease, RemoteUpdateViewModel (+1 more)
+
+### Community 37 - "RemoteKey"
+Cohesion: 0.18
+Nodes (8): RemoteKey, down, escape, .event, left, right, select, up
+
+### Community 39 - "RemoteControlServer.kt"
+Cohesion: 0.06
+Nodes (5): RemoteControlServer, RegistrationListener, RemoteDiscovery, ResolveListener, ResolveRequest
 
 ### Community 40 - "ADR-002: Use NSD and a local TCP protocol for Android remote control"
 Cohesion: 0.17
 Nodes (11): ADR-002: Use NSD and a local TCP protocol for Android remote control, Alternatives Considered, Cloud relay, Consequences, Context, Date, Decision, Google Cast SDK (+3 more)
 
-### Community 42 - "RemoteDiscovery"
-Cohesion: 0.22
-Nodes (3): RemoteDiscovery, ResolveListener, ResolveRequest
-
 ### Community 43 - "manageUpdate.kt"
 Cohesion: 0.17
 Nodes (9): YoutubeVM, JavaScriptEvaluator, compareVersions(), fetchUpdate(), findApkAsset(), getLocalVersion(), getSkipVersion(), getUpdate() (+1 more)
 
-### Community 48 - "RemoteAction"
-Cohesion: 0.17
-Nodes (11): RemoteAction, BACK, DOWN, LEFT, OPEN, PLAY_PAUSE, RIGHT, SEEK_BACK (+3 more)
+### Community 45 - "SwiftUI"
+Cohesion: 0.25
+Nodes (4): VidroXApp, .body, SwiftUI, UIKit
+
+### Community 46 - "ClientError"
+Cohesion: 0.25
+Nodes (5): ClientError, disallowedEndpoint, invalidResponse, invalidURL, unsuccessfulStatus
+
+### Community 47 - "LoadingOverlay"
+Cohesion: 0.29
+Nodes (4): LoadingOverlay, .body, OfflineOverlay, .body
 
 ### Community 50 - "Specification: VidroX Remote Protocol"
 Cohesion: 0.33
@@ -184,22 +206,22 @@ Nodes (4): Behavior, Goal, Specification: VidroX Remote for Android, Success cri
 ## Knowledge Gaps
 - **140 isolated node(s):** `CoreGraphics`, `.body`, `.body`, `invalidURL`, `disallowedEndpoint` (+135 more)
   These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 291 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **25 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `WebViewModel` connect `WebViewModel` to `.pageZoom`?**
-  _High betweenness centrality (0.159) - this node is a cross-community bridge._
+- **Why does `WebViewModel` connect `WebViewModel` to `View`, `RemoteKey`, `Coordinator`, `Foundation`, `.body`?**
+  _High betweenness centrality (0.160) - this node is a cross-community bridge._
 - **Are the 5 inferred relationships involving `WebViewModel` (e.g. with `ContentView` and `.testCancelledNavigationDoesNotShowOfflineState()`) actually correct?**
   _`WebViewModel` has 5 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `CoreGraphics`, `.body`, `.body` to the rest of the system?**
   _140 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `WebViewModel` be split into smaller, more focused modules?**
-  _Cohesion score 0.052313883299798795 - nodes in this community are weakly interconnected._
+- **Should `YoutubeWVWebViewSupport.kt` be split into smaller, more focused modules?**
+  _Cohesion score 0.06009783368273934 - nodes in this community are weakly interconnected._
 - **Why does `ExitBridge` connect `Implementation Plan: VidroX for iPhone` to `remote/MainActivity.kt`, `YoutubeWVWebViewSupport.kt`?**
   _High betweenness centrality (0.109) - this node is a cross-community bridge._
 - **Are the 12 inferred relationships involving `YoutubeWV()` (e.g. with `SplashLoading()` and `DirectionPadOverlay()`) actually correct?**
   _`YoutubeWV()` has 12 INFERRED edges - model-reasoned connections that need verification._
-- **Should `YoutubeWVWebViewSupport.kt` be split into smaller, more focused modules?**
-  _Cohesion score 0.05273937532002048 - nodes in this community are weakly interconnected._
+- **Should `raw/userscripts.js` be split into smaller, more focused modules?**
+  _Cohesion score 0.08080808080808081 - nodes in this community are weakly interconnected._

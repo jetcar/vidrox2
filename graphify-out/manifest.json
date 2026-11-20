@@ -12,9 +12,9 @@
     "semantic_hash": ""
   },
   "app/build.gradle.kts": {
-    "mtime": 1795189391.9650674,
-    "seen": 1795189498.3112693,
-    "ast_hash": "710dd78774e329172e5bed697f5fb586",
+    "mtime": 1795195977.3662279,
+    "seen": 1795196276.643938,
+    "ast_hash": "ad063c5da949ceae642c2ef3ed99d5b2",
     "semantic_hash": ""
   },
   "app/src/main/java/com/jetcar/vidrox/MainActivity.kt": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "app/src/main/java/com/jetcar/vidrox/ui/screens/YoutubeWVWebViewSupport.kt": {
-    "mtime": 1783251077.1701963,
-    "seen": 1793609997.5581577,
-    "ast_hash": "a23ce766712283d6098756187da662c7",
+    "mtime": 1795196010.8778327,
+    "seen": 1795196276.643954,
+    "ast_hash": "de9883fa108b611c229dec0a86baa3d9",
     "semantic_hash": ""
   },
   "app/src/main/java/com/jetcar/vidrox/ui/theme/Color.kt": {
@@ -162,15 +162,15 @@
     "semantic_hash": ""
   },
   "build.gradle.kts": {
-    "mtime": 1795180857.6574614,
-    "seen": 1795181536.4147992,
-    "ast_hash": "278aba2d40bcf3a10df5ca6a75c4715e",
+    "mtime": 1795195839.5722592,
+    "seen": 1795196276.6439714,
+    "ast_hash": "0fe8ca56bf0d92602e9ce12a06f2f79a",
     "semantic_hash": ""
   },
   "gradlew": {
-    "mtime": 1783240318.7408037,
-    "seen": 1793609997.558173,
-    "ast_hash": "c6ea21dea2d500b277296894708cf792",
+    "mtime": 1795196208.5913572,
+    "seen": 1795196276.6439726,
+    "ast_hash": "a43be8432bac3ffd05b3769aa42fe996",
     "semantic_hash": ""
   },
   "ios/VidroXTests/ContentRuleTests.swift": {
@@ -282,9 +282,9 @@
     "semantic_hash": ""
   },
   "tools/youtube-tv-capture/package.json": {
-    "mtime": 1776455098.4434114,
-    "seen": 1793609997.5581918,
-    "ast_hash": "39cc8e18a3b3eabcdae77c72887f7611",
+    "mtime": 1795196021.9326138,
+    "seen": 1795196276.6440184,
+    "ast_hash": "1c4826b22a65b4ff5ea057665ca09a28",
     "semantic_hash": ""
   },
   "tools/youtube-tv-capture/save-storage-state.mjs": {
@@ -294,21 +294,21 @@
     "semantic_hash": ""
   },
   ".github/workflows/capture-youtube-tv-fixtures.yml": {
-    "mtime": 1790493463.2484913,
-    "seen": 1793609997.558194,
-    "ast_hash": "ac96f8968f7191291d499b5538fa9c1d",
+    "mtime": 1795196046.5290961,
+    "seen": 1795196276.6440222,
+    "ast_hash": "95400792cbdf33421491b11298ce1d61",
     "semantic_hash": ""
   },
   ".github/workflows/ios-ipa.yml": {
-    "mtime": 1793613410.5852609,
-    "seen": 1793613697.5691893,
-    "ast_hash": "0a7b1b2ae88695c7aa6bf646c2216406",
+    "mtime": 1795196046.530097,
+    "seen": 1795196276.6440232,
+    "ast_hash": "93d205f76c8d472355f7b277d71e328a",
     "semantic_hash": ""
   },
   ".github/workflows/release-drafter.yml": {
-    "mtime": 1795184049.3190682,
-    "seen": 1795184089.6274652,
-    "ast_hash": "46ee795d89df32f488de85a24def40b7",
+    "mtime": 1795196046.530097,
+    "seen": 1795196276.6440244,
+    "ast_hash": "cdc309c789d68e1ee58971267cac477c",
     "semantic_hash": ""
   },
   "README.md": {
@@ -336,9 +336,9 @@
     "semantic_hash": ""
   },
   "ios/project.yml": {
-    "mtime": 1793617155.2443924,
-    "seen": 1793617162.5324671,
-    "ast_hash": "358d84dfb78bff309758141092ef4fcd",
+    "mtime": 1795196046.5310974,
+    "seen": 1795196276.6440365,
+    "ast_hash": "0e48bd292c70f8f65766c73da7cea695",
     "semantic_hash": ""
   },
   "tasks/plan.md": {
@@ -522,9 +522,9 @@
     "semantic_hash": ""
   },
   "remote/build.gradle.kts": {
-    "mtime": 1795189391.966066,
-    "seen": 1795189498.3113298,
-    "ast_hash": "88e5df71d06a781e0d61d2312707478e",
+    "mtime": 1795195977.3672283,
+    "seen": 1795196276.6440012,
+    "ast_hash": "424efb6f62177cc9ec4bdfe5b1bba330",
     "semantic_hash": ""
   },
   "remote/src/main/java/com/jetcar/vidrox/remote/MainActivity.kt": {
@@ -615,6 +615,12 @@
     "mtime": 1795188633.431191,
     "seen": 1795188859.744705,
     "ast_hash": "c06262c1277d3464bf19c3adfe55b947",
+    "semantic_hash": ""
+  },
+  ".github/dependabot.yml": {
+    "mtime": 1795196071.9223597,
+    "seen": 1795196276.644021,
+    "ast_hash": "562487e44df3d71e79e68ce9c865f893",
     "semantic_hash": ""
   }
 }

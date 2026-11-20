@@ -15,7 +15,7 @@ Provide a separate touch-first Android phone application for sending YouTube vid
 - Show discovery, connection, success, and error states in Russian.
 - Stop discovery and release its multicast lock whenever the screen is paused.
 - Keep controls inside safe display insets and adapt to short/landscape screens.
-- Check the latest GitHub Release at startup and select only the matching `VidroX-Remote-*` APK.
+- Check the latest GitHub Release at startup and select only the matching `VidroX-vX.Y.Z.remote.apk` file.
 
 ## Success criteria
 

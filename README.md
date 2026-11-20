@@ -73,13 +73,13 @@ The generated APKs will be at:
 Install both signed APKs from the latest GitHub Release (or from `build/android-apk` after a local build):
 
 - `VidroX-vX.Y.Z.apk` on the Android TV, tablet, or receiver device.
-- `VidroX-Remote-vX.Y.Z.apk` on the Android phone.
+- `VidroX-vX.Y.Z.remote.apk` on the Android phone.
 
 Open VidroX and leave it on screen. On the phone, open **VidroX Remote** while both devices are on the same non-guest Wi-Fi network. Select the discovered VidroX, enter the six-digit code shown in its upper-left corner, then paste a YouTube link or use **Share → VidroX Remote** from the YouTube app.
 
 The remote provides play/pause, seek ±10 seconds, back, D-pad, and select controls. The pairing code is remembered on both devices. Guest-network client isolation, VPNs, or router multicast blocking can prevent discovery.
 
-VidroX Remote checks the same latest GitHub Release at startup, selects only the `VidroX-Remote-*` APK, verifies its size, SHA-256 digest, and package name, then asks Android to install it.
+VidroX Remote checks the same latest GitHub Release at startup, selects only the `VidroX-vX.Y.Z.remote.apk` file, verifies its size, SHA-256 digest, and package name, then asks Android to install it. The filename keeps the receiver APK first in GitHub's asset list for compatibility with older VidroX versions.
 
 ## iPhone build for Sideloadly
 

@@ -49,7 +49,7 @@ internal suspend fun fetchRemoteRelease(): RemoteRelease {
     }
 }
 
-internal fun remoteAssetName(tagName: String): String = "VidroX-Remote-$tagName.apk"
+internal fun remoteAssetName(tagName: String): String = "VidroX-$tagName.remote.apk"
 
 private fun findRemoteApkAsset(assets: JSONArray, expectedName: String): JSONObject {
     for (index in 0 until assets.length()) {

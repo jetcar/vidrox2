@@ -188,7 +188,7 @@ jobs:
         run: |
           mkdir -p release-artifacts
           cp app/build/outputs/apk/release/app-release.apk release-artifacts/VidroX-${{ needs.detect_release_need.outputs.release_tag }}.apk
-          cp remote/build/outputs/apk/release/remote-release.apk release-artifacts/VidroX-Remote-${{ needs.detect_release_need.outputs.release_tag }}.apk
+          cp remote/build/outputs/apk/release/remote-release.apk release-artifacts/VidroX-${{ needs.detect_release_need.outputs.release_tag }}.remote.apk
 
       - name: Upload Android APK artifacts
         uses: actions/upload-artifact@v5
@@ -222,6 +222,6 @@ jobs:
           fail_on_unmatched_files: true
           files: |
             release-artifacts/VidroX-${{ needs.detect_release_need.outputs.release_tag }}.apk
-            release-artifacts/VidroX-Remote-${{ needs.detect_release_need.outputs.release_tag }}.apk
+            release-artifacts/VidroX-${{ needs.detect_release_need.outputs.release_tag }}.remote.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

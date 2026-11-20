@@ -7,7 +7,7 @@ import org.junit.Test
 class RemoteReleaseTest {
     @Test
     fun `remote asset name uses release tag`() {
-        assertEquals("VidroX-Remote-v0.1.1.apk", remoteAssetName("v0.1.1"))
+        assertEquals("VidroX-v0.1.1.remote.apk", remoteAssetName("v0.1.1"))
     }
 
     @Test

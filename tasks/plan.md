@@ -88,7 +88,7 @@ None.
 
 ## Overview
 
-Add a local-network receiver to the existing Android VidroX app and a separate Android phone remote. Share a strict command protocol, discover receivers with NSD, pair with a six-digit code, and produce two versioned APKs.
+Add a local-network receiver to the existing Android VidroX app and a separate Android phone remote. Share a strict command protocol, discover and select receivers with NSD without a pairing code, and produce two versioned APKs.
 
 ## Architecture Decisions
 

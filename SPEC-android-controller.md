@@ -7,11 +7,10 @@ Provide a separate touch-first Android phone application for sending YouTube vid
 ## Behavior
 
 - Discover VidroX receivers on the current LAN via Android NSD.
-- Let the user select a receiver and enter its six-digit code.
-- Accept pasted YouTube URLs or video IDs and send them with one action.
+- Let the user choose a discovered receiver without a pairing code.
+- Browse YouTube in the app and send the current video with one action; also accept shared YouTube links.
 - Appear in Android's text share sheet so a YouTube link can be sent into the remote.
-- Remember the last pairing code on the phone.
-- Provide always-visible play/pause, seek ±10 seconds, back, D-pad, and select controls.
+- Provide only always-visible play/pause and seek ±10 seconds controls.
 - Show discovery, connection, success, and error states in Russian.
 - Stop discovery and release its multicast lock whenever the screen is paused.
 - Keep controls inside safe display insets and adapt to short/landscape screens.
@@ -19,7 +18,7 @@ Provide a separate touch-first Android phone application for sending YouTube vid
 
 ## Success criteria
 
-- Invalid codes and video targets are rejected before connecting.
+- Invalid video targets are rejected before connecting.
 - Commands are sent off the UI thread with timeouts.
 - Remote APK builds and installs independently from VidroX.
 - Update downloads are accepted only after size, SHA-256 digest, and package-name validation.

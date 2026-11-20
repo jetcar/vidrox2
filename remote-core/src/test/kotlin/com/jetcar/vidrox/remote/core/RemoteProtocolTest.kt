@@ -7,21 +7,32 @@ import org.junit.Test
 class RemoteProtocolTest {
     @Test
     fun `command round trips`() {
-        val command = RemoteCommand("123456", RemoteAction.OPEN, "https://youtu.be/dQw4w9WgXcQ")
+        val command = RemoteCommand(RemoteAction.OPEN, "https://youtu.be/dQw4w9WgXcQ")
         assertEquals(command, RemoteProtocol.decode(RemoteProtocol.encode(command)))
     }
 
     @Test
     fun `control action round trips without argument`() {
-        val command = RemoteCommand("654321", RemoteAction.PLAY_PAUSE)
+        val command = RemoteCommand(RemoteAction.PLAY_PAUSE)
         assertEquals(command, RemoteProtocol.decode(RemoteProtocol.encode(command)))
+    }
+
+    @Test
+    fun `accepts legacy commands with a pairing field`() {
+        val command = RemoteCommand(RemoteAction.PLAY_PAUSE)
+        assertEquals(command, RemoteProtocol.decode("VIDROX/1\t123456\tPLAY_PAUSE\t"))
+    }
+
+    @Test
+    fun `encodes no-code commands as protocol version two`() {
+        val encoded = RemoteProtocol.encode(RemoteCommand(RemoteAction.PLAY_PAUSE))
+        assertEquals("VIDROX/2\t\tPLAY_PAUSE\t", encoded)
     }
 
     @Test
     fun `rejects malformed commands`() {
         listOf(
-            "VIDROX/2\t123456\tPLAY_PAUSE\t",
-            "VIDROX/1\t12345\tPLAY_PAUSE\t",
+            "VIDROX/3\t123456\tPLAY_PAUSE\t",
             "VIDROX/1\t123456\tUNKNOWN\t",
             "VIDROX/1\t123456\tPLAY_PAUSE\textra",
             "VIDROX/1\t123456\tOPEN\t",
@@ -38,6 +49,14 @@ class RemoteProtocolTest {
         assertEquals(expected, YouTubeTarget.canonicalWatchUrl("https://youtu.be/dQw4w9WgXcQ?t=2"))
         assertEquals(expected, YouTubeTarget.canonicalWatchUrl("https://www.youtube.com/shorts/dQw4w9WgXcQ"))
         assertEquals(expected, YouTubeTarget.canonicalWatchUrl("https://m.youtube.com/watch?v=dQw4w9WgXcQ"))
+    }
+
+    @Test
+    fun `builds television watch route`() {
+        assertEquals(
+            "https://www.youtube.com/tv#/watch?v=dQw4w9WgXcQ",
+            YouTubeTarget.tvWatchUrl("https://youtu.be/dQw4w9WgXcQ?t=2"),
+        )
     }
 
     @Test

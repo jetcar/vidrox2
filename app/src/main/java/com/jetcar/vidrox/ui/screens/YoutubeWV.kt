@@ -83,13 +83,6 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
     val pageChromeClient = rememberWebChromeClient(context) { progress ->
         loadingProgress = progress
     }
-    val pairingCode = remember {
-        val preferences = context.getSharedPreferences("vidrox_remote", Activity.MODE_PRIVATE)
-        preferences.getString("pairing_code", null)
-            ?: RemoteControlServer.generatePairingCode().also { generated ->
-                preferences.edit().putString("pairing_code", generated).apply()
-            }
-    }
     val remoteStatus = remember { mutableStateOf("запуск…") }
     val remoteDispatcher = remember {
         WebViewRemoteDispatcher(
@@ -189,14 +182,13 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
         }
     }
 
-    DisposableEffect(context, pairingCode, lifecycleOwner) {
+    DisposableEffect(context, lifecycleOwner) {
         var remoteServer: RemoteControlServer? = null
 
         fun startRemoteServer() {
             if (remoteServer != null) return
             remoteServer = RemoteControlServer(
                 context = context,
-                pairingCode = pairingCode,
                 onCommand = remoteDispatcher::dispatch,
                 onStatus = { status -> activity.runOnUiThread { remoteStatus.value = status } },
             ).also(RemoteControlServer::start)
@@ -380,7 +372,7 @@ fun YoutubeWV(youtubeVM: YoutubeVM = viewModel()) {
 
 
         Text(
-            text = "Пульт: $pairingCode • ${remoteStatus.value}",
+            text = "Пульт по Wi‑Fi • ${remoteStatus.value}",
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .safeDrawingPadding()

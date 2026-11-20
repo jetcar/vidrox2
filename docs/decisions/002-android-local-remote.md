@@ -1,4 +1,4 @@
-# ADR-002: Use NSD and a paired local TCP protocol for Android remote control
+# ADR-002: Use NSD and a local TCP protocol for Android remote control
 
 ## Status
 
@@ -14,11 +14,11 @@ VidroX needs YouTube-style phone-to-screen video sending and playback control. T
 
 ## Decision
 
-Advertise the receiver with Android Network Service Discovery using `_vidrox._tcp.` and exchange one versioned text command per TCP connection. A random six-digit code generated for the receiver installation and shown on screen is required on every command. Protocol and validation code live in a shared JVM module.
+Advertise the receiver with Android Network Service Discovery using `_vidrox._tcp.` and exchange one versioned text command per TCP connection. The phone sends commands directly after the user selects a discovered receiver; no pairing code or account is required. Protocol and validation code live in a shared JVM module. No-code commands use `VIDROX/2`; the receiver also accepts legacy `VIDROX/1` commands, while an updated phone reports that an older receiver must be updated. The legacy pairing field remains in the wire format as an ignored compatibility field.
 
 The receiver exists only while the VidroX screen is active. It accepts a fixed command allowlist and canonical YouTube targets; it never accepts arbitrary JavaScript or arbitrary URLs.
 
-The phone controller hosts the mobile YouTube website in an Android WebView. It tracks main-frame history changes, including YouTube single-page navigation, and enables **На ТВ** only when the current address resolves to a canonical YouTube video. The browser stays alive behind the full-screen remote overlay so video selection is not lost while playback controls are used. Top-level navigation is limited to HTTPS YouTube and Google domains; arbitrary web addresses are never sent to the receiver.
+The phone controller hosts the mobile YouTube website in an Android WebView. It tracks main-frame history changes, including YouTube single-page navigation, and enables **На ТВ** only when the current address resolves to a canonical YouTube video. Every send opens a live picker containing the VidroX receivers currently discovered on the Wi-Fi network; the command is sent only after the user chooses one. The browser stays alive behind the full-screen remote overlay so video selection is not lost while playback controls are used. Top-level navigation is limited to HTTPS YouTube and Google domains; arbitrary web addresses are never sent to the receiver.
 
 ## Alternatives Considered
 
@@ -43,7 +43,7 @@ The phone controller hosts the mobile YouTube website in an Android WebView. It 
 ## Consequences
 
 - Receiver and remote must be on the same reachable LAN; guest Wi-Fi client isolation can prevent discovery or connection.
-- Pairing prevents casual accidental control but does not encrypt traffic.
+- Selecting a discovered receiver avoids accidental sends to another VidroX, but any device on the same reachable LAN that implements the protocol can control an active receiver. The traffic is not encrypted.
 - SDK 36 receives implicit LAN access through `INTERNET`; targeting SDK 37 later requires declaring and requesting `ACCESS_LOCAL_NETWORK`.
 - NSD registration and discovery follow the resumed application lifecycle and use a scoped Wi-Fi multicast lock for Android versions where the system does not manage mDNS reception.
 - YouTube requires JavaScript and DOM storage in the phone WebView. Video targets are still revalidated by the shared protocol and again by the receiver.

@@ -1,8 +1,8 @@
 package com.jetcar.vidrox.remote.core
 
-private const val PROTOCOL_PREFIX = "VIDROX/1"
+private const val LEGACY_PROTOCOL_PREFIX = "VIDROX/1"
+private const val PROTOCOL_PREFIX = "VIDROX/2"
 private const val MAX_LINE_LENGTH = 4096
-private val pairingCodePattern = Regex("\\d{6}")
 
 enum class RemoteAction(val wireName: String, val requiresArgument: Boolean = false) {
     OPEN("OPEN", true),
@@ -22,7 +22,6 @@ enum class RemoteAction(val wireName: String, val requiresArgument: Boolean = fa
 }
 
 data class RemoteCommand(
-    val pairingCode: String,
     val action: RemoteAction,
     val argument: String = "",
 )
@@ -35,7 +34,9 @@ object RemoteProtocol {
 
     fun encode(command: RemoteCommand): String {
         validate(command)
-        return listOf(PROTOCOL_PREFIX, command.pairingCode, command.action.wireName, command.argument)
+        // Keep the empty second field so the command shape remains compatible with
+        // older remotes that included a pairing code.
+        return listOf(PROTOCOL_PREFIX, "", command.action.wireName, command.argument)
             .joinToString("\t")
     }
 
@@ -44,13 +45,13 @@ object RemoteProtocol {
         if ('\n' in line || '\r' in line) throw RemoteProtocolException("invalid_line_break")
 
         val fields = line.split('\t', limit = 4)
-        if (fields.size != 4 || fields[0] != PROTOCOL_PREFIX) {
+        if (fields.size != 4 || fields[0] !in setOf(LEGACY_PROTOCOL_PREFIX, PROTOCOL_PREFIX)) {
             throw RemoteProtocolException("unsupported_protocol")
         }
 
         val action = RemoteAction.fromWireName(fields[2])
             ?: throw RemoteProtocolException("unknown_action")
-        return RemoteCommand(fields[1], action, fields[3]).also(::validate)
+        return RemoteCommand(action, fields[3]).also(::validate)
     }
 
     fun errorResponse(reason: String): String {
@@ -58,12 +59,7 @@ object RemoteProtocol {
         return "ERROR\t${safeReason.ifBlank { "unknown" }}"
     }
 
-    fun isValidPairingCode(code: String): Boolean = pairingCodePattern.matches(code)
-
     private fun validate(command: RemoteCommand) {
-        if (!isValidPairingCode(command.pairingCode)) {
-            throw RemoteProtocolException("invalid_pairing_code")
-        }
         if ('\t' in command.argument || '\n' in command.argument || '\r' in command.argument) {
             throw RemoteProtocolException("invalid_argument")
         }

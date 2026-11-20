@@ -50,8 +50,9 @@ internal fun YouTubeBrowser(
     sharedTarget: String,
     receiverLabel: String?,
     status: String,
+    castSucceededTick: Int,
     onOpenRemote: () -> Unit,
-    onSendVideo: (String, () -> Unit) -> Unit,
+    onSendVideo: (String) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     var webView by remember { mutableStateOf<WebView?>(null) }
@@ -77,6 +78,12 @@ internal fun YouTubeBrowser(
         val target = sharedTarget.takeIf(String::isNotBlank) ?: return@LaunchedEffect
         val canonical = runCatching { YouTubeTarget.canonicalWatchUrl(target) }.getOrNull()
         if (canonical != null && webView?.url != canonical) webView?.loadUrl(canonical)
+    }
+
+    LaunchedEffect(castSucceededTick) {
+        if (castSucceededTick > 0) {
+            webView?.evaluateJavascript(PAUSE_LOCAL_VIDEO_SCRIPT, null)
+        }
     }
 
     BackHandler(enabled = canGoBack) {
@@ -157,11 +164,7 @@ internal fun YouTubeBrowser(
                 canSend = videoUrl != null,
                 onBack = { webView?.goBack() },
                 onSend = {
-                    videoUrl?.let { target ->
-                        onSendVideo(target) {
-                            webView?.evaluateJavascript(PAUSE_LOCAL_VIDEO_SCRIPT, null)
-                        }
-                    }
+                    videoUrl?.let(onSendVideo)
                 },
                 onOpenRemote = onOpenRemote,
             )

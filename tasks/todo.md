@@ -137,7 +137,7 @@ Implementation and CI verification are complete. Physical-device installation th
 
 **Acceptance criteria:**
 - [x] Versioned commands round-trip through one shared implementation.
-- [x] Malformed codes, actions, arguments, targets, and oversized lines are rejected.
+- [x] Malformed versions, actions, arguments, targets, and oversized lines are rejected.
 
 **Verification:** `gradlew :remote-core:test`
 
@@ -147,7 +147,7 @@ Implementation and CI verification are complete. Physical-device installation th
 
 **Acceptance criteria:**
 - [x] VidroX advertises only while its screen is active.
-- [x] The pairing code is visible and required for all commands.
+- [x] The receiver is discoverable and works without a pairing code.
 - [x] Allowed commands control only YouTube playback/navigation.
 
 **Verification:** `gradlew :app:testDebugUnitTest :app:assembleDebug`
@@ -167,8 +167,8 @@ Implementation and CI verification are complete. Physical-device installation th
 ## Task A4: Phone UI
 
 **Acceptance criteria:**
-- [x] Receiver/code/video fields validate locally.
-- [x] Send, play/pause, ±10 seconds, back, D-pad, and select are always visible.
+- [x] Receiver selection and video targets validate locally.
+- [x] Send, play/pause, and ±10 seconds are always visible.
 - [x] The UI reports success and actionable errors in Russian.
 
 **Verification:** `gradlew :remote:assembleDebug`
@@ -192,7 +192,7 @@ Implementation and CI verification are complete. Physical-device installation th
 ## Task A6: Documentation
 
 **Acceptance criteria:**
-- [x] README explains installation, pairing, controls, and Wi-Fi limitations.
+- [x] README explains installation, receiver selection, controls, and Wi-Fi limitations.
 
 **Verification:** instructions match the produced filenames.
 

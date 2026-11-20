@@ -1,13 +1,11 @@
 package com.jetcar.vidrox.remote
 
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -20,26 +18,26 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -49,7 +47,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
@@ -105,12 +102,12 @@ private fun VidroXRemoteTheme(content: @Composable () -> Unit) {
 private fun RemoteScreen(sharedTarget: String) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    val preferences = remember { context.getSharedPreferences("vidrox_remote", MODE_PRIVATE) }
     var endpoints by remember { mutableStateOf<List<RemoteEndpoint>>(emptyList()) }
     var selected by remember { mutableStateOf<RemoteEndpoint?>(null) }
-    var pairingCode by remember { mutableStateOf(preferences.getString("pairing_code", "").orEmpty()) }
     var status by remember { mutableStateOf("поиск устройств…") }
     var showRemote by rememberSaveable { mutableStateOf(false) }
+    var pendingVideoTarget by rememberSaveable { mutableStateOf<String?>(null) }
+    var castSucceededTick by rememberSaveable { mutableIntStateOf(0) }
     var availableUpdate by remember { mutableStateOf<RemoteRelease?>(null) }
     val commandClient = remember { RemoteCommandClient() }
 
@@ -157,13 +154,17 @@ private fun RemoteScreen(sharedTarget: String) {
         }
     }
 
-    fun send(action: RemoteAction, argument: String = "", onSuccess: () -> Unit = {}) {
-        val endpoint = selected
+    fun sendTo(
+        endpoint: RemoteEndpoint?,
+        action: RemoteAction,
+        argument: String = "",
+        onSuccess: () -> Unit = {},
+    ) {
         if (endpoint == null) {
             status = "VidroX не найден"
             return
         }
-        val command = RemoteCommand(pairingCode.trim(), action, argument.trim())
+        val command = RemoteCommand(action, argument.trim())
         status = "отправка…"
         commandClient.send(endpoint, command) { result ->
             status = result.fold(
@@ -176,25 +177,25 @@ private fun RemoteScreen(sharedTarget: String) {
         }
     }
 
+    fun send(action: RemoteAction, argument: String = "", onSuccess: () -> Unit = {}) {
+        sendTo(selected, action, argument, onSuccess)
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         YouTubeBrowser(
             sharedTarget = sharedTarget,
             receiverLabel = selected?.label,
             status = status,
+            castSucceededTick = castSucceededTick,
             onOpenRemote = { showRemote = true },
-            onSendVideo = { target, onSent -> send(RemoteAction.OPEN, target, onSent) },
+            onSendVideo = { target -> pendingVideoTarget = target },
         )
         if (showRemote) {
             RemoteLayout(
                 endpoints = endpoints,
                 selected = selected,
-                pairingCode = pairingCode,
                 status = status,
                 onSelect = { selected = it },
-                onPairingCodeChange = {
-                    pairingCode = it.filter(Char::isDigit).take(6)
-                    preferences.edit().putString("pairing_code", pairingCode).apply()
-                },
                 onClose = { showRemote = false },
                 send = { action, argument -> send(action, argument) },
             )
@@ -208,16 +209,74 @@ private fun RemoteScreen(sharedTarget: String) {
     availableUpdate?.let { release ->
         RemoteUpdateDialog(release = release) { availableUpdate = null }
     }
+
+    pendingVideoTarget?.let { target ->
+        DevicePickerDialog(
+            endpoints = endpoints,
+            selected = selected,
+            onDismiss = {
+                pendingVideoTarget = null
+            },
+            onSelect = { endpoint ->
+                selected = endpoint
+                pendingVideoTarget = null
+                sendTo(endpoint, RemoteAction.OPEN, target) { castSucceededTick++ }
+            },
+        )
+    }
+}
+
+@Composable
+private fun DevicePickerDialog(
+    endpoints: List<RemoteEndpoint>,
+    selected: RemoteEndpoint?,
+    onDismiss: () -> Unit,
+    onSelect: (RemoteEndpoint) -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Выберите ТВ") },
+        text = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 420.dp)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                if (endpoints.isEmpty()) {
+                    Text("Ищу VidroX в этой Wi‑Fi сети…")
+                    Text(
+                        "Откройте VidroX на телевизоре и оставьте его на экране.",
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+                endpoints.forEach { endpoint ->
+                    val label = if (endpoint == selected) "✓ ${endpoint.label}" else endpoint.label
+                    OutlinedButton(
+                        onClick = { onSelect(endpoint) },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            Text(label, fontWeight = FontWeight.SemiBold)
+                            Text(endpoint.hostAddress, style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) { Text("Закрыть") }
+        },
+    )
 }
 
 @Composable
 private fun RemoteLayout(
     endpoints: List<RemoteEndpoint>,
     selected: RemoteEndpoint?,
-    pairingCode: String,
     status: String,
     onSelect: (RemoteEndpoint) -> Unit,
-    onPairingCodeChange: (String) -> Unit,
     onClose: () -> Unit,
     send: (RemoteAction, String) -> Unit,
 ) {
@@ -239,10 +298,8 @@ private fun RemoteLayout(
                     ConnectionPanel(
                         endpoints = endpoints,
                         selected = selected,
-                        pairingCode = pairingCode,
                         status = status,
                         onSelect = onSelect,
-                        onPairingCodeChange = onPairingCodeChange,
                         onClose = onClose,
                         modifier = Modifier
                             .weight(1f)
@@ -264,10 +321,8 @@ private fun RemoteLayout(
                     ConnectionPanel(
                         endpoints = endpoints,
                         selected = selected,
-                        pairingCode = pairingCode,
                         status = status,
                         onSelect = onSelect,
-                        onPairingCodeChange = onPairingCodeChange,
                         onClose = onClose,
                         modifier = if (compact) {
                             Modifier
@@ -298,10 +353,8 @@ private fun RemoteLayout(
 private fun ConnectionPanel(
     endpoints: List<RemoteEndpoint>,
     selected: RemoteEndpoint?,
-    pairingCode: String,
     status: String,
     onSelect: (RemoteEndpoint) -> Unit,
-    onPairingCodeChange: (String) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier,
     compact: Boolean,
@@ -330,14 +383,6 @@ private fun ConnectionPanel(
                 }
             }
         }
-        OutlinedTextField(
-            value = pairingCode,
-            onValueChange = onPairingCodeChange,
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text("Код с экрана VidroX") },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-        )
     }
 }
 
@@ -360,30 +405,6 @@ private fun ControlsPanel(
             ControlButton("▶ / ❚❚", RemoteAction.PLAY_PAUSE, send, wideButtonWidth, buttonHeight)
             ControlButton("+10", RemoteAction.SEEK_FORWARD, send, buttonWidth, buttonHeight)
         }
-        Spacer(Modifier.height(if (compact) 6.dp else 12.dp))
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(24.dp))
-                .padding(if (compact) 8.dp else 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(if (compact) 4.dp else 8.dp),
-        ) {
-            ControlButton("▲", RemoteAction.UP, send, buttonWidth, buttonHeight)
-            Row(horizontalArrangement = Arrangement.spacedBy(if (compact) 4.dp else 8.dp)) {
-                ControlButton("◀", RemoteAction.LEFT, send, buttonWidth, buttonHeight)
-                ControlButton("OK", RemoteAction.SELECT, send, buttonWidth, buttonHeight)
-                ControlButton("▶", RemoteAction.RIGHT, send, buttonWidth, buttonHeight)
-            }
-            ControlButton("▼", RemoteAction.DOWN, send, buttonWidth, buttonHeight)
-        }
-        Spacer(Modifier.height(if (compact) 6.dp else 10.dp))
-        Button(
-            onClick = { send(RemoteAction.BACK, "") },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surface),
-        ) {
-            Text("Назад")
-        }
     }
 }
 
@@ -404,10 +425,9 @@ private fun ControlButton(
 }
 
 private fun humanError(error: Throwable): String = when (error.message) {
-    "invalid_pairing_code" -> "Введите 6-значный код"
-    "wrong_pairing_code" -> "Неверный код"
     "missing_argument", "invalid_youtube_target" -> "Неверная ссылка YouTube"
     "receiver_error" -> "Приёмник отклонил команду"
     "receiver_not_ready" -> "VidroX ещё загружается"
+    "unsupported_protocol" -> "Обновите VidroX на ТВ"
     else -> "Нет связи с VidroX"
 }

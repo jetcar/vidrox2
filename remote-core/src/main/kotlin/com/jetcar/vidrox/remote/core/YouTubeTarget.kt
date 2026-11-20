@@ -14,10 +14,17 @@ object YouTubeTarget {
     )
 
     fun canonicalWatchUrl(input: String): String {
+        return "https://www.youtube.com/watch?v=${validatedVideoId(input)}"
+    }
+
+    fun tvWatchUrl(input: String): String =
+        "https://www.youtube.com/tv#/watch?v=${validatedVideoId(input)}"
+
+    private fun validatedVideoId(input: String): String {
         val value = input.trim()
         val videoId = if (videoIdPattern.matches(value)) value else extractFromUrl(value)
         if (!videoIdPattern.matches(videoId)) throw RemoteProtocolException("invalid_youtube_target")
-        return "https://www.youtube.com/watch?v=$videoId"
+        return videoId
     }
 
     private fun extractFromUrl(value: String): String {

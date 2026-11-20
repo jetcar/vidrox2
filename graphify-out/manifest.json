@@ -12,9 +12,9 @@
     "semantic_hash": ""
   },
   "app/build.gradle.kts": {
-    "mtime": 1795187405.868328,
-    "seen": 1795187561.00572,
-    "ast_hash": "ef900b67ea6c8bb2a398f59bc9ebcbdc",
+    "mtime": 1795189391.9650674,
+    "seen": 1795189498.3112693,
+    "ast_hash": "710dd78774e329172e5bed697f5fb586",
     "semantic_hash": ""
   },
   "app/src/main/java/com/jetcar/vidrox/MainActivity.kt": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "app/src/main/java/com/jetcar/vidrox/ui/screens/YoutubeWV.kt": {
-    "mtime": 1795182180.1422606,
-    "seen": 1795182220.0701728,
-    "ast_hash": "7b880aeb6c60c4efd1a4f578da6cde7a",
+    "mtime": 1795188633.431191,
+    "seen": 1795188859.7446554,
+    "ast_hash": "3636ac6bf0e45f2467d60c67bc519791",
     "semantic_hash": ""
   },
   "app/src/main/java/com/jetcar/vidrox/ui/screens/YoutubeWVOverlays.kt": {
@@ -312,9 +312,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1795187517.43557,
-    "seen": 1795187561.0058112,
-    "ast_hash": "3a9ac19bdefc80d354fa81250515f69a",
+    "mtime": 1795189172.15187,
+    "seen": 1795189235.7144206,
+    "ast_hash": "1f7e8ff0c6e457551b0da50e919133ad",
     "semantic_hash": ""
   },
   "SPEC-ios.md": {
@@ -342,15 +342,15 @@
     "semantic_hash": ""
   },
   "tasks/plan.md": {
-    "mtime": 1795181463.926254,
-    "seen": 1795181536.4148557,
-    "ast_hash": "3fe03cdc0868ed5896bc1cd6262360af",
+    "mtime": 1795190690.234545,
+    "seen": 1795190701.8287067,
+    "ast_hash": "3bcee2ff184adde8aca183127f54f13a",
     "semantic_hash": ""
   },
   "tasks/todo.md": {
-    "mtime": 1795181463.9272413,
-    "seen": 1795181536.4148564,
-    "ast_hash": "d0c1240c2e7e7c7eb8cb792e367372ad",
+    "mtime": 1795190690.2335453,
+    "seen": 1795190701.8287103,
+    "ast_hash": "80e9a0e09002c09b66d8d269aa1cea27",
     "semantic_hash": ""
   },
   "app/src/main/res/drawable/banner_fg.png": {
@@ -486,15 +486,15 @@
     "semantic_hash": ""
   },
   "app/src/main/java/com/jetcar/vidrox/remote/RemoteControlServer.kt": {
-    "mtime": 1795181951.7860107,
-    "seen": 1795182163.5121813,
-    "ast_hash": "763d76a9eaecd6924143c6c343b8d0ac",
+    "mtime": 1795188633.4301622,
+    "seen": 1795188859.7446454,
+    "ast_hash": "d12bb898d6461a7733922238178e1ea3",
     "semantic_hash": ""
   },
   "app/src/main/java/com/jetcar/vidrox/remote/WebViewRemoteDispatcher.kt": {
-    "mtime": 1795182180.1412585,
-    "seen": 1795182220.070162,
-    "ast_hash": "23fabee6d3cab76888c8a5febb962800",
+    "mtime": 1795189391.963091,
+    "seen": 1795189498.3112743,
+    "ast_hash": "efaef2d35355d1ac2abde9bead92de71",
     "semantic_hash": ""
   },
   "remote-core/build.gradle.kts": {
@@ -504,33 +504,33 @@
     "semantic_hash": ""
   },
   "remote-core/src/main/kotlin/com/jetcar/vidrox/remote/core/RemoteProtocol.kt": {
-    "mtime": 1795180857.6614614,
-    "seen": 1795181536.4148235,
-    "ast_hash": "2982f91aa2837e8e87760336ad6aa3fe",
+    "mtime": 1795188994.4010446,
+    "seen": 1795189080.5247185,
+    "ast_hash": "8d68d5dca3ad15ccab868a43a19a87fb",
     "semantic_hash": ""
   },
   "remote-core/src/main/kotlin/com/jetcar/vidrox/remote/core/YouTubeTarget.kt": {
-    "mtime": 1795181796.6528974,
-    "seen": 1795182163.5122375,
-    "ast_hash": "9ff3c1938316f301060b133016c97dac",
+    "mtime": 1795189391.9620664,
+    "seen": 1795189498.3113275,
+    "ast_hash": "cae1989c7b28b0db8871e76f4303390b",
     "semantic_hash": ""
   },
   "remote-core/src/test/kotlin/com/jetcar/vidrox/remote/core/RemoteProtocolTest.kt": {
-    "mtime": 1795181469.7955408,
-    "seen": 1795181536.4148262,
-    "ast_hash": "ff0ff27d43bb1cd5cd3ee30cc541a9af",
+    "mtime": 1795189391.9640665,
+    "seen": 1795189498.3113286,
+    "ast_hash": "4d6341b7026b40c3eaa5397a67fc4b29",
     "semantic_hash": ""
   },
   "remote/build.gradle.kts": {
-    "mtime": 1795187405.870332,
-    "seen": 1795187561.0057807,
-    "ast_hash": "00d20e48dee3b2324ac534ddb9e7a8bd",
+    "mtime": 1795189391.966066,
+    "seen": 1795189498.3113298,
+    "ast_hash": "88e5df71d06a781e0d61d2312707478e",
     "semantic_hash": ""
   },
   "remote/src/main/java/com/jetcar/vidrox/remote/MainActivity.kt": {
-    "mtime": 1795187700.14169,
-    "seen": 1795187806.8018377,
-    "ast_hash": "b77104ab8386ead192e70b921871b0ac",
+    "mtime": 1795189172.148871,
+    "seen": 1795189235.714396,
+    "ast_hash": "b94cc21c76219299d04c0d25a54b9715",
     "semantic_hash": ""
   },
   "remote/src/main/java/com/jetcar/vidrox/remote/network/RemoteCommandClient.kt": {
@@ -558,27 +558,27 @@
     "semantic_hash": ""
   },
   "SPEC-android-controller.md": {
-    "mtime": 1795184049.3220687,
-    "seen": 1795184089.6274688,
-    "ast_hash": "9f0517720e687a2ee3d34629def5c643",
+    "mtime": 1795190690.2305453,
+    "seen": 1795190701.8286812,
+    "ast_hash": "caf37fe212f6543d137a7129a951964c",
     "semantic_hash": ""
   },
   "SPEC-android-receiver.md": {
-    "mtime": 1795182122.8960702,
-    "seen": 1795182163.5122583,
-    "ast_hash": "ab852c96fb6fe1da075309bc7b117dd4",
+    "mtime": 1795190690.2315454,
+    "seen": 1795190701.8286855,
+    "ast_hash": "a2fdb1606d1ccf33abc580810973de74",
     "semantic_hash": ""
   },
   "SPEC-android-remote-protocol.md": {
-    "mtime": 1795181217.8308592,
-    "seen": 1795181536.4148488,
-    "ast_hash": "a3fe389e4e8ce76304b95c67f6ca0d26",
+    "mtime": 1795190690.232546,
+    "seen": 1795190701.8286881,
+    "ast_hash": "b93223410913af9a4a9327492df203a6",
     "semantic_hash": ""
   },
   "docs/decisions/002-android-local-remote.md": {
-    "mtime": 1795187517.4365683,
-    "seen": 1795187561.0058184,
-    "ast_hash": "5c85912cd8857c8f170b4f41c24508a9",
+    "mtime": 1795188994.4030445,
+    "seen": 1795189080.5247586,
+    "ast_hash": "13ac7929a17d245e2c4299718d337b9b",
     "semantic_hash": ""
   },
   "remote/src/main/java/com/jetcar/vidrox/remote/update/RemoteRelease.kt": {
@@ -612,9 +612,9 @@
     "semantic_hash": ""
   },
   "remote/src/main/java/com/jetcar/vidrox/remote/YouTubeBrowser.kt": {
-    "mtime": 1795187700.1396897,
-    "seen": 1795187806.801839,
-    "ast_hash": "7ff5f4d824de8d4e2de9d0aaded2b912",
+    "mtime": 1795188633.431191,
+    "seen": 1795188859.744705,
+    "ast_hash": "c06262c1277d3464bf19c3adfe55b947",
     "semantic_hash": ""
   }
 }

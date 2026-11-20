@@ -32,7 +32,7 @@ class WebViewRemoteDispatcher(
     }
 
     private fun open(target: String) {
-        val url = YouTubeTarget.canonicalWatchUrl(target)
+        val url = YouTubeTarget.tvWatchUrl(target)
         val webView = webViewProvider() ?: return
         webView.post { webView.loadUrl(url) }
     }

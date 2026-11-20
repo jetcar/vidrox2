@@ -14,7 +14,6 @@ import java.io.InputStreamReader
 import java.net.ServerSocket
 import java.net.Socket
 import java.net.SocketException
-import java.security.SecureRandom
 import java.util.concurrent.Executors
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.RejectedExecutionException
@@ -25,7 +24,6 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class RemoteControlServer(
     context: Context,
-    val pairingCode: String,
     private val onCommand: (RemoteCommand) -> Boolean,
     private val onStatus: (String) -> Unit,
 ) : AutoCloseable {
@@ -136,9 +134,6 @@ class RemoteControlServer(
                     val reader = BufferedReader(InputStreamReader(client.getInputStream(), Charsets.UTF_8))
                     val line = readLimitedLine(reader)
                     val command = RemoteProtocol.decode(line)
-                    if (command.pairingCode != pairingCode) {
-                        throw RemoteProtocolException("wrong_pairing_code")
-                    }
                     synchronized(commandLock) {
                         if (!running.get()) throw RemoteProtocolException("receiver_stopped")
                         if (!onCommand(command)) {
@@ -213,8 +208,5 @@ class RemoteControlServer(
         private const val MAX_COMMAND_LENGTH = 4096
         private const val MAX_CLIENTS = 4
         private const val MAX_QUEUED_CLIENTS = 4
-        private val secureRandom = SecureRandom()
-
-        fun generatePairingCode(): String = "%06d".format(secureRandom.nextInt(1_000_000))
     }
 }

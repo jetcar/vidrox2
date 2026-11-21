@@ -1,8 +1,5 @@
 name: Release Preparation
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 concurrency:
   group: android-release-preparation
   cancel-in-progress: false
@@ -29,7 +26,7 @@ jobs:
       release_version_code: ${{ steps.detect.outputs.release_version_code }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -137,7 +134,7 @@ jobs:
     if: needs.detect_release_need.outputs.has_changes == 'true'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Update Android app versions for this build
         shell: bash
@@ -150,11 +147,11 @@ jobs:
           RELEASE_VERSION: ${{ needs.detect_release_need.outputs.release_version }}
           RELEASE_VERSION_CODE: ${{ needs.detect_release_need.outputs.release_version_code }}
 
-      - name: Set up JDK 21
-        uses: actions/setup-java@v5
+      - name: Set up JDK 25
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: '25'
           cache: gradle
 
       - name: Make Gradle wrapper executable
@@ -191,7 +188,7 @@ jobs:
           cp remote/build/outputs/apk/release/remote-release.apk release-artifacts/VidroX-${{ needs.detect_release_need.outputs.release_tag }}.remote.apk
 
       - name: Upload Android APK artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: android-release-apks
           path: release-artifacts/*.apk
@@ -206,13 +203,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download APK artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: android-release-apks
           path: release-artifacts
 
       - name: Publish GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.detect_release_need.outputs.release_tag }}
           name: ${{ needs.detect_release_need.outputs.release_tag }}

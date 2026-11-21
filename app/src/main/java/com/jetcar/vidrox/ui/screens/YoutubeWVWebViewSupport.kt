@@ -129,7 +129,7 @@ internal fun createLoggingWebViewClient(
                     Log.d(WEBVIEW_DEBUG_TAG, "Blocked ad request $url")
                     return emptyResponse()
                 }
-                Log.d(WEBVIEW_DEBUG_TAG, "request ${request?.method ?: "GET"} $url")
+                Log.d(WEBVIEW_DEBUG_TAG, "request ${request.method} $url")
             }
             return super.shouldInterceptRequest(view, request)
         }

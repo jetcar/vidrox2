@@ -1,10 +1,7 @@
-@file:Suppress("DEPRECATION")
-
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -44,7 +41,11 @@ if (isReleaseBuildRequested && !hasReleaseSigning) {
 
 android {
     namespace = "com.jetcar.vidrox"
-    compileSdk = 36
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 2
+        }
+    }
 
     signingConfigs {
         if (hasReleaseSigning) {
@@ -83,16 +84,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    buildToolsVersion = "36.0.0"
-    ndkVersion = "25.2.9519653"
-
-
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
 }
 

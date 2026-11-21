@@ -1,7 +1,7 @@
 name: VidroX
 
 options:
-  minimumXcodeGenVersion: 2.46.0
+  minimumXcodeGenVersion: 2.48.0
   deploymentTarget:
     iOS: "16.0"
 
